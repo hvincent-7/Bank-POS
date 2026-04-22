@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bankpos
+      POSTGRES_PASSWORD: bankpos
+      POSTGRES_DB: bankpos
+    ports:
+      - "5432:5432"
+    volumes:
+      - bankpos-db:/var/lib/postgresql/data
+
+volumes:
+  bankpos-db:

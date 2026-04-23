@@ -1,6 +1,0 @@
-IniFile	FileName	DirProperty	Section	Key	Value	Action	Component_
-s72	l255	S72	l96	l128	l255	i2	s72
-IniFile	IniFile
-IniTableKey1	WIN.INI	SystemFolder	 	 	 	0	ISX_DEFAULTCOMPONENT45
-IniTableKey2	SYSTEM.INI	SystemFolder	 	 	 	0	ISX_DEFAULTCOMPONENT45
-IniTableKey3	PROTOCOL.INI	SystemFolder	 	 	 	0	ISX_DEFAULTCOMPONENT45

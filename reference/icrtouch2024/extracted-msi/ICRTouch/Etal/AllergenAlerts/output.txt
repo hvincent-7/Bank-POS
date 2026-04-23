@@ -1,1 +1,0 @@
-23/01/2019 14:25.05 If script crashes after init you may be missing background image in the window.xml or rearwindow.xml

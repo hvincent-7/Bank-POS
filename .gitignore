@@ -1,3 +1,14 @@
+# Proprietary / licensed content — do not commit.
+# ICRTouch installer binaries (MSI, CAB, DLLs, BMPs) are owned by ICRTouch Ltd.
+# Distributing them via git is a EULA/copyright breach. Keep any local copies
+# outside the repo.
+ICRTouch2024.zip
+Binary/
+reference/
+*.msi
+*.cab
+
+# Node / PWA
 node_modules
 dist
 build

@@ -63,6 +63,11 @@ On first run, SQLite is created under `%LOCALAPPDATA%/BankPos/bank-pos.sqlite`.
 
 ## Notes
 
-- The previous web PWA/API implementation remains in the repository history/branches.
-- Extracted ICRTouch installer artifacts under `reference/icrtouch2024` are used only
-  as behavior and deployment reference for clean-room implementation.
+- The previous web PWA/API implementation (`apps/`, `packages/`) is still present on
+  this branch as legacy; the full PWA scaffold is also preserved on the
+  `archive/web-pwa` branch.
+- ICRTouch is a commercial product owned by ICRTouch Ltd. This project is a
+  clean-room implementation based on public POS conventions (ESC/POS, XML keyboard
+  layouts, PLU/department/clerk concepts common to till systems) and the venue's own
+  menu export. No ICRTouch installer binaries, DLLs, resources, or decompiled code
+  are used as a source — do not commit any such material to this repo.

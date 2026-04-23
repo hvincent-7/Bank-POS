@@ -1,0 +1,22 @@
+<DIALOG id="DLG:PROGRESS" name="Progress Dialog" left="210" top="250" width="500" height="120">
+	<BACKGROUND image="dispmsg_bg.Bmp" TransparentColour="00FF00FF"/>
+	
+	<LINE1MESSAGE left="250" top="30">
+		<FONT face="Arial" size="28" align="centre" valign="centre" italic="true" colour="00FF0000"/>
+	</LINE1MESSAGE>
+			
+	<COUNTER left="150" top="45" width="200" height="35" textleft="250" texttop="52">
+		<FONT face="Arial" size="26" align="centre" valign="top" colour="FFFFFF"/>
+	</COUNTER>
+			
+	<BUTTONS>
+		<BUTTON id="BTN:STOP" name="Stop Button" left="210" top="80" width="80" height="30">
+			<STATEIMAGE state="up" image="progress_buttons.bmp" left="0" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="down" image="progress_buttons.bmp" left="0" top="30" TransparentColour="FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:SUSPEND" name="EFT Suspend Button" left="210" top="80" width="80" height="30">
+			<STATEIMAGE state="up" image="progress_buttons.bmp" left="80" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="down" image="progress_buttons.bmp" left="80" top="30" TransparentColour="FF00FF"/>
+		</BUTTON>
+	</BUTTONS>
+</DIALOG>

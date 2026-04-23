@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyName>BankPosTill</AssemblyName>
+    <RootNamespace>Bank.Pos.Till</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bank.Pos.Core\Bank.Pos.Core.csproj" />
+    <ProjectReference Include="..\Bank.Pos.Data\Bank.Pos.Data.csproj" />
+    <ProjectReference Include="..\Bank.Pos.Kitchen\Bank.Pos.Kitchen.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="layouts\main.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="layouts\assets\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

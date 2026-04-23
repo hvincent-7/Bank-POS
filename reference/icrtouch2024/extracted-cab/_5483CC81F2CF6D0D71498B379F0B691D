@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ETAL>
+  <FILE>setnewpricelevel.emoc2</FILE>
+  <OUTPUTFILE>output.txt</OUTPUTFILE>
+  <NAME>Set new price level</NAME>
+  <CREATED>02/03/2015</CREATED>
+  <LASTMODIFIED>02/03/2015</LASTMODIFIED>
+  <MINVERID>6000</MINVERID>
+  <AUTHOR>Antony ICRTouch</AUTHOR>
+</ETAL>

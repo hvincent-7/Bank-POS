@@ -1,0 +1,22 @@
+:BASE TranslationConfigEditor.hlp
+1 Introduction
+2 Welcome=Welcometopic@TranslationConfigEditor.hlp
+2 How the search engine works=SEARCHENGINE@TranslationConfigEditor.hlp
+1 Editor Usage
+2 Dictionary Editor
+3 Search Characters=SEARCHENTRY@TranslationConfigEditor.hlp
+3 Creating a new dictionary entry=NEWENTRY@TranslationConfigEditor.hlp
+3 Editing a dictionary entry=EDITENTRY@TranslationConfigEditor.hlp
+3 Deleting a dictioanry entry=DELETEENTRY@TranslationConfigEditor.hlp
+2 Edit Unknown List
+3 Editing the unknown list=Editingtheunknownlist@TranslationConfigEditor.hlp
+2 Importing Dictionary Items
+3 Using the dictionary importer=IMPORTITEMS@TranslationConfigEditor.hlp
+2 Exporting the Dictionary
+3 Using the dictionary export=Usingthedictionaryexport@TranslationConfigEditor.hlp
+2 Exporting the Unknown List
+3 Exporting the unknown list=Exportingtheunknownlist@TranslationConfigEditor.hlp
+2 Configuration
+3 Configuration=Configuration@TranslationConfigEditor.hlp
+2 Reindexing the Dictionary
+3 Reindexing the dictionary=REINDEX@TranslationConfigEditor.hlp

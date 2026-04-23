@@ -1,0 +1,132 @@
+/**********************************************************************
+Set price level on init
+
+Sets the correct price level according to the schedule when the till is loaded
+**********************************************************************/
+
+dofile("etal\\lib\\flags.moc");
+dofile("etal\\lib\\keys.moc");
+
+local bDebugPrinting = false;
+
+function OnInit()
+{
+    ICR_SetLocalUserData("bDebugPrinting", bDebugPrinting, true);
+    ICR_EnableDebugLog(bDebugPrinting);
+
+	//add program settings
+	ICR_SetLocalUserData("bEnabled", false, true);
+	ICR_SetLocalUserData("nClerkId",0,true);
+
+	ICR_AdvertiseProgramSetting("Enabled?","bEnabled");
+	ICR_AdvertiseProgramSetting("Id of auto level change clerk","nClerkId");
+
+	//Check we're enabled
+	if(	ICR_GetLocalUserData("bEnabled") == false)
+	{
+		return;
+	}
+
+	//check a valid clerk's been set
+	if(	ICR_GetLocalUserData("nClerkId") == 0)
+	{
+		ICR_MessageBox("Set price level on init - invalid clerk set!");
+		return;
+	}
+
+	local tScheduledChanges = [];	
+	
+	//get the whole schedule
+	for(local nDow = 0; nDow < 7; nDow++)
+	{
+		local tSchedule = ICR_GetPGMData(ICR_FLAGS_FILE_PRICELEVELSCHEDULAR, nDow + 1);
+
+		for(local slot = 1; slot <= 12; slot++)
+		{
+			local nHour = tSchedule["HOUR" + slot];
+			local nMinute = tSchedule["MINUTE" + slot];
+			local nPriceLevel = tSchedule["PRICELEVEL" + slot];			
+			if(nPriceLevel != 0)
+			{
+				if(bDebugPrinting)
+				{
+					print("schedule item: " + nHour + ":" + nMinute + " - " + nPriceLevel);
+				}
+				//convert that into a time in minutes since midnight Sunday
+				local nMinutesSinceStartOfWeek = GetMinutesSinceStartOfWeek(nDow, nHour, nMinute);
+				tScheduledChanges.append({minutes = GetMinutesSinceStartOfWeek(nDow, nHour, nMinute), priceLevel = nPriceLevel});
+			}
+		}
+	}			
+	
+	//if there aren't any items in the schedule then this will be real quick.
+	if(tScheduledChanges.len() <= 0)
+	{
+		return;
+	}
+	
+	//sort the whole schedule - there's no guarantee that they were entered in chronological order for each day
+	tScheduledChanges.sort(function (a,b) {
+	   if(a.minutes > b.minutes) return 1
+	   else if(a.minutes < b.minutes) return -1
+	   return 0;
+	});
+	
+	//what's the time, Mr Squirrel?
+	local tDate = date();
+	local tDateInMinutesSinceSunday = GetMinutesSinceStartOfWeek(tDate.wday, tDate.hour, tDate.min);
+	if(bDebugPrinting)
+	{
+		foreach(index, value in tScheduledChanges)
+		{
+			print("schedule value: " + value.minutes + " : " + value.priceLevel);
+		}	
+		print("now " + tDateInMinutesSinceSunday);
+	}
+	
+	//find the last change before now.
+	local tPriceLevelToSet = null;
+	for(local i = tScheduledChanges.len() - 1; i >= 0; i--)
+	{
+		if(tScheduledChanges[i].minutes <= tDateInMinutesSinceSunday)
+		{
+			//got one!
+			tPriceLevelToSet = tScheduledChanges[i];
+			break;
+		}
+	}
+	
+	if(tPriceLevelToSet == null)
+	{
+		//there's at least one item in the schedule, but it's after now. That means the last one in the list was the last to happen (the last one from last week.)
+		tPriceLevelToSet = tScheduledChanges[tScheduledChanges.len() - 1];
+	}
+
+	if(bDebugPrinting)
+	{
+		print("new level: " + tPriceLevelToSet.priceLevel);
+	}
+	
+	//got it now, just need to set it.
+	
+	//we need to sign in to set the price level - we'll grab our specified clerk
+	local nClerkId = ICR_GetLocalUserData("nClerkId");
+	
+	//sign in as the price level clerk
+	local tKey = CheckForKey("SignonScriptClerk" + nClerkId, ICR_FLAGS_FILE_STATUSKEY, ICR_FLAGS_KEYTYPE_CLERK, 0x0000, nClerkId);
+	ICR_KeyPress(ICR_FLAGS_FILE_STATUSKEY, tKey);
+	
+	//set the price level
+	tKey = CheckForKey("PermPriceLevel" + tPriceLevelToSet.priceLevel, ICR_FLAGS_FILE_STATUSKEY, ICR_FLAGS_KEYTYPE_PRICELEVEL, 0x0000, tPriceLevelToSet.priceLevel);
+	ICR_KeyPress(ICR_FLAGS_FILE_STATUSKEY, tKey);
+	
+	//and sign off again
+	tKey = CheckForKey("SignoffScriptClerk", ICR_FLAGS_FILE_STATUSKEY, ICR_FLAGS_KEYTYPE_SIGNOFF, 0x0000, 0);
+	ICR_KeyPress(ICR_FLAGS_FILE_STATUSKEY, tKey);
+}
+
+function GetMinutesSinceStartOfWeek(nDow, nHour, nMinute)
+{
+	return (nDow * 24 * 60) + (nHour * 60) + nMinute;
+}
+

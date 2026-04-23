@@ -1,0 +1,13 @@
+<WINDOW id="WDW:REG" name="Reg window" left="712" top="59" width="311" height="684">
+	<BACKGROUND image="audit\regwindow_bg_6.bmp"/>
+	<TEXT left="15" top="10" width="282" height="670" highlightbackcolour="FFFFFF">
+		<FONT face="Arial" size="18" align="left" valign="top" colour="FFFFFF" highlightcolour="FF"/>
+	</TEXT>
+	<!-- The EXTINFO box overlays the reg window passing across extra info such as customer loyalty message, weight information -->
+	<!-- Height is omited intentionally as the dialog swells based on how many lines are being displayed -->
+	<EXTINFO left="10" top="10" width="290" bordercolour="FF0000" borderwidth="5">				 
+		<TEXT left="20" top="10" width="250" height="200" highlightbackcolour="FFFFFF">
+			<FONT face="Arial" size="18" align="left" valign="top" colour="FFFFFF" highlightcolour="FF"/>
+		</TEXT>
+	</EXTINFO>
+</WINDOW>

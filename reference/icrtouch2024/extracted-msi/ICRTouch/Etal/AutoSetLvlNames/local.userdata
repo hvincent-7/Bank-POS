@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<USERDATA>
+  <ITEM>
+    <NAME>bScriptEnabled</NAME>
+    <KIND>BOOLEAN</KIND>
+    <VALUE>TRUE</VALUE>
+  </ITEM>
+  <ITEM>
+    <NAME>bForceCap</NAME>
+    <KIND>BOOLEAN</KIND>
+    <VALUE>TRUE</VALUE>
+  </ITEM>
+  <ITEM>
+    <NAME>bDebugPrinting</NAME>
+    <KIND>BOOLEAN</KIND>
+    <VALUE>FALSE</VALUE>
+  </ITEM>
+</USERDATA>

@@ -1,0 +1,33 @@
+Action	Condition	Sequence
+s72	S255	I2
+InstallUISequence	Action
+AppSearch		400
+CCPSearch	CCP_TEST	500
+CostFinalize		1000
+CostInitialize		800
+FileCost		900
+ExecuteAction		1300
+SetupCompleteError		-3
+SetupCompleteSuccess		-1
+SetupInitialization		420
+SetupInterrupted		-2
+SetupProgress		1240
+RMCCPSearch	Not CCP_SUCCESS And CCP_TEST	600
+FindRelatedProducts		430
+LaunchConditions		410
+MigrateFeatureStates		1200
+DLLWrapCleanup	UILevel < 5	1301
+ISInitAllUsers	VersionNT And NOT Installed	575
+DLLWrapStartup		4
+IsolateComponents		950
+ValidateProductID		700
+InstallWelcome	Not Installed And (Not PATCH Or IS_MAJOR_UPGRADE)	1210
+MaintenanceWelcome	Installed And Not RESUME And Not Preselected And Not PATCH	1230
+PatchWelcome	PATCH And Not IS_MAJOR_UPGRADE	1205
+SetupResume	Installed And (RESUME Or Preselected) And Not PATCH	1220
+RegistryCleanup	Installed	1325
+setAllUsersProfile2K	VersionNT >= 500	980
+SetAllUsersProfileNT	VersionNT = 400	970
+setUserProfileNT	VersionNT	960
+ConfigureICRTouch	Not Installed	1350
+ResolveSource	Not Installed And Not PATCH	990

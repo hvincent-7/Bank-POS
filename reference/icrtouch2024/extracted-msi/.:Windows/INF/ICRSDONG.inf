@@ -1,0 +1,76 @@
+; SafeNet Sentinel SuperPro/UltraPro/HardwareKey USB driver INF file 
+; 
+; Copyright (C) 2006 SafeNet, Inc., All rights reserved. 
+ 
+[Version] 
+Signature="$CHICAGO$" 
+Class=USB 
+ClassGuid={36fc9e60-c465-11cf-8056-444553540000} 
+provider=%SafeNet% 
+DriverVer=03/09/2006, 7.3.0.0 
+ 
+[Manufacturer] 
+%SafeNet%=SafeNet 
+ 
+[SafeNet] 
+%USB\VID_04B9&PID_0300.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_0300 
+%USB\VID_04B9&PID_0301.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_0301 
+%USB\VID_04B9&PID_0302.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_0302 
+%USB\VID_04B9&PID_0303.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_0303 
+%USB\VID_04B9&PID_0304.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_0304 
+%USB\VID_04B9&PID_8000.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_8000
+%USB\VID_04B9&PID_8001.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_8001
+%USB\VID_04B9&PID_8002.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_8002
+%USB\VID_04B9&PID_8003.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_8003
+%USB\VID_04B9&PID_8004.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_8004
+%USB\VID_04B9&PID_8005.DeviceDesc%=SNTNLUSB, USB\VID_04B9&PID_8005
+ 
+[SourceDisksNames] 
+1=%DiskName%,,, 
+ 
+[SourceDisksFiles] 
+ 
+[ControlFlags] 
+; All PnP devices should be excluded from manual AddDevice Applet list 
+ExcludeFromSelect.NTx86 = USB\VID_04B9&PID_0300 
+ 
+[DestinationDirs] 
+ 
+[SNTNLUSB.NTx86] 
+CopyFiles=SNTNLUSB.SysCopy 
+ 
+[SNTNLUSB.SysCopy] 
+ 
+[SNTNLUSB.NTx86.Services] 
+Addservice = SNTNLUSB, 0x00000002, SNTNLUSB.AddService 
+ 
+[SNTNLUSB.AddService] 
+DisplayName = %SNTNLUSB.SvcDesc% 
+ServiceType = 1 ; SERVICE_KERNEL_DRIVER 
+StartType = 3 ; SERVICE_DEMAND_START 
+ErrorControl = 1 ; SERVICE_ERROR_NORMAL 
+ServiceBinary = %12%\SNTNLUSB.SYS 
+AddReg = SNTNLUSB.AddReg.NTx86 
+LoadOrderGroup = Base 
+ 
+[SNTNLUSB.AddReg.NTx86] 
+HKR,"Setup","UsbSupport",0x10001,1 
+HKR,"Current","VersionString",,"SSD7.3.0" 
+ 
+[Strings] 
+SafeNet="SafeNet, Inc." 
+DisplayClassName="Software Security Token" 
+USB\VID_04B9&PID_0300.DeviceDesc="ICRTouch UltraPro Dongle" 
+USB\VID_04B9&PID_0301.DeviceDesc="SafeNet USB Security Security Token" 
+USB\VID_04B9&PID_0302.DeviceDesc="SafeNet USB Security Security Token" 
+USB\VID_04B9&PID_0303.DeviceDesc="SafeNet USB Security Security Token" 
+USB\VID_04B9&PID_0304.DeviceDesc="SafeNet USB Security Security Token" 
+USB\VID_04B9&PID_8000.DeviceDesc="SafeNet Sentinel Hardware Key"
+USB\VID_04B9&PID_8001.DeviceDesc="SafeNet Sentinel Hardware Key/T"
+USB\VID_04B9&PID_8002.DeviceDesc="SafeNet Sentinel Hardware Key/M"
+USB\VID_04B9&PID_8003.DeviceDesc="SafeNet Sentinel Hardware Key/MT"
+USB\VID_04B9&PID_8004.DeviceDesc="SafeNet Sentinel Dual Hardware Key"
+USB\VID_04B9&PID_8005.DeviceDesc="SafeNet Sentinel Dual Hardware Key/T"
+SNTNLUSB.SvcDesc="ICRTouch UltraPro Dongle" 
+DiskName="ICRTouch Dongle Driver Installation Disk" 
+ 

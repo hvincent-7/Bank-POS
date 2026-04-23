@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard rows="6" cols="8">
+  <!-- Row 0: Mode + Sign Off -->
+  <row index="0">
+    <button col="0" w="1" h="1" kind="mode"     value="Sales"    caption="SALES"    color="#2ecc71" />
+    <button col="1" w="1" h="1" kind="mode"     value="Training" caption="TRAINING" color="#3498db" />
+    <button col="2" w="1" h="1" kind="mode"     value="Refund"   caption="REFUND"   color="#e67e22" />
+    <button col="3" w="1" h="1" kind="mode"     value="Void"     caption="VOID"     color="#e74c3c" />
+    <button col="4" w="1" h="1" kind="mode"     value="Manager"  caption="MANAGER"  color="#9b59b6" managerOnly="true" />
+    <button col="7" w="1" h="1" kind="function" value="SignOff"  caption="SIGN OFF" color="#7f8c8d" />
+  </row>
+  <!-- Row 1: Drinks -->
+  <row index="1">
+    <button col="0" w="1" h="1" kind="plu" value="LAG-PT"  caption="Lager&#10;Pint"         color="#f39c12" />
+    <button col="1" w="1" h="1" kind="plu" value="ALE-PT"  caption="Ale&#10;Pint"           color="#d35400" />
+    <button col="2" w="1" h="1" kind="plu" value="WINE-GL" caption="Wine&#10;Glass"         color="#8e44ad" />
+    <button col="3" w="1" h="1" kind="plu" value="COKE"    caption="Coke"                  color="#c0392b" />
+  </row>
+  <!-- Row 2: Food -->
+  <row index="2">
+    <button col="0" w="1" h="1" kind="plu" value="BURG"    caption="Burger"                color="#27ae60" />
+    <button col="1" w="1" h="1" kind="plu" value="CHIP"    caption="Chips"                 color="#f1c40f" />
+    <button col="2" w="1" h="1" kind="plu" value="PIZZA"   caption="Pizza"                 color="#e74c3c" />
+  </row>
+  <!-- Row 3-4: empty -->
+  <!-- Row 5: Functions -->
+  <row index="5">
+    <button col="4" w="1" h="1" kind="function" value="Send"     caption="SEND TO&#10;KITCHEN" color="#27ae60" />
+    <button col="5" w="1" h="1" kind="function" value="Park"     caption="PARK"               color="#2980b9" />
+    <button col="6" w="1" h="1" kind="function" value="Resume"   caption="RESUME"             color="#16a085" />
+    <button col="7" w="1" h="1" kind="function" value="Close"    caption="CLOSE"              color="#8e44ad" />
+  </row>
+</keyboard>

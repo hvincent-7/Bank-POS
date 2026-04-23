@@ -1,0 +1,87 @@
+local bDebugPrinting = false;
+
+/************************************************************************
+CheckCheckDigitEAN(szBarcode)
+Check to see whether szBarcode is a valid EAN 8 or 13
+if it's EAN returns true, if it isn't returns false
+************************************************************************/
+function CheckCheckDigitEAN(szBarcode)
+{   
+    local nSum=0;
+    
+    for (local nCount = 1; nCount < szBarcode.len() ; nCount++)
+    {
+        // counting backwards from the right, the weights are 3,1,3,1,etc
+        // for every digit in the barcode except the check digit, multiply it by it's weight and sum them
+        nSum += (nCount % 2) ? (szBarcode[szBarcode.len() - (nCount+1)].tointeger()-48) * 3 : (szBarcode[szBarcode.len() - (nCount+1)].tointeger()-48);
+        if(bDebugPrinting)print("digit at "+nCount+" is "+(szBarcode[szBarcode.len() - (nCount+1)].tointeger()-48)+" nSum is now "+nSum);
+    }
+    // if the check digit + the sum (mod10) is 0 then it's an EAN
+    if (((nSum + (szBarcode[szBarcode.len()-1].tointeger()-48)) % 10) == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+/************************************************************************
+CalculateCheckDigitEAN(szBarcode)
+Work out what check digit needs to be appended to szBarcode for it to be 
+a valid EAN barcode
+************************************************************************/
+function CalculateCheckDigitEAN(szBarcode)
+{   
+    local nSum=0;
+    
+    for (local nCount = 0; nCount <= szBarcode.len() ; nCount++)
+    {
+        // counting backwards from the right, the weights are 3,1,3,1,etc
+        // for every digit in the barcode multiply it by it's weight and sum them
+        nSum += (nCount % 2) ? (szBarcode[szBarcode.len() - (nCount+1)].tointeger()-48) * 3 : (szBarcode[szBarcode.len() - (nCount+1)].tointeger()-48);
+        if(bDebugPrinting)print("digit at "+nCount+" is "+(szBarcode[szBarcode.len() - (nCount+1)].tointeger()-48)+" nSum is now "+nSum);
+    }
+    
+    return nSum % 10;
+}
+
+/************************************************************************
+GetPLUByBarcode(szBarcode)
+look through the PLU for one with a matching barcode
+returns the PLU number that it matched  or null if
+nothing found
+
+---Deprecated--- use ICR_GetPLURecNumber(szBarcode) instead
+************************************************************************/
+function GetPLUByBarcode(szBarcode)
+{
+    // strip leading 0s because Col is mean
+    local bDoneStripping = false;
+    local szStrippedBarcode="";
+    // loop through the characters in the barcode
+    for (local nCount =0;nCount <szBarcode.len(); nCount++)
+    {
+        // if it's not a 0
+        if(szBarcode[nCount] != 48)
+        {   // then we're done stripping 0s
+            bDoneStripping = true;
+        }
+        // if we're done stripping 0s (ie. if this or a previous character is not a 0)
+        if(bDoneStripping)
+        {   // then add it to the stripped barcode
+            szStrippedBarcode += szBarcode[nCount].tochar();
+        }
+    }
+    
+    local tPLU;
+    //loop through the PLU file
+    for (local nCount=1; nCount < ICR_GetFileSize(1); nCount++)
+    {   // grab the plu and see if the random code matches the stripped one we've stored
+        tPLU = ICR_GetPGMData(1,nCount);
+        if (tPLU.RANDOMCODE == szStrippedBarcode)
+        {   // if it does return the plu number
+            return nCount;
+        }
+    }
+    // if none of them matched return null
+    return null;
+ }

@@ -1,0 +1,6 @@
+ISSetupType_	Feature_
+s38	s38
+ISSetupTypeFeatures	ISSetupType_	Feature_
+Typical	AlwaysInstall
+Custom	AlwaysInstall
+Minimal	AlwaysInstall

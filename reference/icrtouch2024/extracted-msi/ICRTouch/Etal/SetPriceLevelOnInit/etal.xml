@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ETAL>
+ <FILE>SetPriceLevelOnInit.moc</FILE>
+ <OUTPUTFILE>output.txt</OUTPUTFILE>
+ <NAME>Set Price Level on Init</NAME>
+ <CREATED>6/2/2013</CREATED>
+ <LASTMODIFIED>7/2/2013</LASTMODIFIED>
+ <MINVERID>5900</MINVERID>
+ <AUTHOR>Ben.Gribble@ICRtouch.com</AUTHOR>
+</ETAL>

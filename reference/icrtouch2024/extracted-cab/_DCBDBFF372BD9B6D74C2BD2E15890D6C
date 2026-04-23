@@ -1,0 +1,1184 @@
+/*
+Normally after reprogramming your till you would have to re-import the external product groups to get the new buttons added to the keyboard onto the Pockettouch program.
+Script emulates the task of going to PGM3 > PLU > External Product Groups > Import External Product Groups.
+ 
+The script can be called on a button (Script Key 569) or on a Timer set in PGM3 Etal. Default Time to check for changes is every 30min but can be changed in PGM3 Etal.
+
+    .1 Better Zero Price Checking.
+       Ignore Zero halo items flag added.
+    .2 Option to Import by Row or Column rather than Keyboard Order.  
+       Level Range Filter. You can now have screens just for PocketTouch.
+	.3 Fixed issue when trying to import list plu from screen that was Programmed to be no list.
+	   Fixed sync ehp not updating last run time.  
+	.4 Fixed Not working when max headers set very low
+*/
+
+
+local bDebugPrinting = false;
+
+// Load libraries
+dofile("etal\\lib\\keys.moc");
+dofile("etal\\lib\\Json.moc"); 
+dofile("etal\\lib\\dates.moc");
+
+
+// Triggers 
+// Once per halfhour if inactive ( clerk logged off ) 
+// EHP 
+// Script Key 569 
+
+const nPGMImportScriptKey = 569;
+local g_nMinTimer = 0;     
+local g_nFileID = 100;
+local g_nMinDelay = 30000; // 60000 = 1 Min
+local g_tLastUpdate = {};
+local szUserDataPrefix = "PGImportOptions";
+const g_szWebPath = "web\\";
+const g_szEHPFile = "pockettouchsync.ehp";
+local cPallete = null;
+
+local tImportOptions = {    Source = 1,
+                            UseAltKeyboardText = false,
+                            IgnoreEmptyDesc    = true,
+                            IgnoreNonSell      = true,
+                            IgnoreZeroPriceHalo= false,
+                            IgnoreWeight       = true,
+                            IgnoreEmptyGrps    = true,
+                            ImportListPLUs     = true,
+                            IgnoreEmptyList    = true,
+                            LogOnJournal       = true,
+                            LoadPallette       = true,
+                            TimeLapseCheck     = 30,
+							SortButtonsMethod  = 0,
+							StartLevel         = 11,
+							EndLevel           = 0
+};
+
+/********************************************************************************************
+function OnInit 
+Called When TouchPoint Starts
+**********************************************************************************************/
+
+function OnInit()
+{
+    ICR_SetLocalUserData("bDebugPrinting",false,true);// turn off lib debug.
+    g_tLastUpdate = date(); g_tLastUpdate.year = 2016; 
+    // Keys
+    local nFoundKey = CheckForKey(ICR_GetLanguageText(4608),53,110,0,0,nPGMImportScriptKey);  
+    if(bDebugPrinting)print("Script key on STS"+nFoundKey);
+    // Create Script data
+    local tSystem = ICR_GetSystemData();
+
+    tImportOptions.PATH <- tSystem.SCRIPTLOCATION;
+    tImportOptions.EndLevel <- ICR_GetFileSize(43); // Default End Level is last level.
+    WriteUserDataFromTable(tImportOptions,true,szUserDataPrefix); // Create userdata if does not exist 
+	// Script write settings to global user data for Pocktouchsync which is seperate script.
+    WriteGlobalUserDataFromTable(tImportOptions,true,szUserDataPrefix); // Create globaldata if does not exist 
+    
+    // Pretend we left PGM where we load settings
+    AfterModeChange(10 , 0);
+    
+    // Date store for ehp
+    ICR_SetGlobalUserData("PocketTouchSync_tLastUpdate",JSONSerialise(g_tLastUpdate),true); 
+    // Ehp File. Move ehp file to web folder if its in our folder
+    local szEHPFileName = tImportOptions.PATH + g_szEHPFile;
+    ICR_AwaitFile(szEHPFileName, 1, g_nFileID);
+}
+
+function OnAwaitFile(szFileName, nEventID, bExpired)
+{
+    if(nEventID != g_nFileID)return;
+    
+    if(bExpired)
+    {
+        // EHP file not in script folder. 
+    }
+    else 
+    {
+        // EHP file in script folder. This needs to go in the web folder.
+        print("moving ehp file to "+g_szWebPath +"\\"+ g_szEHPFile);
+        // make folder incase is does not exist.
+        local szMAKECMD = "mkdir "+g_szWebPath;
+        system(szMAKECMD);
+        // testing we need to waste a few milli seconds waiting for the disk. 
+        ICR_SetLocalUserData("bDebugPrinting",false);
+        // copy to web folder.
+        local szCOPYCMD = "copy ";
+        szCOPYCMD += ".\\"+ tImportOptions.PATH +"\\"+ g_szEHPFile;
+        szCOPYCMD += " ";
+        szCOPYCMD += g_szWebPath +"\\"+ g_szEHPFile;
+        szCOPYCMD += " /Y";
+        system(szCOPYCMD);
+        // ehp does not need to be in main script folder.
+        local szDELCMD = "del ";
+        szDELCMD += ".\\"+ tImportOptions.PATH +"\\"+ g_szEHPFile;
+        szDELCMD += " /F /Q";
+        system(szDELCMD);
+    }
+}
+
+
+/********************************************************************************************
+function AfterModeChange(nFrom , nTo)
+Called When we go to from modes
+**********************************************************************************************/
+
+function AfterModeChange(nFrom , nTo)
+{
+    if(nTo == 1) // Going to Sales Mode
+    {
+        // Start idle checking timer. 
+        if(g_nMinTimer)ICR_StopTimer(g_nMinTimer)
+        if(IAmTheMaster())g_nMinTimer = ICR_StartTimer(g_nMinDelay);
+    }
+    if(nFrom == 1) // Left Sales Mode
+    {
+        // Stop idle checking timer. 
+        if(g_nMinTimer)ICR_StopTimer(g_nMinTimer)
+        g_nMinTimer = 0;
+    }
+    
+    if(nFrom == 10) // Left PGM3
+    {
+        if(bDebugPrinting)print("Update Settings");
+        tImportOptions = WriteTableFromUserdata(tImportOptions,szUserDataPrefix);
+		// Stupid Check 
+		if(tImportOptions.StartLevel > tImportOptions.EndLevel)tImportOptions.EndLevel = tImportOptions.StartLevel;
+        WriteGlobalUserDataFromTable(tImportOptions,false,szUserDataPrefix); // update global for ehp  
+    }
+    
+    if(nFrom == 11) // Left PGM4
+    {
+        if(bDebugPrinting)print("Left PGM4");
+        // Update Ext Prodgrps
+        StartUpdateExtProductGroups();
+    }
+}
+
+/******************************************************************
+OnEnterPGMMenu
+called when the user goes to our program menus
+******************************************************************/
+
+function OnEnterPGMMenu(nSub)
+{
+    local nID = 0;
+    ICR_PurgeProgramSettings();
+    if(bDebugPrinting)print("PGMMenu"+nSub);
+    switch(nSub)
+    {
+    case 0:
+        // main menu
+        ICR_AdvertiseProgramSetting("Use Alt Keyboard Text ?",szUserDataPrefix +"UseAltKeyboardText");
+        ICR_AdvertiseProgramSetting("Ignore Empty List PLUs ?",szUserDataPrefix + "IgnoreEmptyList");
+        ICR_AdvertiseProgramSetting("Ignore Non Sell Items ?",szUserDataPrefix +"IgnoreNonSell");
+        ICR_AdvertiseProgramSetting("Import List PLUs ?",szUserDataPrefix +"ImportListPLUs");
+        ICR_AdvertiseProgramSetting("Ignore Weight PLUs ?",szUserDataPrefix +"IgnoreWeight");
+        ICR_AdvertiseProgramSetting("Ignore Empty PLU Descriptions ?",szUserDataPrefix +"IgnoreEmptyDesc");
+        ICR_AdvertiseProgramSetting("Ignore Non Priced HALOs ?",szUserDataPrefix+ "IgnoreZeroPriceHalo");
+		nID = ICR_AdvertiseProgramSetting("Keyboard Sort Method",szUserDataPrefix+ "SortButtonsMethod"); 
+		ICR_ProgramItem_SetOptionList(nID,101); // Load Sorting type drop down 
+	    nID = ICR_AdvertiseProgramSetting("Only Import From Level",szUserDataPrefix+ "StartLevel");
+		ICR_ProgramItem_SetOptionList(nID,43);
+		nID = ICR_AdvertiseProgramSetting("Only Import To Level",szUserDataPrefix+ "EndLevel");
+		ICR_ProgramItem_SetOptionList(nID,43);
+		ICR_AdvertiseProgramSetting("Use Colours from palette.bmp, NO = No change?",szUserDataPrefix +"LoadPallette");
+        nID = ICR_AdvertiseProgramSetting("Duration between Check for Changes",szUserDataPrefix +"TimeLapseCheck");
+        ICR_ProgramItem_SetAltType(nID, 20); // Set Time Type on prev option
+        break;
+    default:
+        // Does not exist 
+        
+        break;
+    }
+}
+        
+		
+function OnEnterPGMOptionList(nID)
+{
+    // get rid of the last list
+    ICR_PurgeProgramOptionList();
+    switch(nID)
+    {
+	case 101: //SORT METHOD
+		ICR_ProgramOptionList_Add("Use Keyboard Order",0);
+		ICR_ProgramOptionList_Add("Force Sort by Rows",1);
+		ICR_ProgramOptionList_Add("Force Sort by Columns",2);
+		break;
+    case 43: // Pgm menu for keyboard levels
+        local nLevels = ICR_GetFileSize(43);
+        for (local nCount = 11; nCount <= nLevels; nCount++)
+        {
+            local tThisLevelName = ICR_GetPGMData(43,nCount);
+            ICR_ProgramOptionList_Add(tThisLevelName.TEXT, nCount);
+        }
+        break;
+    }
+}
+
+function StartUpdateExtProductGroups()
+{
+    // The update process was going to use timer to split the update process in the managable chucks 
+    // but binned iT  when it got fast enough not to be noticable.
+    UpdateExtProductGrpsFromKeyBoard();
+}
+
+function UpdateExtProductGrpsFromKeyBoard()
+{
+    // After Experienting with different models. The fastest way to found is do the workings on the table. then write.  
+    local g_tProcess = {};g_tProcess.clear(); // { KEY = { [nRecord] = tKey ... } , PLU = {[nRecord] = tPLU ... } , LPLU = {[nRecord] = tLISTPLU ...  } etc};
+    // load palette bitmap handler
+    if(cPallete == null)cPallete = bitmapfilehandler("PALLETTE.BMP");
+
+    // See how long read all the stuff takes.
+    //local tDateStart = date(); 
+    //if(bDebugPrinting)printtable(tDateStart);
+    
+    //List of files we interested in. We grab all of these.
+    local tFILE = { KEYS          = 74,
+                    LISTPLU       = 10,
+                    PRODUCTHEADER = 80,
+                    PRODUCTITEMS  = 81,
+    }
+    //Get all the FILESIZES we are interested in	
+    foreach(szFileName,nFile in tFILE)
+    {
+        g_tProcess[szFileName] <- {};
+        g_tProcess[szFileName+"MAX"] <- ICR_GetFileSize(nFile)
+        for(local nCount = 1 ; nCount <= g_tProcess[szFileName+"MAX"] ; nCount++)
+        {
+            g_tProcess[szFileName][nCount] <- ICR_GetPGMData(nFile,nCount);
+        }
+    }
+    // The other Files we grab on the fly. speeds it up not grabbing everything.
+    tFILE.PLU <- 1;
+    g_tProcess.PLU <- {};
+    tFILE.STATUS <- 53;
+    g_tProcess.STATUS <- {};
+    tFILE.LEVEL <- 43; 
+
+    // How long did reading it all take ?
+    //local tDateFinished = date(); 
+    //if(bDebugPrinting)printtable(tDateFinished);
+    
+    if(bDebugPrinting)print("*OLD*");
+    if(bDebugPrinting)printtable(g_tProcess.PRODUCTHEADER);
+    if(bDebugPrinting)printtable(g_tProcess.PRODUCTITEMS);
+	// Use a Sum to check if things have changed.
+    local nSumBefore = SumTableByIndex(g_tProcess.PRODUCTITEMS,"BACKCOLOUR");
+    nSumBefore = nSumBefore.tostring();
+    nSumBefore += SumTableByIndex(g_tProcess.PRODUCTITEMS,"ITEMRECORD");
+    
+    // Clean Previous PG dATA
+    for(local nCount = 1 ; nCount <= g_tProcess["PRODUCTHEADERMAX"] ; nCount++)
+    {
+        g_tProcess["PRODUCTHEADER"][nCount]["TEXT"] = "";
+    }
+    // Clean Previous PG Items
+    for(local nCount = 1 ; nCount <= g_tProcess["PRODUCTITEMSMAX"] ; nCount++)
+    {
+        g_tProcess["PRODUCTITEMS"][nCount]["ITEMRECORD"] = 0;
+        g_tProcess["PRODUCTITEMS"][nCount]["GROUPNUMBER"] = 0;
+    }
+	// Load Filters
+	local nStart = (tImportOptions.StartLevel - 1) * 200;
+	local nEnd = (tImportOptions.EndLevel ) * 200;
+	local nLevel = 1;
+	local tSystem = ICR_GetSystemData();
+
+	// Are we Resorting the buttons by ROW COL ?
+	if(tImportOptions.SortButtonsMethod != 0)
+	{
+		// Adjust weight calc to favour rows or cols
+		local nLWeight = 1; local nTWeight = 1;
+		switch(tImportOptions.SortButtonsMethod)
+		{
+		case 0://Button order. Do nothing
+			break;	
+		case 1: // By Row
+			nTWeight = tSystem.YRES;
+			break;
+		case 2: // By Col
+			nLWeight = tSystem.XRES;
+			break;
+		}
+		// Do the sorting
+		if(bDebugPrinting)print("-- Resorting KeyBoard method "+tImportOptions.SortButtonsMethod);
+		for(local nKeyBoard = nStart ; (nKeyBoard < nEnd) && (nLevel <= g_tProcess.PRODUCTHEADERMAX) ; nKeyBoard = (nKeyBoard+200) )
+		{
+			 local nLevel = (nKeyBoard / 200)+1; 
+			 if(bDebugPrinting)print("Level "+nLevel+ " Keys "+ nKeyBoard+"~"+(nKeyBoard+199) );
+			 local tThisLevel = {};
+			 // Read out this level into own table to be sorted.
+			 for(local nKeyRecord = nKeyBoard ; nKeyRecord <= (nKeyBoard + 199)  ; nKeyRecord++ )
+			 {
+			      tThisLevel[nKeyRecord] <- g_tProcess["KEYS"][nKeyRecord];
+				  tThisLevel[nKeyRecord].WEIGHT <- ((tThisLevel[nKeyRecord].LEFT * nLWeight) + (tThisLevel[nKeyRecord].TOP * nTWeight ))
+			 }
+			 if(bDebugPrinting)print("UnSorted Level "+nLevel);
+			 if(bDebugPrinting)print(tThisLevel);
+			 // Sort the table 
+			 tThisLevel = QSortTable(tThisLevel,"WEIGHT",nKeyBoard , (nKeyBoard + 199) );
+			 // Put back sorted keys back.
+			 for(local nKeyRecord = nKeyBoard ; nKeyRecord <= (nKeyBoard + 199)  ; nKeyRecord++ )
+			 {
+				  g_tProcess["KEYS"][nKeyRecord] <- tThisLevel[nKeyRecord];
+			 }
+			 if(bDebugPrinting)print("Sorted Level "+nLevel);
+			 if(bDebugPrinting)print(tThisLevel);
+			 if(bDebugPrinting)print("--------------------------------");		 
+		}
+		if(bDebugPrinting)print("-- Sorting done");
+		nLevel = 1;
+	}// Finished sorting
+
+    //New PGM Container 
+    local tNewProductGroupsIndex = {}; // = { [nLevel ] = [nPG] };
+    local nPGICount = 1;
+    // run through the keys and populate our new external program.
+    for(local nKeyRecord = nStart ; (nKeyRecord <= nEnd) && (tNewProductGroupsIndex.len() <= g_tProcess.PRODUCTHEADERMAX) ; nKeyRecord++ )
+    {
+        nLevel = (nKeyRecord / 200)+1; 
+		if(bDebugPrinting)print("Looking at KeyRecord "+nKeyRecord + " of "+nEnd+" Level "+nLevel+ " Max header "+g_tProcess.PRODUCTHEADERMAX+ " Foundheaders "+tNewProductGroupsIndex.len());
+		// Is Key Something we can use in PocketTouch ?
+        if((g_tProcess["KEYS"][nKeyRecord]["ITEMFILE"] != tFILE.PLU) && (g_tProcess["KEYS"][nKeyRecord]["ITEMFILE"] != tFILE.STATUS ))
+        {
+			//Not sometihng we interested in.
+            continue;
+        }
+        if(g_tProcess["KEYS"][nKeyRecord]["ITEMRECORD"] == 0 )continue; //NOFUNC
+        // Refer to Key ITEMRECORD as nRecord for shorter code below.
+        
+        if(bDebugPrinting)printtable(g_tProcess["KEYS"][nKeyRecord]);
+
+        local nRecord = g_tProcess["KEYS"][nKeyRecord]["ITEMRECORD"]; // nRecord rather than g_tProcess["KEYS"][nKeyRecord]["ITEMRECORD"] Makes the following far more readable :)
+        local tNewProductItem = {OVERRIDETEXT="", GROUPNUMBER=0 , TEXTCOLOUR=0 , FLAG=0 , ITEMRECORD=0 , TYPE=0 , BACKCOLOUR=0 };
+
+        if(g_tProcess["KEYS"][nKeyRecord]["ITEMFILE"] == tFILE.PLU ) 
+        {
+            
+			//PLU. Have we got this PGM Data ?
+            if(!(nRecord in g_tProcess.PLU))
+            {
+                g_tProcess["PLU"][nRecord] <- ICR_GetPGMData(tFILE.PLU, nRecord);
+            }
+            // Ignore Empty Desc
+            if(tImportOptions.IgnoreEmptyDesc)
+            {
+                if(g_tProcess["PLU"][nRecord]["NAME"] == "")continue; // ignoring blank name
+            }
+			// Ignore things you cannot sell
+            if(tImportOptions.IgnoreNonSell)
+            {
+                if(( !(g_tProcess["PLU"][nRecord]["FLAG2"] & 0x0001) )&&(g_tProcess["PLU"][nRecord]["PRICE1L1"] == 0) && (g_tProcess["PLU"][nRecord]["HALO"] == 0) )continue; // ignoring zero price
+            }
+            if(tImportOptions.IgnoreZeroPriceHalo)
+            {
+                if( (g_tProcess["PLU"][nRecord]["PRICE1L1"] == 0) && (g_tProcess["PLU"][nRecord]["HALO"] > 0) )continue;
+            }
+            // You cannot connect a scale to pockettouch so we are probably ignoring the weight.
+            if(tImportOptions.IgnoreWeight)
+            {
+                if( g_tProcess["PLU"][nRecord]["FLAG2"] & 0x0020 )continue; // skip weight plu
+            }
+            if(bDebugPrinting)print("Interested in KEY "+nKeyRecord);
+
+            if(bDebugPrinting)print("using PLU "+nRecord);
+            if(bDebugPrinting)printtable(g_tProcess["PLU"][nRecord]);
+            tNewProductItem.ITEMRECORD  = nRecord;
+            tNewProductItem.TYPE= 0;
+            tNewProductItem.FLAG= 0; // TODO: Worry about what this flag does on PLUs?
+        }
+        // If the key is a Status key ?
+        if(g_tProcess["KEYS"][nKeyRecord]["ITEMFILE"] == tFILE.STATUS )
+        {
+            // If we not importing List PLU then we can ignore all the status keys.
+			if(!tImportOptions.ImportListPLUs)continue;
+            nRecord++; // Oddly STS Record number on the key are one out from record number so on this bit +1 ?
+            if(!(nRecord in g_tProcess["STATUS"]))
+            {
+                g_tProcess["STATUS"][nRecord] <- ICR_GetPGMData(53,nRecord);
+            }
+            if(bDebugPrinting)printtable(g_tProcess["STATUS"][nRecord]); 
+			
+			if(g_tProcess["STATUS"][nRecord]["KEYTYPE"] != 96)continue; // This STS not ListPLU																		   
+			// Sometimes they put a list plu on the keyboard not linked to anything
+			if(g_tProcess["STATUS"][nRecord]["VALUE"] == 0)continue; // This List key is set to to list none
+			
+            // Check we have plus in the list
+			if(PluListEmpty(g_tProcess["LISTPLU"][g_tProcess["STATUS"][nRecord]["VALUE"]]))continue; // This list empty
+            if(bDebugPrinting)print("Interested in KEY "+nKeyRecord+" STS "+ (nRecord) +" LIST "+g_tProcess["STATUS"][nRecord]["VALUE"]);
+            
+            tNewProductItem.ITEMRECORD = g_tProcess["STATUS"][nRecord]["VALUE"];
+            tNewProductItem.TYPE = 1;
+            tNewProductItem.FLAG = g_tProcess["STATUS"][nRecord]["FLAG"];
+        }
+        
+        // We want this plu or list. Have we populated Product header for this level ?
+        if(!(nLevel in tNewProductGroupsIndex))
+        {
+            if(bDebugPrinting)print("New PG "+(tNewProductGroupsIndex.len()+1)+ " for lvl "+nLevel);
+            tNewProductGroupsIndex[nLevel] <- tNewProductGroupsIndex.len()+1;   
+            local tThisLevel = ICR_GetPGMData(43,nLevel);           
+            g_tProcess["PRODUCTHEADER"][tNewProductGroupsIndex[nLevel]]["TEXT"] = tThisLevel.TEXT;
+        }
+        else
+        {
+            if(bDebugPrinting)print("Exists PG"+ tNewProductGroupsIndex[nLevel]+" lvl "+nLevel  );
+            
+        }
+        
+        // Populate PGItem Record Data from key
+        if(tImportOptions.UseAltKeyboardText)
+        {
+            tNewProductItem.OVERRIDETEXT = g_tProcess["KEYS"][nKeyRecord]["TEXT"];
+        }
+        else
+        {
+            tNewProductItem.OVERRIDETEXT = ""; // This pgm Clear if flag not set.
+        }
+        
+        tNewProductItem.GROUPNUMBER = tNewProductGroupsIndex[nLevel];
+        // Did script read the PALLETTE.BMP?
+        if((cPallete.LoadedOkay()) && ( tImportOptions.LoadPallette))
+        {
+            // The Colour on the key is a reference to index in the PALLETTE.BMP
+			if(bDebugPrinting)print("Using pallete Colour");
+            tNewProductItem.TEXTCOLOUR = cPallete.IndexColour( g_tProcess["KEYS"][nKeyRecord].TEXTCOLOUR );
+            tNewProductItem.BACKCOLOUR = cPallete.IndexColour( g_tProcess["KEYS"][nKeyRecord].FILLCOLOUR );
+        }
+        else 
+        {
+            // No Palette ~ Instead Use the old colour.
+			if(bDebugPrinting)print("Using existing Colour");
+            tNewProductItem.TEXTCOLOUR = g_tProcess["PRODUCTITEMS"][nPGICount].TEXTCOLOUR;
+            tNewProductItem.BACKCOLOUR = g_tProcess["PRODUCTITEMS"][nPGICount].BACKCOLOUR;
+        }
+        
+        // Stupid check Is Text colour and bg colour the same ?
+        if(tNewProductItem.TEXTCOLOUR == tNewProductItem.BACKCOLOUR)
+        {
+            // If they they same. Usually because the both zero we popuate colour from the header.
+            if(bDebugPrinting)print("Correct using PGH Colour");
+            tNewProductItem.TEXTCOLOUR = g_tProcess["PRODUCTHEADER"][tNewProductGroupsIndex[nLevel]]["TEXTCOLOUR"];
+            tNewProductItem.BACKCOLOUR = g_tProcess["PRODUCTHEADER"][tNewProductGroupsIndex[nLevel]]["BACKCOLOUR"];
+            // Still Same ? Go white and dark grey
+            if(tNewProductItem.TEXTCOLOUR == tNewProductItem.BACKCOLOUR)
+            {
+                if(bDebugPrinting)print("Correct Using Grey + white");
+                tNewProductItem.TEXTCOLOUR = 0xFFFFFF;
+                tNewProductItem.BACKCOLOUR = 0x444444;
+            }
+        }
+        
+        // Now put it somewhere.
+        if(bDebugPrinting)print("Store PGITEM "+nPGICount+" from key "+ nKeyRecord);
+        if(bDebugPrinting)printtable(tNewProductItem);
+        //tNewProductItems[tNewProductGroupsIndex[nLevel]][tNewProductItems[tNewProductGroupsIndex[nLevel]].len()+1] <- tNewProductItem;
+        g_tProcess["PRODUCTITEMS"][nPGICount] = tNewProductItem;
+        nPGICount++;
+    }
+	// Finished 
+    if(bDebugPrinting)print("*NEW*");
+    if(bDebugPrinting)printtable(g_tProcess["PRODUCTHEADER"]);
+    if(bDebugPrinting)printtable(g_tProcess["PRODUCTITEMS"]);
+    // Work Out if anything actually changed ?
+    local nSumAfter = SumTableByIndex(g_tProcess.PRODUCTITEMS,"BACKCOLOUR"); 
+    nSumAfter = nSumAfter.tostring();
+    nSumAfter += SumTableByIndex(g_tProcess.PRODUCTITEMS,"ITEMRECORD");
+    
+    if(bDebugPrinting)print("Sum before "+nSumBefore + " after "+nSumAfter);
+    
+    if(nSumBefore == nSumAfter)
+    {
+        if(bDebugPrinting)print("Nothing Changed");
+        //return;
+    }
+    // Log this?
+    if(tImportOptions.LogOnJournal)
+    {
+        // Journal **Import Product Groups
+        local szLine = "**"+ICR_GetLanguageText(4608);
+        // nPGICount - 1 + tNewProductGroupsIndex.len() 
+        ICR_JournalLine(szLine, 0, 0, 53, nPGMImportScriptKey, 0);  //Lang 4608 =Import Product Groups
+    }
+    // Run though our new Headers Items pgm write it all back. 
+	if(bDebugPrinting)print("Saving PG Headers");
+    for(local nCount = 1 ;nCount < g_tProcess.PRODUCTHEADERMAX ; nCount++)
+    {
+		//if(bDebugPrinting)print("Saving F");
+        ICR_SetPGMData( tFILE.PRODUCTHEADER , nCount ,g_tProcess["PRODUCTHEADER"][nCount] );
+    }
+    if(bDebugPrinting)print("Saving PG Items");
+    for(local nCount = 1 ;nCount < g_tProcess.PRODUCTITEMSMAX ; nCount++)
+    {
+        ICR_SetPGMData( tFILE.PRODUCTITEMS , nCount ,g_tProcess["PRODUCTITEMS"][nCount] );
+    }
+    
+    // Update Last update
+    g_tLastUpdate = date();
+    ICR_SetGlobalUserData("PocketTouchSync_tLastUpdate",JSONSerialise(g_tLastUpdate));  
+}
+
+/*************************************************************************
+SumTableByIndex - add sum of all matching indexs - recursive
+**************************************************************************/
+function SumTableByIndex(tTable,szIDX)
+{
+    local nSum = 0
+    foreach( idx , val in tTable)
+    {
+        if((typeof val == "table")||(typeof val == "array"))  
+        {
+            nSum +=  SumTableByIndex(val,szIDX);
+        }
+        else
+        {
+            if(idx == szIDX)nSum += val;
+        }
+    }
+    return nSum;
+}
+
+
+/*********************************************************************************************
+* PluListEmpty 
+* Returns true if all the plu link in the list are 0. false if it has PLUs
+*********************************************************************************************/
+
+function PluListEmpty(tPLULIST)
+{
+    if(bDebugPrinting)print("Checking Empty on List "+tPLULIST.NAME);
+    //Determines if a ListPLU is Empty
+    for(local nCount = 1 ; nCount <= 50 ; nCount++ )
+    {
+        if(tPLULIST["ITEM"+nCount] != 0 )
+        {
+            if(bDebugPrinting)print("List Not Empty");
+            return false;
+        }
+    }
+    if(bDebugPrinting)print("List Empty")
+    return true;
+}
+
+/*********************************************************************************************
+* OnTimer
+* Envoked when a Timer occurs
+*********************************************************************************************/
+
+function OnTimer(nTimerID, nSystemTime)
+{
+    // Is it Our Minute Timer ?
+    if(nTimerID == g_nMinTimer)
+    {
+        if(bDebugPrinting)print("MinTimerOccured");
+        // Min Timer Occurred.
+        ICR_StopTimer(g_nMinTimer);
+        g_nMinTimer = 0
+        // Is Pos Busy ?
+        local tSystem = ICR_GetSystemData();
+        if(tSystem.CURRENTCLERK != 0)
+        {
+            // Till is Busy Try later.
+            g_nMinTimer = ICR_StartTimer(g_nMinDelay);
+            return;
+        }
+    
+        //Check if Hour has lapsed since last update.
+        local tDateNow = date();
+        local tTimeLapse = GetDateDiff( g_tLastUpdate ,tDateNow);
+        local nTimeLapse = tTimeLapse.min + (tTimeLapse.hour * 100) + (tTimeLapse.day * 10000) // DDHHMM 
+		if(tImportOptions.TimeLapseCheck < 5)tImportOptions.TimeLapseCheck = 5; // Enforce 5 min minimum 
+        if(bDebugPrinting)print("nTimeLapse"+nTimeLapse+ "  TimeLapseCheck"+tImportOptions.TimeLapseCheck);
+        if( nTimeLapse >= tImportOptions.TimeLapseCheck )
+        {
+            // Over Set time passed. Lets reimport. maybe some new stuff came from web.
+            if(bDebugPrinting)print("Doing Timed update check");
+            UpdateExtProductGrpsFromKeyBoard();
+            // Refresh last update.
+            g_tLastUpdate = date();
+        }
+        
+        //Restart Timer 
+        g_nMinTimer = ICR_StartTimer(g_nMinDelay);
+        return;
+    }
+}
+
+/************************************************************************************************************
+* function OnRunScriptKeyPress(nFile, nRecord, nNumber, nValue, nFlag)
+* Occurs when a script key is pressed.
+**************************************************************************************************************/
+
+function OnRunScriptKeyPress(nFile, nRecord, nNumber, nValue, nFlag)
+{
+    // Is it our script key ?
+    if(nNumber == nPGMImportScriptKey)
+    {
+        local tSystem = ICR_GetSystemData();
+        if(tSystem.CURRENTCLERK == 0)
+        {
+            ICR_Error(1); // Err Please Sign On
+            return;
+        }
+        if(bDebugPrinting)print("Script Key Pressed");
+        // Do Update
+        if(IAmTheMaster())UpdateExtProductGrpsFromKeyBoard();
+    }
+}
+
+
+
+/*********************************************************************************************
+* PocketTouchSync()
+* This function is called by pockettouchsync.ehp
+*********************************************************************************************/
+
+function PocketTouchSync()
+{
+    // Sync called from PocketTouch EHP
+    local tResponse = {}; // We will send a table of json back.
+    local tDateNow = date();
+    local tSystem = ICR_GetSystemData();
+    if(tSystem.VERSIONID < 6700)return; //too old for pt sync
+    
+	if(!IAmTheMaster())
+	{
+		tResponse.STATUS <- "NOT MASTER";
+		ICR_EHP_Output(JSONSerialise(tResponse) );
+	}
+	
+    // Check we not already updated recently. Incase they spam button to try slow up or crash till.
+    local szLastDate = ICR_GetGlobalUserData("PocketTouchSync_tLastUpdate");
+    local tLastUpdate = JSONDeSerialise(szLastDate);
+    if(bDebugPrinting)printtable(tDateNow);
+    if(bDebugPrinting)printtable(tLastUpdate);
+    if((tDateNow.hour == tLastUpdate.hour) && ( tDateNow.min == tLastUpdate.min ))
+    {
+        tResponse.LASTUPDATE <- tLastUpdate;
+        tResponse.STATUS <- "DONE";
+        if(bDebugPrinting)print("RECENTLY DONE");
+        ICR_EHP_Output(JSONSerialise(tResponse) );
+        return;
+    }
+	// If someone logged on doing stuff dont do update.
+    if(tSystem.CURRENTCLERK != 0)
+    {
+        tResponse.LASTUPDATE <- tLastUpdate;
+        tResponse.STATUS <- "BUSY";
+        if(bDebugPrinting)print("BUSY");
+        ICR_EHP_Output(JSONSerialise(tResponse) );
+        return;
+    }
+    // Do update
+    if(bDebugPrinting)print("PocketTouch Called Update");
+    tImportOptions = WriteTableFromGlobalUserdata(tImportOptions,szUserDataPrefix);
+    UpdateExtProductGrpsFromKeyBoard();
+    if(bDebugPrinting)print("DONE");
+    tResponse.STATUS <- "DONE";
+	// update last done
+    tResponse.LASTUPDATE <- tDateNow;
+    ICR_EHP_Output(JSONSerialise(tResponse) );
+	ICR_SetGlobalUserData("PocketTouchSync_tLastUpdate",JSONSerialise(tDateNow) );
+}
+
+/*********************************************************************************************
+* IAmTheMaster()
+* is this till the master ? return true if yes or false if no.
+*********************************************************************************************/
+
+function IAmTheMaster()
+{
+    local tSystemConfig = ICR_GetPGMData(302,1); // = TERMINALID:0 | CONFIGURATION:0 | TERMINALNAME: | ERRORSTATUS:0 | LOCATION:0
+    if(tSystemConfig.FLAG & 0x00000004) //This machine check tracking master flag is yes
+    {
+        if(bDebugPrinting)print("I am the CheckMaster");
+        return true;
+    }
+    else
+    {
+        if(bDebugPrinting)print("I am NOT the CheckMaster");
+        return false;
+    }
+}
+
+/******************************************************************************************
+* WriteUserDataFromTable WriteTableFromUserdata 
+* Lazy way do handle userdata So we dont have to write a long stream of Get/Set userdata 
+******************************************************************************************/
+
+function WriteUserDataFromTable( tTable , bCreate = false , szPrefix = "")
+{
+    foreach( idx , val in tTable)
+    {
+        if(typeof val == "table")
+        {
+            WriteUserDataFromTable(val , bCreate , szPrefix+idx );
+        }
+        else
+        {
+            if(bDebugPrinting)print("WRITE "+szPrefix+idx + ":"+val );
+            ICR_SetLocalUserData(szPrefix+idx, val , bCreate);
+        }
+    }
+}
+
+function WriteTableFromUserdata( tTable , szPrefix = "" )
+{
+    local tData = {};
+    foreach( idx , val in tTable)
+    {
+        if((typeof val == "table") || (typeof val == "array"))
+        {
+            tData[idx] <- WriteTableFromUserdata( val , szPrefix+idx );
+        }
+        else
+        {
+            tData[idx] <- ICR_GetLocalUserData(szPrefix+idx);
+            if(bDebugPrinting)print("READ "+szPrefix+idx + ":" + tData[idx] );
+        }
+    }
+    return tData;
+}
+
+
+/******************************************************************************************************
+* WriteGlobalUserDataFromTable WriteTableFromGlobalUserdata ~ Using global so EHP can see same settings.
+* Lazy way do handle userdata So we dont have to write a long stream of Get/Set userdata 
+*******************************************************************************************************/
+
+function WriteGlobalUserDataFromTable( tTable , bCreate = false , szPrefix = "")
+{
+    foreach( idx , val in tTable)
+    {
+        if(typeof val == "table")
+        {
+            WriteUserDataFromTable(val , bCreate , szPrefix+idx );
+        }
+        else
+        {
+            if(bDebugPrinting)print("WRITE "+szPrefix+idx + ":"+val );
+            ICR_SetGlobalUserData(szPrefix+idx, val , bCreate);
+        }
+    }
+}
+
+function WriteTableFromGlobalUserdata( tTable , szPrefix = "" )
+{
+    local tData = {};
+    foreach( idx , val in tTable)
+    {
+        if((typeof val == "table") || (typeof val == "array"))
+        {
+            tData[idx] <- WriteTableFromUserdata( val , szPrefix+idx );
+        }
+        else
+        {
+            tData[idx] <- ICR_GetGlobalUserData(szPrefix+idx);
+            if(bDebugPrinting)print("READ "+szPrefix+idx + ":" + tData[idx] );
+        }
+    }
+    return tData;
+}
+
+
+function printtable(tData, szPrefix = "" , szSuffix = "")
+{
+    local sztable = "";
+    if (tData == null)
+    {
+        print ("Null table");
+        return;
+    }
+    if (!((typeof tData == "table") || (typeof tData == "array")))
+    {
+        print ("ERR not a table or array "+tData);
+        return;
+    }
+    foreach(idx,val in tData)
+    {
+        if ((typeof val == "table") || (typeof val == "array"))
+        {
+            printtable(val, idx+"{" , "}" );
+        }
+        else
+        {
+            sztable += (  idx +":"+ val +"|");
+        }
+    }
+    sztable += "\n";
+    print (szPrefix +  sztable);
+}
+
+/****************************************************************************
+QSortTable - Does what it says on the tin, sorts a table
+indices start from 0 and they go up to tThisTable.len() - 1
+SubFunctions tableswap(table,a,b)
+*****************************************************************************/
+
+function QSortTable (tThisTable, szSortBy, left = null, right = null)
+{	
+    if(bDebugPrinting)print("Sorting, left:"+left+" right:"+right+" length is "+tThisTable.len());
+    if (tThisTable == null)
+    {
+        // we don't need to do anything :)
+        return tThisTable
+    }
+    if(tThisTable.len() <= 1)
+    {
+        // already sorted then if it's only got one thing in it
+        return tThisTable;
+    }
+    // if left and right values weren't passed (ie. we didn't call ourselves) set them to sensible values
+    if (left == null)
+        left = 0;
+    if (right == null)
+        right = tThisTable.len() - 1;
+    if (left < right)
+	{
+        local i = left + 1 ; //(First slot will hold pivot.)
+        local j = right;
+        local pivot =  left + ((right-left) >> 1); 
+        if(bDebugPrinting)print("left: "+left+" pivot: "+pivot+" right: "+right);
+
+            tableswap(tThisTable,left,pivot);
+
+                
+        while (i < j) 
+		{         
+		    while ((i <= right) && (tThisTable[i][szSortBy] < tThisTable[left][szSortBy])) 
+			{
+                /* Leave the parts on the left of pivot in place if
+                   they are smaller than the pivot. */
+				i++;  //Move up
+            }
+			while ((j > left) && (tThisTable[j][szSortBy] >= tThisTable[left][szSortBy])) 
+			{
+                /* Leave the parts on the right of pivot in place if
+                   they are greater or the same as the pivot. */
+				j--;  //Move down
+            }
+			
+            if (i < j) // If the indexs havn't crossed we found something thats needs swapping. 
+			{
+                tThisTable = tableswap(tThisTable,i,j);
+            }
+		}
+        
+            tableswap(tThisTable,left,j);
+
+		/* Sort the left half using this function recursively. */	
+        if (j != 0)
+        {   // if j is 0 there *is* no left part
+            tThisTable = QSortTable (tThisTable,szSortBy, left, j-1 );
+        }
+        /* Sort the right half using this function recursively. */
+        tThisTable = QSortTable (tThisTable,szSortBy, j+1 , right); //+1
+    }	
+    
+    return tThisTable;
+}
+
+function tableswap(tTable,a,b)
+{
+    local Temp = tTable[a];
+    tTable[a] = tTable[b];	
+	tTable[b] = Temp;
+	return tTable;
+}
+
+
+
+/* This class is incomplete !!! And should not be used for anything than grabbing the palette from v3 bmps. 
+* Thinking behind this loader was created based from the following source.
+*  Reference Source http://www.fileformat.info/format/bmp/egff.htm 
+*/
+
+class bitmapfilehandler
+{
+    bBMPDebug = false;
+    szFilePath = null;
+    szFileError = null;
+    rawbytearray = null;
+    fileheader = null;
+    bitmapheader = null;
+    colorarr = null;
+
+    constructor(szFileToOpen)
+    {
+        szFilePath = szFileToOpen;
+        rawbytearray = [];
+        try
+        {
+            // Read all the bytes
+            local ByteSteam = file(szFilePath,"r");
+            local RawByte = ByteSteam.readn('b');
+            while(ByteSteam.eos() == null)
+            {
+                rawbytearray.push(RawByte);
+                RawByte = ByteSteam.readn('b');
+            }
+            rawbytearray.push(RawByte);
+            ByteSteam.flush();
+            ByteSteam.close();
+            if(bBMPDebug)print("-- File Header --");
+            
+            // Create a clone from which we pop of values 
+            local bytearray = clone rawbytearray;
+            // Bring structure to the Bytes.
+            bytearray.reverse();
+            if(bBMPDebug)print("array len "+bytearray.len());
+            
+            /* All versions of BMP format files begin with the following 14-byte header
+               WORD   FileType;     * File type, always 4D42h ("BM") 
+               DWORD  FileSize;     * Size of the file in bytes 
+               WORD   Reserved1;    * Always 0 
+               WORD   Reserved2;    * Always 0 
+               DWORD  BitmapOffset; * Starting position of image data in bytes 
+            */
+            
+            // All bmps start with BM 42 4D
+            fileheader = {};
+            fileheader.type <- bytearray.pop().tochar();
+            fileheader.type += bytearray.pop().tochar();
+            if(bBMPDebug)print("TYPE "+fileheader.type);
+            if(fileheader.type != "BM")
+            {
+                szFileError = "Not BMP Type we care about";
+                print(szFileError);
+                return;
+            }
+            // file size is dword ( aka 4 bytes)
+            fileheader.size <- _popdword(bytearray);
+            if(bBMPDebug)print("SIZE "+fileheader.size);
+            // Next Reserved bytes
+            fileheader.reserved1 <- _popword(bytearray);
+            fileheader.reserved2 <- _popword(bytearray);
+            if(bBMPDebug)print("RES "+fileheader.reserved1+ "  "+fileheader.reserved2);
+            
+            // Now the Offset to the image map.. Which is seems kind of pointless as every normal bmp Ive looked at has the map after the headers but probably important if it a compressed version. The bmp spec also allows for a byte gap between the bitmap header and the start of the pixel data.
+            fileheader.offset <- _popdword(bytearray);
+            if(bBMPDebug)print("OFFSET "+fileheader.offset);
+            /* Thats the easy bit done. */
+            if(bBMPDebug)print("-- BitmapHeader --"); // aka imageheader, dibheader, infoheader, yourmom,  Differnt sources give it a different names... Microsoft examples use bitmapheader.
+            bitmapheader = {};
+            // Next is the BitmapHeader which has different versions. 
+            // They key indicator to the version is the Header size which is aways the first 2bytes. and always the same for the type that version of the header.
+            bitmapheader.size <- _popdword(bytearray);
+            if(bBMPDebug)print("SIZE "+bitmapheader.size);
+            switch(bitmapheader.size)
+            {
+            case 10: // v1 device dependant
+            case 12: // OSX2
+            case 14: // BMP Version 2 (Microsoft Windows 2.x) 
+                // Skip these.
+                szFileError = "BMP Type too old for me to care about";
+                print(szFileError);
+                break;
+            case 40: // BMP Version 3 (3.1 or NT)
+            case 52: // 
+                if(bBMPDebug)print("V3");
+                /* v3 layout. From our perspective the dword and long mean the same thing. 4 bytes
+                DWORD Size;               Size of this header in bytes - got this
+                LONG  Width;              Image width in pixels 
+                LONG  Height;             Image height in pixels 
+                WORD  Planes;             Number of color planes 
+                WORD  BitsPerPixel;       Number of bits per pixel 1 4 8 24
+                DWORD Compression;        Compression methods used 
+                DWORD SizeOfBitmap;       Size of bitmap in bytes 
+                LONG  HorzResolution;     Horizontal resolution in pixels per meter   
+                LONG  VertResolution;     Vertical resolution in pixels per meter   
+                DWORD ColorsUsed;         Number of colors in the image. zero is okay   
+                DWORD ColorsImportant;    Minimum number of important colors   
+                */
+                bitmapheader.width     <- _poplong(bytearray);
+                bitmapheader.height    <- _poplong(bytearray);
+                bitmapheader.planes    <- _popword(bytearray);
+                bitmapheader.bpp       <- _popword(bytearray);
+                if(bBMPDebug)print("size "+bitmapheader.width +"x"+bitmapheader.height+" planes "+bitmapheader.planes+" bpp"+bitmapheader.bpp);
+                bitmapheader.compression <- _popdword(bytearray);
+                bitmapheader.sizeofbitmap <- _popdword(bytearray);
+                if(bBMPDebug)print("bm byte size "+bitmapheader.sizeofbitmap);
+                bitmapheader.horzres   <- _poplong(bytearray);
+                bitmapheader.vertres   <- _poplong(bytearray);
+                bitmapheader.colorsused <- _popdword(bytearray);
+                bitmapheader.colorsimportant <- _popdword(bytearray);
+                if(bBMPDebug)print("Colors "+bitmapheader.colorsused+ " imp "+bitmapheader.colorsimportant);
+                if(bBMPDebug)print("bytes left "+bytearray.len()); //1028
+                local pixelarr = rawbytearray.slice(fileheader.offset);  //  
+                //_hexprintarr(pixelarr);
+                // Colour Table (12 + bitmapheader.size)
+                
+                if(bitmapheader.bpp <= 8)
+                {
+                    colorarr = [];
+                    // 1028 > 4
+                    local nColor = _pop4bcolour(bytearray); 
+                    while(bytearray.len() >= ( fileheader.size - fileheader.offset   ) )
+                    {
+                        if(bBMPDebug)print( format("%08X",nColor) )
+                        colorarr.push(nColor );
+                        nColor = _pop4bcolour(bytearray); 
+                    }
+                }
+                else
+                {
+                    // Should be something here. but not in the normal touchpoint pallete 
+                    // which was the focus of making this. 
+                }
+                
+                break;
+            case 108: // BMP Version 4 (Microsoft Windows 95)
+                if(bBMPDebug)print("V4");
+                // TODO: v4
+                szFileError = "v4 BMP not supported by script";
+                print(szFileError);
+                return;
+                break;
+            default:
+                // Skip these.
+                szFileError = "Dont know what to do with header size "+bitmapheader.size ;
+                print(szFileError);
+            }
+            szFileError = "OK";
+        }
+        catch(e)
+        {
+            szFileError = e;
+            if(szFileToOpen)print(szFileError);
+        }
+    }
+    
+    function LoadedOkay()
+    {
+        if(szFileError == "OK")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function IndexColour(idx)
+    {
+        return colorarr[idx];
+    }
+    
+    function DrawActiveWindow(nLeft, nTop)
+    {
+        // To be called in onpaint event
+    
+    }
+    
+    function DrawWindow(nLeft, nTop)
+    {
+        // writes a window xml. loads it. displays it.
+    
+    }
+    
+    function DestroyWindow(nLeft, nTop)
+    {
+        // Hides window. unloads window ?
+        
+    }
+    
+    function PrintDraw(nLeft, nTop)
+    {
+        // Draw to the paint canvas. Req ICR_PrintImage_Start
+        
+    }
+    
+    function GetSize()
+    {
+        local tSize = { HEIGHT = 0 , WIDTH = 0 };
+        tSize.WIDTH = this.bitmapheader.width;
+        tSize.HEIGHT = this.bitmapheader.height;
+        return tSize;
+    }
+    
+    function HEXDebug() // Lets debug hex old style
+    {
+        local szHexDebug = "";
+        local szChar = "";
+        local szOutput = "";
+        for(local nCount = 0 ; nCount < rawbytearray.len() ; nCount++)
+        {
+            
+            if(rawbytearray[nCount] < 12)
+            {
+                szChar += ".";
+            }
+            else
+            {
+                szChar += rawbytearray[nCount].tochar();
+            }
+            
+            szHexDebug += format("%02X",rawbytearray[nCount] );
+            szHexDebug += " ";
+            if((nCount - 7) % 8 == 0 )
+            {
+                szOutput += szHexDebug + szChar + "\n";
+                szHexDebug = "";
+                szChar = "";
+            }
+        }
+        return szOutput;
+    }
+    
+    
+    function _hexprintarr(arr)
+    {
+        local szOutput = ""
+        for(local idx = 0 ; idx < arr.len() ; idx++)
+        {
+            szOutput += format("%2X",arr[idx]) + " ";
+        }
+        print(szOutput);
+    }
+
+    function _popword(arr)
+    {
+        local nValue = 0
+        nValue = arr.pop();
+        nValue += (arr.pop()<< 8 );
+        return nValue
+    }
+    
+    function _popdword(arr)
+    {
+        local nValue = 0
+        nValue = arr.pop();
+        nValue += (arr.pop()<< 8 );
+        nValue += (arr.pop()<< 16 );
+        nValue += (arr.pop()<< 24 );
+        return nValue
+    }
+    
+    function _poplong(arr)
+    {
+        //TODO: figure out what should be differnt between reading long vs dword
+        local nValue = 0
+        nValue = arr.pop();
+        nValue += (arr.pop()<< 8 );
+        nValue += (arr.pop()<< 16 );
+        nValue += (arr.pop()<< 24 );
+        return nValue
+    }
+    
+    function _pop4bcolour(arr)
+    {
+        // was going to reformat this but then relised touchpoint stores the colour backword to match bmp format.
+        local nValue = 0
+        nValue = arr.pop();
+        nValue += (arr.pop()<< 8 );
+        nValue += (arr.pop()<< 16 );
+        nValue += (arr.pop()<< 24 );
+        return nValue
+    }
+}
+// End bitmapfilehandler
+
+

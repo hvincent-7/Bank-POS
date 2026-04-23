@@ -8,7 +8,7 @@ import type {
 } from "@bank-pos/shared";
 import { getToken } from "./session.js";
 
-const BASE = (import.meta.env.VITE_API_URL as string) ?? "http://localhost:4000";
+const BASE = (import.meta.env.VITE_API_URL as string) ?? "/api";
 
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers);

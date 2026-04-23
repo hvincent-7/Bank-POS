@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<USERDATA>
+  <ITEM>
+    <NAME>bDebugPrinting</NAME>
+    <KIND>BOOLEAN</KIND>
+    <VALUE>FALSE</VALUE>
+  </ITEM>
+  <ITEM>
+    <NAME>bEnabled</NAME>
+    <KIND>BOOLEAN</KIND>
+    <VALUE>FALSE</VALUE>
+  </ITEM>
+  <ITEM>
+    <NAME>nClerkId</NAME>
+    <KIND>INTEGER</KIND>
+    <VALUE>0</VALUE>
+  </ITEM>
+</USERDATA>

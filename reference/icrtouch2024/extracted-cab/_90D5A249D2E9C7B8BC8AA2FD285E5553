@@ -1,0 +1,56 @@
+<SPLITCHECK name="Split Check Dialog">
+  <!-- Contains the layout for the keyboard programming editor
+       This consists of a floating dialog over the keyboard with the editing controls mounted on it -->      
+	
+  <BACKGROUND image="splitcheck_bg.png" />
+
+  <!-- Seat detail area, this is replicated across the screen as many times as there are seats on the table or "seats" number of times -->
+  <DETAIL left="50" top="50" width="XPIX - 50" height="YPIX - 100" seatwidth="300" seats="20" >
+    <BACKGROUND image="splitarea_bg.png" TransparentColour="FF00FF"/>
+    <!-- The seat number at the top -->
+    <HEADER left="0" top="0" width="280" height="50">    
+      <FONT face="Arial" size="32" align="right" valign="centre" colour="FFFFFF" />
+    </HEADER>
+    <!-- The items in the seat -->
+    <ITEMS left="10" top="60" width="280" height="YPIX - 300" >    
+      <FONT face="Arial" size="16" align="left" valign="top" colour="FFFFFF" highlightcolour="00e65600"/>
+    </ITEMS>
+    <!-- The total at the bottom -->
+    <FOOTER left="0" top="YPIX - 135" width="280" height="40">    
+      <FONT face="Arial" size="32" align="right" valign="top" colour="FFFFFF" />
+    </FOOTER>
+  </DETAIL>
+
+  <BUTTONS>
+
+    <!-- Global floaty buttons -->
+    <BUTTON id="BTN:EXIT" name="Exit Button" left="XPIX * 0.9 - 10" top="5" width="90" height="40">
+      <STATEIMAGE state="up" image="splitcheck_buttons.png" left="0" top="0" TransparentColour="FF00FF"/>
+      <STATEIMAGE state="down" image="splitcheck_buttons.png" left="0" top="40" TransparentColour="FF00FF"/>
+    </BUTTON>    
+    <BUTTON id="BTN:LEFT" name="Left Button" left="10" top="(YPIX - 195) / 2" width="33" height="195">
+      <STATEIMAGE state="up" image="splitcheck_lr.png" left="0" top="0" TransparentColour="FF00FF" />
+      <STATEIMAGE state="down" image="splitcheck_lr.png" left="0" top="195" TransparentColour="FF00FF" />
+    </BUTTON>    
+    <BUTTON id="BTN:RIGHT" name="Right Button" left="XPIX - 43" top="(YPIX - 195) / 2" width="33" height="195">
+      <STATEIMAGE state="up" image="splitcheck_lr.png" left="33" top="0" TransparentColour="FF00FF" />
+      <STATEIMAGE state="down" image="splitcheck_lr.png" left="33" top="195" TransparentColour="FF00FF" />
+    </BUTTON>    
+    
+    <!-- seat detail area buttons -->
+    <BUTTON id="BTN:SEAT" name="Seat Button" left="1" top="2" width="80" height="40">
+      <STATEIMAGE state="up" image="splitcheck_buttons.png" left="170" top="0" TransparentColour="FF00FF"/>
+      <STATEIMAGE state="down" image="splitcheck_buttons.png" left="170" top="40" TransparentColour="FF00FF"/>
+    </BUTTON>
+    <BUTTON id="BTN:PRINT" name="Print Button" left="80" top="2" width="80" height="40">
+      <STATEIMAGE state="up" image="splitcheck_buttons.png" left="90" top="0" TransparentColour="FF00FF"/>
+      <STATEIMAGE state="down" image="splitcheck_buttons.png" left="90" top="40" TransparentColour="FF00FF"/>
+    </BUTTON>
+    <BUTTON id="BTN:PAY" name="Pay Button" left="160" top="2" width="80" height="40">
+      <STATEIMAGE state="up" image="splitcheck_buttons.png" left="250" top="0" TransparentColour="FF00FF"/>
+      <STATEIMAGE state="down" image="splitcheck_buttons.png" left="250" top="40" TransparentColour="FF00FF"/>
+    </BUTTON>
+
+  </BUTTONS>
+  
+</SPLITCHECK>

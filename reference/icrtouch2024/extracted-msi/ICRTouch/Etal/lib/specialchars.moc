@@ -1,0 +1,37 @@
+
+// ICRTouch Printer codes
+getconsttable().PRTCODE_EURO                  <- 128;
+getconsttable().PRTCODE_DOUBLEON              <- 160;
+getconsttable().PRTCODE_DOUBLEOFF             <- 161;
+getconsttable().PRTCODE_DOUBLEHEIGHTON        <- 195;
+getconsttable().PRTCODE_DOUBLEHEIGHTWIDTHON   <- 196;
+getconsttable().PRTCODE_BOLDON                <- 162;
+getconsttable().PRTCODE_BOLDOFF               <- 163;
+getconsttable().PRTCODE_REDON                 <- 164;
+getconsttable().PRTCODE_REDOFF                <- 165;
+getconsttable().PRTCODE_DOUBLESTRIKEON        <- 166;
+getconsttable().PRTCODE_DOUBLESTRIKEOFF       <- 167;
+getconsttable().PRTCODE_BACKFEED_PAPER        <- 168;
+getconsttable().PRTCODE_RELEASE_PAPER         <- 169;
+getconsttable().PRTCODE_PRINTLOGO             <- 170;
+getconsttable().PRTCODE_LFEEDBPRINT           <- 171;
+getconsttable().PRTCODE_LFEEDBCUT             <- 172;
+getconsttable().PRTCODE_LFEEDACUT             <- 173;
+getconsttable().PRTCODE_CUT                   <- 174;
+getconsttable().PRTCODE_RECEIPTONLY           <- 180;
+getconsttable().PRTCODE_JOURNALONLY           <- 181;
+getconsttable().PRTCODE_SLIPPRINTER           <- 182;
+getconsttable().PRTCODE_UPSIDEDOWNON          <- 183;
+getconsttable().PRTCODE_UPSIDEDOWNOFF         <- 184;
+getconsttable().PRTCODE_FIREDRAWER1           <- 185;
+getconsttable().PRTCODE_FIREDRAWER2           <- 186;
+getconsttable().PRTCODE_INITIALISE            <- 187;
+getconsttable().PRTCODE_TM295PREPARECHECK     <- 188;
+getconsttable().PRTCODE_SOUNDBUZZER           <- 189;
+getconsttable().PRTCODE_PRINTCHECKBARCODE     <- 190;
+getconsttable().PRTCODE_PRINTSTART            <- 191;
+getconsttable().PRTCODE_SETNOLINESPACING      <- 192;
+getconsttable().PRTCODE_SETDEFLINESPACING     <- 193;
+getconsttable().PRTCODE_GFX_LF                <- 194;
+getconsttable().PRTCODE_TMH6000PREPARECHECK   <- 197;
+

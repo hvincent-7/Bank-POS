@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ETAL>
+  <FILE>AutoExtProgGrps.moc</FILE>
+  <OUTPUTFILE>output.txt</OUTPUTFILE>
+  <NAME>AutoExtProgGrps</NAME>
+
+  <CREATED>27/04/2016</CREATED>
+  <LASTMODIFIED>09/05/2017</LASTMODIFIED>
+  <MINVERID>5540</MINVERID>
+  <AUTHOR>Antony ICRTouch</AUTHOR>
+</ETAL>

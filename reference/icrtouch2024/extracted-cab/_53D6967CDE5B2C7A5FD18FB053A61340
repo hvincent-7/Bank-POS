@@ -1,0 +1,26 @@
+<DIALOG id="DLG:PICTUREMSGBOX" name="Picture Message Box" left="200" top="150" width="340" height="410">
+	<BACKGROUND image="picturemsgbox_bg.bmp" TransparentColour="00FF00FF"/>
+	
+	<LINE1MESSAGE left="170" top="350">
+		<FONT face="Arial" size="24" align="centre" valign="centre" italic="true" colour="00FFFFFF"/>
+	</LINE1MESSAGE>
+	
+	<PICTURE left="10" top="10" width="320" height="320" textleft="165" texttop="165">
+		<FONT face="Arial" size="24" align="centre" valign="centre" italic="true" colour="00FFFFFF"/>
+	</PICTURE>
+	
+	<BUTTONS>
+		<BUTTON id="BTN:OK" name="Ok Button" left="130" top="375" width="80" height="30">
+			<STATEIMAGE state="up" image="picturemsgbox_buttons.bmp" left="0" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="down" image="picturemsgbox_buttons.bmp" left="0" top="30" TransparentColour="FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:YES" name="Yes Button" left="80" top="375" width="80" height="30">
+			<STATEIMAGE state="up" image="picturemsgbox_buttons.bmp" left="80" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="down" image="picturemsgbox_buttons.bmp" left="80" top="30" TransparentColour="FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:NO" name="No Button" left="180" top="375" width="80" height="30">
+			<STATEIMAGE state="up" image="picturemsgbox_buttons.bmp" left="160" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="down" image="picturemsgbox_buttons.bmp" left="160" top="30" TransparentColour="FF00FF"/>
+		</BUTTON>
+	</BUTTONS>
+</DIALOG>

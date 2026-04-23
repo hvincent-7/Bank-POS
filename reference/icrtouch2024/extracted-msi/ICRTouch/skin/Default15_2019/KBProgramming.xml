@@ -1,0 +1,107 @@
+<KBPROGRAMMING name="Keyboard Programming Dialog" left="500" top="50" width="470" height="235">
+	<!-- Contains the layout for the keyboard programming editor
+	     This consists of a floating dialog over the keyboard with the editing controls mounted on it -->
+	
+	<BACKGROUND image="kbprogramming_bg.bmp" TransparentColour="00FF00FF"/>
+
+	<BUTTONS>
+		<!-- don't need a type button any more  BUTTON id="BTN:TYPE" name="Button Type Button" left="10" top="10" width="101" height="41"  -->
+		<!--  STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="0" top="0"/  -->
+		<!--  STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="101" top="0"/  -->
+		<!--  /BUTTON  -->
+		<BUTTON id="BTN:EXIT" name="Exit Button" left="384" top="5" width="69" height="28">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="649" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="649" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:MERGE" name="Merge Button" left="5" top="172" width="75" height="60">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="0" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:SPLIT" name="Split Button" left="82" top="172" width="75" height="60">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="75" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="75" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:UPLEVEL" name="Up Level Button" left="309" top="39" width="74" height="41">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="718" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="718" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:DOWNLEVEL" name="Down Level Button" left="389" top="39" width="74" height="41">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="792" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="792" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:COPY" name="Copy Button" left="159" top="172" width="75" height="60">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="150" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="150" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:PASTE" name="Paste Button" left="236" top="172" width="75" height="60">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="225" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="225" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<!-- don't really need up and down buttons  BUTTON id="BTN:UPFONT" name="Up Font Button" left="120" top="500" width="101" height="41"  -->			
+		<!--  STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="0" top="287"/  -->
+		<!--  STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="101" top="287"/  -->
+		<!--  /BUTTON  -->
+		<!--  BUTTON id="BTN:DOWNFONT" name="Down Font Button" left="120" top="550" width="101" height="41"  -->
+		<!--  STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="0" top="328"/  -->
+		<!--  STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="101" top="328"/  -->
+		<!--  /BUTTON  -->
+		<BUTTON id="BTN:IMAGE" name="Image Button" left="317" top="127" width="99" height="41">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="550" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="550" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<!--  BUTTON id="BTN:UPSHAPE" name="Up Shape Button" left="230" top="500" width="101" height="41"  -->
+		<!--  STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="0" top="287"/  -->
+		<!--  STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="101" top="287"/  -->
+		<!--  /BUTTON  -->
+		<!--  BUTTON id="BTN:DOWNSHAPE" name="Down Shape Button" left="230" top="550" width="101" height="41"  -->
+		<!--  STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="0" top="328"/  -->
+		<!--  STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="101" top="328"/  -->
+		<!--  /BUTTON  -->
+		<BUTTON id="BTN:EDITTEXT" name="Edit Text Button" left="213" top="127" width="99" height="41">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="451" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="451" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:UNDO" name="Undo Button" left="313" top="172" width="75" height="60">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="300" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="300" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:REDO" name="Redo Button" left="390" top="172" width="75" height="60">
+			<STATEIMAGE state="up" image="kbprogramming_buttons.bmp" left="375" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="kbprogramming_buttons.bmp" left="375" top="60" TransparentColour="00FF00FF"/>
+		</BUTTON>
+	</BUTTONS>
+	
+	<WINDOWS>
+		<!-- you can have background images on these but I don't because it's easier not to -->
+		<WINDOW id="WDW:COLOUR" name="Button background colour window" left="5" top="127" width="101" height="41">
+			<TEXT left="5" top="5" width="91" height="31">
+				<FONT face="Arial" size="30" align="centre" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+		<WINDOW id="WDW:TEXTCOLOUR" name="Button text colour window" left="109" top="127" width="101" height="41">
+			<TEXT left="5" top="5" width="91" height="31">
+				<FONT face="Arial" size="30" align="centre" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+		<WINDOW id="WDW:INFO" name="Button information window" left="5" top="83" width="254" height="41">
+			<TEXT left="5" top="5" width="240" height="31">
+				<FONT face="Arial" size="30" align="left" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+		<WINDOW id="WDW:LEVEL" name="Level window" left="5" top="39" width="300" height="41">
+			<TEXT left="5" top="5" width="290" height="31">
+				<FONT face="Arial" size="30" align="left" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+		<WINDOW id="WDW:FONT" name="Current font window" left="262" top="83" width="100" height="41">
+			<TEXT left="5" top="5" width="90" height="31">
+				<FONT face="Arial" size="30" align="left" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+		<WINDOW id="WDW:SHAPE" name="Current button shape window" left="365" top="83" width="100" height="41">
+			<TEXT left="5" top="5" width="90" height="31">
+				<FONT face="Arial" size="30" align="left" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+	</WINDOWS>
+</KBPROGRAMMING>

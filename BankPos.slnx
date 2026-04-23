@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Bank.Pos.Core/Bank.Pos.Core.csproj" />
+    <Project Path="src/Bank.Pos.Data/Bank.Pos.Data.csproj" />
+    <Project Path="src/Bank.Pos.Kitchen/Bank.Pos.Kitchen.csproj" />
+    <Project Path="src/Bank.Pos.Till/Bank.Pos.Till.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Bank.Pos.Core.Tests/Bank.Pos.Core.Tests.csproj" />
+  </Folder>
+</Solution>

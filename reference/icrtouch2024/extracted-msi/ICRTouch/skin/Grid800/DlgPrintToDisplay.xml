@@ -1,0 +1,38 @@
+<DIALOG id="DLG:PRINTTODISPLAY" name="Print to display dialog" left="200" top="100" width="601" height="401">
+	<BACKGROUND image="printtodisplay_bg.bmp" TransparentColour="00FF00FF"/>
+			
+	<PRINTAREA left="11" top="13" width="508" height="378" textleft="20" highlightbackcolour="00FFFFFF">
+		<FONT face="Courier New" size="22" align="left" valign="top" colour="FFFFFF" highlightcolour="000000"/>
+	</PRINTAREA>
+			
+	<BUTTONS>
+		<BUTTON id="BTN:PAGEUP" name="Page Up Button" left="528" top="58" width="65" height="50">
+			<STATEIMAGE state="up" image="printtodisplay_buttons.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="printtodisplay_buttons.bmp" left="65" top="0" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:SCROLLUP" name="Scroll Up Button" left="528" top="108" width="65" height="50">
+			<STATEIMAGE state="up" image="printtodisplay_buttons.bmp" left="0" top="50" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="printtodisplay_buttons.bmp" left="65" top="50" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:PRINT" name="Print Button" left="528" top="158" width="65" height="50">
+			<STATEIMAGE state="up" image="printtodisplay_buttons.bmp" left="0" top="100" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="printtodisplay_buttons.bmp" left="65" top="100" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:OPEN" name="Open Button" left="528" top="158" width="65" height="50">
+			<STATEIMAGE state="up" image="printtodisplay_buttons.bmp" left="0" top="300" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="printtodisplay_buttons.bmp" left="65" top="300" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:ESCAPE" name="Escape Button" left="528" top="208" width="65" height="50">
+			<STATEIMAGE state="up" image="printtodisplay_buttons.bmp" left="0" top="150" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="printtodisplay_buttons.bmp" left="65" top="150" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:SCROLLDOWN" name="Scroll Down Button" left="528" top="258" width="65" height="50">
+			<STATEIMAGE state="up" image="printtodisplay_buttons.bmp" left="0" top="200" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="printtodisplay_buttons.bmp" left="65" top="200" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:PAGEDOWN" name="Page Down Button" left="528" top="308" width="65" height="50">
+			<STATEIMAGE state="up" image="printtodisplay_buttons.bmp" left="0" top="250" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="printtodisplay_buttons.bmp" left="65" top="250" TransparentColour="00FF00FF"/>
+		</BUTTON>
+	</BUTTONS>
+</DIALOG>

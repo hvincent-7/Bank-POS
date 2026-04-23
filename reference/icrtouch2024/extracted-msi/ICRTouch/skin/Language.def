@@ -1,0 +1,4520 @@
+VERSION=7000
+
+; Language definition file for ICRTouch
+; Created 24/2/2006
+
+; Each language file consists of
+; LANGID=MAXLENGTH=Text
+
+; LANGID - Is the unique language identifier
+; MAXLENGTH - is the maximum length of the text
+;             all text over this will be truncated changing this field WILL result in system instability 
+
+; The entire text line is imported up to the end of the line.  White spaces at the end of the line are imported also.
+
+; [TYPE ID] - Is purely added to aid human readablility
+
+; Any line that does not begin with a numeric {0-9} is tread as a comment line
+
+
+; NOTE - USER CHANGES
+; -------------------
+; If you make changes to this file it is possible {likely} that these changes may get overwritten when you apply
+; an ICRTouch update in the future.
+; 
+; To ensure your changes aren't lost you should copy and paste the changed line {no need for headers or anything}
+; into a new file called CustomLanguage.def that will reside in the same folder
+;
+; The CustomLanguage.def file is loaded AFTER the main language file, overwriting any language texts this file is never
+; overwritten during an update
+
+
+#####################################################################
+# ICRTouch Version 2.530 - 15/3/2006                                #
+#####################################################################
+
+[FILE NAMES]
+
+1=24=PLU
+2=24=PLU Group
+3=24=Clerk
+4=24=Clerk Detail
+5=24=List PLU
+6=24=Tax
+7=24=Batch Report
+8=24=Printer Logos
+9=24=Scrolling Message
+10=24=Cheque Printing
+11=24=Level Names
+12=24=Fixed Character
+13=24=Error Message
+14=24=Check Text
+15=24=Fixed Totaliser
+16=24=Finalise Key
+17=24=Transaction Key
+18=24=Status Key
+19=24=Department
+20=24=Time Zones
+21=24=Time Zone Links
+22=24=Mix & Match
+23=24=Scheduler
+24=24=Keyboard
+25=24=System Flags
+26=24=Employee Jobs
+27=24=Employee Shifts
+28=24=Non PLU
+29=24=Mix & Match 2
+30=24=Tables
+31=24=Customer
+32=24=Customer with Totals
+33=24=Customer Group
+34=24=Terminal Connection
+35=24=IO Parameter
+36=24=Device Connection
+37=24=PLU Stock
+38=24=PLU Stock Adjustments
+39=24=Screen Saver Image
+40=24=Floor Plan Image 1
+41=24=Graphic Logo
+42=24=Floor Plan Image 2
+43=24=Floor Plan Image 3
+44=24=Floor Plan Image 4
+45=24=Floor Plan Image 5
+46=24=Floor Plan Image 6
+47=24=Floor Plan Image 7
+48=24=Floor Plan Image 8
+49=24=Floor Plan Image 9
+50=24=Floor Plan Image 10
+51=24=User Font 1
+52=24=User Font 2
+53=24=User Font 3
+54=24=User Font 4
+55=24=User Font 5
+56=24=User Font 6
+57=24=User Font 7
+58=24=User Font 8
+59=24=Software Executable
+60=24=Icons
+61=24=Software Lock
+62=24=Date and Time
+63=24=Short PLU 1
+64=24=Short PLU 2
+65=24=Short PLU 4
+66=24=Short Clerk 1
+67=24=Short Clerk 2
+68=24=Short Keyboard 1
+69=24=Short Keyboard 2
+70=24=Keyboard - Random Codes
+71=24=System Config
+72=24=Fixed Key
+
+
+[DISPLAY MESSAGES]
+
+101=40=You are not clocked in, clock in now?
+102=40=You are on a break, break in now?
+103=24=CLOCK IN
+104=24=END BREAK
+105=24=CLOCK OUT
+106=24=START BREAK
+107=24=ENTER CASHIER NUMBER
+108=20=TRANSFER TO
+109=24=BILL PRINTED
+110=24=DUTCH BILL PRINTED
+111=24=NUMBER OF BILLS
+112=40=Please Insert a New Slip
+113=24=SUBTOTAL:
+114=24=CONTINUE?
+115=20=ENTER TEXT
+116=40=Please insert slip
+117=24=CURRENT SALE
+118=30=SCALE.DLL CHECKSUM:
+119=24=CHECKSUM OK
+120=24=CHECKSUM INVALID
+121=24=ENTER WEIGHT (kg)
+122=40=YOU HAVE A CHECK OPEN, CONTINUE?
+123=40=ACCOUNT CUSTOMER, CONTINUE?
+124=12=TOTAL:
+125=12=SHORT:
+126=5=TL:
+127=20=Waiting for Port
+128=20=Buffer to Clear
+129=40=Reset all sales data, Are you sure?
+130=24=Sales Data Reset
+131=40=RESETTING TOTALS
+132=40=Clear entire memory contents?
+133=24=MRS
+134=40=LOADING DEFAULT PROGRAM
+135=40=DETERMINE TERMINAL ID
+136=3=ID#
+137=24=Please give a name
+138=40=Please Wait.
+139=40=Collect program from another till?
+140=24=Auto program start
+141=40=TouchPoint is running in demo mode
+142=24=Demo mode
+143=40=Sales data will not be committed
+144=24=NO NUMBER
+145=40=CLOSE DRAWER
+146=40=Please wait, erasing flash memory
+147=40=Please wait, downloading graphic logo
+148=40=INIT MODEM
+149=24=RESPONSE:
+150=10=NUMBER:
+151=40= UNKNOWN CUSTOMER
+152=40=No caller ID numbers available
+153=12=Blacklist
+154=24=From Customer Number?
+155=24=To Customer Number?
+156=12=Transfer
+157=4=to
+158=16=Customer
+159=30=POINTS:
+160=30=BALANCE:
+161=30=AVAILABLE:
+162=40=Enter Customer Number
+163=40=CREATE A NEW CUSTOMER?
+164=40=AUTO CREATE CUSTOMER
+165=40=ENTER FIRST NAME
+166=40=ENTER LAST NAME
+167=40=SELECT CUSTOMER GROUP
+168=40=ENTER ADDRESS LINE 1
+169=40=ENTER ADDRESS LINE 2
+170=40=ENTER ADDRESS LINE 3
+171=40=ENTER ADDRESS LINE 4
+172=40=ENTER POSTCODE
+173=40=ENTER PHONENUMBER
+174=40=Awaiting response ...
+175=3=PTS
+176=4=BAL:
+177=50=Everything will be converted to EUROs, Continue?
+178=24=EURO Change over
+179=40=Converting data, please wait ...
+180=24=Select Destination
+181=24=Floppy Disk
+182=24=Data Backup Area
+183=24=Programmed Location
+184=40=Do You Want to Print a Cheque?
+185=40=Please Insert Cheque Into Slip Printer
+186=40=Write Cheque Card Number on Back of Chq
+187=40=Signature & Date OK?
+188=24=OPEN
+189=24=TRANSFER
+190=24=SPLIT ITEMS
+191=24=PRINT BILL
+192=24=SHOW INFO
+193=24=PRINT SLIP
+194=24=DUTCH PRINT
+195=24=THIS CHECK IS FREE
+196=24=THIS TABLE IS FREE
+197=12=ITEMS:
+198=12=TEXT:
+199=12=OPENED BY,
+200=20=BILL PRINTED: YES
+201=20=BILL PRINTED: NO
+202=20=SALE FINALISED
+203=20=BILL AVAILABLE: YES
+204=40=Delete this table?
+205=12=FROM
+206=40=Please enter check number
+207=1=R
+208=24=PLEASE SELECT FOLIO
+209=12=FOLIO
+210=24=ENTER ROOM #
+211=24=PLEASE SELECT SHIFT
+212=24=ENTER BOOKING REF
+213=40=REQUESTING ROOM STATUS, PLEASE WAIT
+214=40=POSTING, PLEASE WAIT
+215=9=SUNDAY
+216=9=MONDAY
+217=9=TUESDAY
+218=9=WEDNESDAY
+219=9=THURSDAY
+220=9=FRIDAY
+221=9=SATURDAY
+222=9=JANUARY
+223=9=FEBRUARY
+224=9=MARCH
+225=9=APRIL
+226=9=MAY
+227=9=JUNE
+228=9=JULY
+229=9=AUGUST
+230=9=SEPTEMBER
+231=9=OCTOBER
+232=9=NOVEMBER
+233=9=DECEMBER
+234=5=FROM:
+235=12=TermnlID
+236=16=Online PC
+237=16=Inline PC
+238=16=HOTEL SERVER
+239=20=CLERK SIGNED OFF
+240=16=START OF:
+241=24=Inline Functions
+242=24=IRC Initialise
+243=24=Check Busy Reset
+244=24=Table Busy Reset
+245=24=Clerk Busy Reset
+246=24=Send Stock Counter
+247=24=Clerk Chk/Tbl Transfer
+248=24=Resync Bill Lodging
+249=24=Enter Check Number
+250=24=Enter Table Number
+251=12=BUSY RESET:
+252=5=TABLE
+253=5=CHECK
+254=24=Transfer From Clerk
+255=24=Transfer To Clerk
+256=40=Initialising IRC
+257=24=Clerk Functions
+258=24=Clear Auto-Clerk Buttons
+259=24=Which Terminal?
+260=24=All Terminals
+261=24=Program Files
+262=24=All Programs
+263=24=Sending File,
+264=24=Receiving File,
+265=24=Backup/Restore
+266=24=Data Backup
+267=24=Data Restore
+268=24=Backup Location
+269=24=Restore Location
+270=16=Backup File,
+271=16=Restore File,
+272=16=FILE
+273=24=Please Select a Location
+274=24=No detail link
+275=40=Code Does Not Exist. Create New Item?
+276=24=RECORD NO.
+277=24=RANGE PROGRAM
+278=8=YES
+279=8=NO
+280=24=NO PLU SELECTED
+281=24=INVALID ENTRY
+282=24=NO LINK
+283=24=iButton Number Not Set
+284=24=iButton Number Set
+285=24=Please Press iButton
+286=40=Reindexing PLU File, Please Wait.
+287=40=Range Programming, Please Wait.
+288=40=Exporting Customer File, Please Wait.
+289=24=NO PLU
+290=24=Choose File Type
+291=30=Code Exists at Record No
+292=24=. Edit this Record?
+293=40=Press the Cell you want to Merge to
+294=20=Copy Screen Level -
+295=16=into this level?
+296=24=Screen Levels
+297=40=Please Select End Box, OK?
+298=24=Select Start PLU
+299=4=TEXT
+300=24=PLU by Range
+301=24=Function Key Wizard
+302=24=No Function
+303=40=Copy Starting Box's Properties?
+304=24=SENDING KEYBOARD FILE TO
+305=24=FUNCTION TYPE
+306=40=NEW STATUS KEY CREATED AT RECORD
+307=4=REF:
+308=4=TBL:
+309=4=GST:
+310=40=ENTER CLERK NUMBER
+311=3=TO:
+312=10=Today
+313=12=Tomorrow
+314=30=BOOKING TIME (HH:MM)
+315=30=DURATION
+316=30=GUESTS
+317=30=BOOKING REF
+318=40=Delete the selected reservation?
+319=40=This reservation clashes with
+320=12=Reserved
+321=12=Open Table
+322=24=using selected reservation?
+323=24=Reservation Functions
+324=24=View Details
+325=24=Change Reservation
+326=24=Delete Reservation
+327=24=Edit Notes
+328=24=Take Deposit
+329=24=Reservation notes
+330=30=RESERVATION
+331=16=REFERENCE:
+332=16=TABLE NUMBER:
+333=10=GUESTS:
+334=20=DEPOSIT:
+335=40=NOTES;
+336=40=ENTER DEPOSIT
+337=40=Please Choose Media
+338=40=Indexing PLU File
+339=40=Please enter payment code for licence no.
+340=50=The 28 day extension has been applied
+341=20=YOUR SERVER IS
+342=24=CURRENT ACTIVE CLERKS
+343=20=RECEIPT PRINTED
+344=24=Price Level
+345=24=End of Day
+346=24=X Mode Reports
+347=24=Z Mode Reports
+348=24=Hidden Functions
+349=40=CANCEL, OK?
+350=24=Remove Mouse
+351=24=Enable Mouse
+352=24=Remove NET Drivers
+353=24=Enable NET Drivers
+354=24=Turn Off Journal
+355=24=Turn On Journal
+356=24=Master Reset
+357=24=Enter payment code
+358=24=Minimize TouchPoint
+359=24=Exit to Windows
+360=50=All Sales Data Reset
+361=24=Program Mode
+362=12=, Active
+363=50=Close Till Down, Are You Sure?
+364=20=******* TILL ********
+365=20=****** CLOSED *******
+366=40=Download Graphic Logo to Receipt Printer?
+367=40=Remove service charge from this check?
+368=40=Set service charge on this check?
+369=24=Select Search Group
+370=24=All Groups
+371=24=Select an Item
+372=24=Please Select Dest
+373=24=Printed Text Message
+374=24=Email a Terminal
+375=50=CREATE A NEW PLU FROM THIS CODE?
+376=24=PLU NOT FOUND
+377=40=ENTER PRODUCT NAME
+378=40=ENTER PRICE
+379=24=SELECT DEPARTMENT
+380=24=SELECT GROUP
+381=40=Please Swipe Credit Card
+382=40=Enter Card Number
+383=40=Enter Expiry Date, MMYY
+384=40=ENTER CUSTOMER NAME
+385=24=LOYALTY CARD:
+386=40=LOYALTY CARD NO
+387=40=Terminal Z Locked, Please Wait
+388=6=DEMO
+389=3=lic
+390=40=** Sale in Suspend Buffer **
+391=40=Please Sign On
+392=8=CUSTOMER
+393=4=CUST
+394=3=CK1
+395=3=CK2
+396=16=DEVICE ERROR!
+397=40=Please enter cashback amount
+398=40=Awaiting transaction result
+399=24=FROM MEDIA
+400=24=TO MEDIA
+
+3901=40=Points Redeemed
+3902=40=Updating data please wait.
+
+[PRINTER MESSAGES]
+
+401=20=CLOCK IN   
+402=20=CLOCK OUT  
+403=20=START BREAK
+404=20=END BREAK  
+405=20=ERROR      
+406=24=NO DETAIL EXISTS
+407=24=SALE ID:
+408=1=T
+409=24=DISCOUNT AMT:
+410=24=POINTS EARNED:
+411=6=No
+412=24=SALE TOTAL
+413=12=FROM
+414=24=NEW BALANCE
+415=12=OPEN
+416=24=PREVIOUS BAL
+417=24=TOTAL
+418=24=SUBTOTAL
+419=6=BILL
+420=6=OF
+421=40=CONTINUED ...
+422=20=... CONTINUED
+423=6=Value
+424=12=SPLIT
+425=24=* END OF SPLIT CHECK *
+426=10= KEYED
+427=24=CHECK PICKUP COUNT:
+428=24=CURRENT CHECK TOTAL:
+429=20=SALE FINALISED, ID:
+430=24=*** REFUND MODE *** 
+431=40=   !!! FULL SALES DATA RESET !!!
+432=10=START:
+433=19=* CUSTOMER INQUIRY *
+434=16=PHONENUMBER:
+435=24=Last Transaction Date:
+436=24=Spend To Date:
+437=24=Spend Towards Discount:
+438=24=Discount Total To Date:
+439=12=POINTS:
+440=16=This is worth
+441=24=Balance:
+442=24=Credits:
+443=24=Debits:
+444=24= Black List Customer:
+445=24= Customer Transfer:
+446=24= To:
+447=24=Spend Today:
+448=30=No of Times Used Today:
+449=6=Off
+450=14=Your Next Sale
+451=12=Usage:
+452=12=Worth:
+453=12=Deptors:
+454=12=Creditors:
+455=12=Liabilty:
+456=12=Total:
+457=16=Total Points:
+458=20=Total Spend:
+459=20=Total Credits:
+460=20=Total Debits:
+461=20=Debtors Total:
+462=20=Creditors Total:
+463=20=Total Liability:
+464=20=Total Usage:
+465=24=DISCOUNTED
+466=12=OLD POINTS:
+467=12=NEW POINTS:
+468=9=OLD BAL:
+469=9=NEW BAL:
+470=9=BALANCE:
+471=24=SHORT
+472=6=CHANGE
+473=24=CASHBACK
+474=24=GRATUITY
+475=16=TIME:
+476=16=CONSECUTIVE NO:
+477=16=POSTED BY:
+478=16=SALE ITEMS:
+479=24=PLU GROUP TOTALS:
+480=24=DEPARTMENT TOTALS:
+481=24=SALE TOTALS:
+482=24=DISCOUNT TOTAL:
+483=24=SERVICE CHARGE:
+484=40=          * CLERK INTERRUPTED *
+485=40=   CLERK CHECK/TABLE TRANSFER
+486=5=FROM:
+487=5=TO:
+488=20=Terminal Connection
+489=40=    ID    NAME           F/C  CHECK SYS  
+490=10=LOCATION
+491=4=YES
+492=4=NO
+493=10=SELF
+494=10=SATLT
+495=10=MSTR
+496=10=BCKUP
+497=16=CUSTOMER MASTER:
+498=16=CUSTOMER BACKUP:
+499=18=TIME & ATT MASTER:
+500=18=TIME & ATT BACKUP:
+501=24=NO CLERK
+502=40=        ** Duplicate Receipt **
+503=6=KP
+504=19=*** REFUND MODE ***
+505=12=*REFUND MODE*
+506=12=**TRAINING**
+507=12=REFUND ITEM
+508=6=ITEM
+509=6=OF
+510=9=TICKET
+511=30=DEPOSIT RECEIVED, TABLE:
+512=12=MEDIA
+513=20=SALE FINALISED, ID:
+514=20=NOTUSED
+515=5=CT:
+516=8=PBAL:
+517=8=No:
+518=18=MODE CHANGE,
+519=18=REG MODE
+520=18=REFUND MODE
+521=18=X MODE
+522=18=Z MODE
+523=18=MANAGER MODE
+524=18=HOME MODE
+525=18=PROGRAM 1 MODE
+526=18=PROGRAM 2 MODE
+527=18=PROGRAM 3 MODE
+528=18=PROGRAM 4 MODE
+529=18=PROGRAM 5 MODE
+530=18=PROGRAM 6 MODE
+531=18=PROGRAM 7 MODE
+532=24=TOUCHPOINT CLOSED DOWN:
+533=40= ******  TOUCHPOINT CLOSED DOWN  *******
+534=40=       Service Charge Removed
+535=40=       Service Charge Set
+536=16=CUSTOMER NAME:
+537=16=CARD NUMBER:
+538=16=EXPIRY DATE:
+539=24=PRICE LEVEL CHANGED,
+540=24=UNKNOWN
+541=12=MEDIA,
+542=20=TIME CHANGE:
+
+
+[REPORT DISPLAY MESSAGES]
+
+601=40=Printing PLU Report
+602=24=SELECT FROM DEPARTMENT
+603=24=ALL DEPARTMENTS
+604=24=SELECT TO DEPARTMENT
+605=24=ALL REMAINING DEPTS
+606=24=SELECT FROM PLU GROUP
+607=24=ALL PLU GROUP
+608=24=SELECT TO PLU GROUP
+609=24=ALL REMAINING PLU GRPS
+610=24=SELECT CLERK
+611=24=THIS CLERK
+612=24=DECLARE CASH IN DRAWER
+613=20=DECLARE CASH
+614=24=Collecting PLU
+615=24=Collecting PLU Group
+616=24=Collecting Detail Clk
+617=24=Collecting Tax Table
+618=24=Collecting Fixed Tl
+619=24=Collecting Finalise
+620=24=Collecting Transaction
+621=24=Collecting Department
+622=24=Collecting Time Zones
+623=24=Collecting Mix & Match
+624=24=Collecting Mix & Match 2
+625=24=EJF RESET
+626=40=Printing PLU Group Report
+627=40=Printing Detail Clerk Report
+628=40=Printing Tax Table Report
+629=40=Printing FIXED Totaliser Report
+630=40=Printing Finalise Key Report
+631=40=Printing Transaction Key Report
+632=40=Printing Department Report
+633=40=Printing Time Zone Report
+634=40=Printing Mix & Match Report
+635=40=Printing Mix & Match 2 Report
+636=40=Printing System Error Log
+637=40=Are You Sure, Z Reset?
+638=40=Waiting for Printer Buffer to Clear
+639=24=Enter Password
+640=24=Please Choose Location
+641=24=This Location
+642=24=All Locations
+643=40=UPDATE CUSTOMER FILE FROM MASTER?
+644=40=RECEIVING TIME & ATT TRAN LOG
+645=24=WHICH CUSTOMERS?
+646=24=ALL CUSTOMERS
+647=24=A CUSTOMER GROUP
+648=24=ALL ACCOUNT CUSTOMERS
+649=24=OVERDRAWN CUSTOMERS
+650=24=A SINGLE CUSTOMER
+651=24=SELECT CUSTOMER GROUP
+652=24=TRANSACTION RANGE
+653=24=ALL TRANSACTIONS
+654=24=FOR THE LAST MONTH
+655=24=UNPAID TRANSACTIONS
+656=24=FROM A SET DATE
+657=24=Date, DDMMYYYY
+658=24=SHOW DETAIL?
+659=24=NO DETAIL
+660=24=ALL DETAIL
+661=24=DEPT TOTALS ONLY
+662=24=GROUP TOTALS ONLY
+663=40=RECEIVING CUSTOMER DTL HEADERS
+664=40=RECEIVING CUSTOMER DTL ITEMS
+665=40=Printing Electronic Journal
+666=24=Time, HHMM
+667=24=Choose Key Type
+668=24=Enter a string
+669=40=Enter search text
+670=10=STRING :
+671=40=RECEIVING CHECK INDEXES
+672=40=PRINTING OPEN CHECK REPORT
+673=40=PRINTING CUSTOMER REPORT
+674=40=PRINTING CUSTOMER DETAIL
+
+[REPORT TITLES]
+
+701=24=Fixed Totaliser
+702=24=Finalise Key
+703=24=Transaction Key
+704=24=PLU Group
+705=24=Department
+706=24=Clerk Detail
+707=24=Clerk Detail, single Clk
+708=24=Time Zone Detail
+709=24=Mix & Match
+710=24=Mix & Match 2
+711=24=Tax Table
+712=24=PLU Reports
+713=24=Open Check Report
+714=24=Journal Roll Reports
+715=24=Customer Reports
+716=24=Time & Attendance
+717=24=Error Log
+718=24=Full PLU
+719=24=PLU Totals Only
+720=3=PLU
+721=24=PLU Stock
+722=24=PLU Below Minimum Stock
+723=24=Sort?
+724=24=No sort
+725=24=Sort by dept
+726=24=Sort by group
+727=24=Full journal roll
+728=24=Printed in reverse
+729=24=Reset only
+730=24=from date/time
+731=24=For a specific day
+732=24=For a specific clerk
+733=24=For a product/function
+734=24=Tax Table (Net)
+735=24=Customer Spend to Date
+736=24=Total of Customer Spend
+737=24=Credits
+738=24=Debits
+739=24=Free Meal Usage
+740=24=Customer Points
+741=24=Outstanding Points Total
+742=24=Customer Balance
+743=24=Debtors
+744=24=Hot Cards
+745=24=Transaction History
+746=24=EFT Reports
+747=24=Live Store, Summary
+748=24=Live Store, Detail
+749=24=Awaiting Trnsfr, Summary
+750=24=Awaiting Trnsfr, Detail
+751=24=Time & Attendance
+752=24=Clocked in
+753=24=Hours worked
+754=24=Audit trail
+
+
+[REPORT PRINTING]
+
+801=40=Full PLU Period ? Reset Report
+802=40=Full PLU Period ? Read Report
+803=40=PLU Totals Period ? Reset Report
+804=40=PLU Totals Period ? Read Report
+805=40=PLU Stock Reset Report
+806=40=PLU Stock Read Report
+807=40=Below Minimum Stock Report
+808=40=PLU Price Level # Period ? Read Report
+809=12=FROM DEPT: 
+810=12=TO DEPT:   
+811=12=FROM GROUP:
+812=12=TO GROUP:  
+813=3=CUR
+814=3=MIN
+815=8=TOTAL:
+816=10=LOCATION :
+817=24=ALL LOCATIONS
+818=5=OK
+819=5=NG
+820=40= CASH DECLARED TOTALS
+821=10=DCLRD FOR
+822=10=TL IN
+823=10=DIFFERENCE
+824=5=UNDER
+825=5=OVER
+826=14=  Range, From:
+827=5=To:
+828=40=** Error Log Reset
+829=40=** PLU Stock Totals Reset
+830=20=ALL CUSTOMERS
+831=20=ALL ACCOUNT CUSTOMERS
+832=20=ALL OVERDRAWN ACCOUNT CUSTOMERS
+833=20=SINGLE CUSTOMER GP:
+834=20=SINGLE CUSTOMER:
+835=40=** Customer File Period ? Totals Reset
+836=40=** Cust Points Period ? Totals Reset
+837=40=** Cust Spends Period ? Totals Reset
+838=40=** Cust Credits Period ? Totals Reset
+839=40=** Cust Debits Period ? Totals Reset
+840=40=** Customer Balance Reset
+841=40=** Customer Debtor's Balance Reset
+842=40=** Customer Hot Cards Reset
+843=40=** Customer Free Meal Period ? Reset
+844=40=** PLU Period ? Totals Reset
+845=40=** PLU Group Period ? Totals Reset
+846=40=** Clerk Detail Period ? Totals Reset
+847=40=** Tax Table Period ? Totals Reset
+848=40=** Check Tracking File Reset
+849=40=** Fixed Totaliser Period ? Totals Reset
+850=40=** Finalise Key Period ? Totals Reset
+851=40=** Transaction Key Period ? Totals Reset
+852=40=** Department Period ? Totals Reset
+853=40=** Time Zone Period ? Totals Reset
+854=40=** Mix & Match Period ? Totals Reset
+855=40=** Mix & Match 2 Period ? Totals Reset
+856=5=AVRGE
+857=40=        *** BREAK END ***   
+858=40=PLU Group Period ? Reset Report
+859=40=PLU Group Period ? Read Report
+860=40=Detail Clerk Period ? Reset Report
+861=40=Detail Clerk Period ? Read Report
+862=40=Tax Table Period ? Reset Report
+863=40=Tax Table Period ? Read Report
+864=40=Open Check Reset Report
+865=40=Open Check Read Report
+866=40=Open Balance Report
+867=40=Fixed Totaliser Period ? Reset Report
+868=40=Fixed Totaliser Period ? Read Report
+869=40=Finalise Key Period ? Reset Report
+870=40=Finalise Key Period ? Read Report
+871=40=Transaction Key Period ? Reset Report
+872=40=Transaction Key Period ? Read Report
+873=40=Department Period ? Reset Report
+874=40=Department Period ? Read Report
+875=40=Time Zone Period ? Reset Report
+876=40=Time Zone Period ? Read Report
+877=40=Mix & Match Period ? Reset Report
+878=40=Mix & Match Period ? Read Report
+879=40=Mix & Match 2 Period ? Reset Report
+880=40=Mix & Match 2 Period ? Read Report
+881=40=System Error Log
+882=40=JOB:
+883=40=FILE:
+884=40=POWER FAILURE
+885=40=XMS INIT ERROR
+886=40=XMS ALLOC ERROR
+887=40=NET NO ANSWER
+888=40=BAD DATA PACKET
+889=40=PACKET NOT SENT
+890=40=MODEM INIT ERROR
+891=40=MODEM TIMOUT
+892=40=UNKNOWN MODEM ERR
+893=40=TRNSLT DB OPEN ERR
+894=40=CHECK DETAIL MEMORY
+895=40=UNKNOWN ERROR
+896=40=Journal Read Report, for a string
+897=40=Electronic Journal Read Report, by Clerk
+898=40=Electronic Journal Report, by day
+899=40=Electronic Jnl Read Report, by Date/Time
+900=40=Electronic Journal Reset Report
+901=40=Electronic Journal Read Report
+902=40= ** REPORT NOT RESET !!!!!!
+903=12=REPORT FOR:
+904=12=ALL TERMINALS
+905=9=CLOCK IN
+906=9=CLOCK OUT
+907=9=BREAK OUT
+908=9=BREAK IN
+909=40=EMPLOYEE, CLOCKED IN
+910=40=EMPLOYEE, HOURS WORKED
+911=40=TIME & ATT, AUDIT TRAIL
+912=10=ON BREAK
+913=9=TIME CHNG
+914=16=TIME WORKED:
+915=12=SHIFT:
+916=24=INFRINGEMENTS:
+917=40= POSSIBLY AFFECTED BY A TIME CHANGE
+918=5=TO
+919=8=TL TIME:
+920=20=ANOMALOUS RECORD
+921=20=ANOMALOUS RECORDS
+922=6=TIME:
+923=4=IN: 
+924=4=OUT:
+925=1=b
+926=1=i
+927=40=** Time and Attendance reset
+928=24=NO CLERK
+929=40=Customer Transaction History
+930=24= CURRENT BAL:
+931=40=** Customer detail reset
+932=8=SALE TL
+933=8=BAL ADJ
+934=8=NEW BAL
+935=12=FROM :
+936=24=For the date,
+937=40=Customer Points, Period ? Reset Report
+938=40=Customer Points, Period ? Read Report
+939=40=Cust Pts Total, Period ? Reset Report
+940=40=Cust Pts Total, Period ? Read Report
+941=40=Customer Spends, Period ? Reset Report
+942=40=Customer Spend, Period ? Read Report
+943=40=Cust Spnd Total, Period ? Reset Report
+944=40=Cust Spnd Total, Period ? Read Report
+945=40=Customer Credits, Period ? Reset Report
+946=40=Customer Credits, Period ? Read Report
+947=40=Customer Debits, Period ? Reset Report
+948=40=Customer Debits, Period ? Read Report
+949=40=Customer Balance, Reset Report
+950=40=Customer Balance, Read Report
+951=40=Customer Debtors, Reset Report
+952=40=Customer Debtors, Read Report
+953=40=Hot Card Report
+954=40=Customer Detail Read Report
+955=40=Free Meal Usage Reset Report
+956=40=Free Meal Usage Read Report
+957=40= ** Detail Reset
+958=20=Secret Number:
+959=40=     PLU Descriptor Program Report
+960=40=       PLU Price Program Report
+961=40=       PLU Group Program Report
+962=40=       Clerk Program Report
+963=40=       Clerk Detail Program Report
+964=40=       List PLU Program Report
+965=40=     Receipt Logo Program Report
+966=40=     Level Names Program Report
+967=40=     Fixed Character Program Report
+968=40=    Error Message Program Report
+969=40=     Fixed Totaliser Program Report
+970=40=      Finalise Key Program Report
+971=40=      Transaction Key Program Report
+972=40=      Status Key Program Report
+973=40=      Department Program Report       
+974=40=** EJF RESET       
+
+
+[SYSTEM CONTROL 1]
+
+1001=50=System Control 1
+1002=50=Compulsory Closed Drawer?
+1003=50=Drawer Open at Zero ST?
+1004=50=Consolidate REG Display Window?
+1005=50=Prohibit Multiple REFUND Mode Ops
+1006=50=Receipt On for RF Mode?
+1007=50=Reset Consecutive Number, after Z1 Fxd Tl?
+1008=50=Initial Value for Consec No.
+1009=50=Auto Sign Off Clerk Seconds
+1010=50=Disable Clerk Interrupt?
+1011=50=Clerk float in location only?
+1012=50=Seconds before Screen Saver
+1013=50=Screen Off Time, During Saver (Hour)
+1014=50=Screen On Time, During Saver (Hour)
+1015=50=Seconds before Drawer Open Alarm
+1016=50=Default Level for REG Modes
+1017=50=Direct Entry for Option Windows
+1018=50=Training clerk opens drawer?
+1019=50=Use price level 1 when no price in current level?
+
+
+[SYSTEM CONTROL 2]
+
+1031=50=System Control 2
+1032=50=Local currency decimal places
+1033=50=NET Totalising for PLUs, Depts & Groups?
+1034=50=Method of rounding
+1035=50=Manual tax system?
+1036=50=iButtons for Clerks?
+1037=50= Sign off at removal of iButton?
+1038=50=Enable Sharp UP5900 Clerk Lock?
+1039=50=Enable Sharp UP5900/X500 MCR?
+1040=50=Enable Sharp UP-X500 Clerk Lock?
+1041=50=Enable TEC ST60 MCR?
+1042=50=Enable XN900 iButtons?
+1043=50=Enable XN900 MCR?
+1044=50=Disable key press sound?
+1045=50=Power unit off at Windows shutdown?
+1046=50=Ignore track 1 magnetic card swipes?
+1047=50=Ignore track 2 magnetic card swipes?
+
+
+[TICKET ISSUANCE]
+
+1071=50=Ticket Issuance
+1072=50=Show price on ticket
+1073=50=Use 3rd @ qty for tickets per item
+1074=50= Inc ticket number for per item tickets
+1075=50=Print in double size
+1076=50=Print ticket number
+1077=50=Ticket number resets at daily Z1
+1078=50=Print receipt header message
+1079=50=Print 1 line of header message
+1080=50=Print graphic logo
+1081=50=Print receipt bottom message
+1082=50=Print 1 line of bottom message
+1083=50=Cut ticket
+1084=50=Dotted line at end of ticket
+1085=50=Star TSP700 detects start of ticket
+1086=50=Star TSP700, print density heavy
+1087=50=Print receipt info line
+1088=50=Info line prints at bottom of ticket
+1089=50=Print order info
+1090=50=Ticket printer 2 uses ticket number 1
+1091=50=Print total number of tickets
+1092=50=Left justify ticket
+1093=50=Line feeds before ticket printing
+
+
+[SLIP PRINT]
+
+1101=50=Slip Print Control
+1102=50=Pre-Feed Lines
+1103=50=Max Slip Lines
+1104=50=Print Header Message?
+1105=50=Print Commercial Message?
+1106=50=Print Bottom Message?
+1107=50=Print VAT Number?
+1108=50=Print Tax Symbol?
+
+
+[ORDER CONTROL]
+
+1121=50=Order Control
+1122=50=Automatically calculate next Order Num?
+1123=50= Enforce order number when prompted?
+1124=50=Order Numbers only apply to KP Items?
+1125=50=Comp Covers only apply to KP Items?
+1126=50=Print REFUND Mode Sales on KP?
+1127=50=Print KP in Double Width
+1128=50=Print KP in Double Height
+1129=50=Print Order Number in Double Height
+1130=50=Print Check/Table Number in Double Height
+1131=50=Insert a line in between KP items
+1132=50=Automatically Issue a Receipt for KP Items?
+1133=50=Reset Order Number, after Z1 Fixed Total?
+1134=50=Initial Value for Order Number
+1135=50=Condense Dbl Size Items when Overrun?
+1136=50=Prompt for location?
+1137=50=Sort by Department?
+1138=50=Sort by PLU Group?
+1139=50=Compress KP Ticket?
+1140=50=Autocut KP ticket?
+1141=50=Print dotted line at end of order?
+1142=50=Issue FF at end of order?
+1143=50=Sound buzzer at order?
+1144=50=Number of line feeds before order
+1145=50=Number of line feeds after order
+1146=50=Translate KP order
+1147=50=KV Type
+1148=50= Number at top is
+
+
+[REPORT CONTROL]
+
+1161=50=Report Control
+1162=50=Do not print X Count
+1163=50=Do not print Z Count
+1164=50=Compulsory cash declaration
+1165=50=Do not print reports on journal
+1166=50= Do not print report headers
+1167=50= Do not print report reset lines
+1168=50=Do not print time on reports?
+1169=50=Do not print date on reports?
+1170=50=Do not print consec number on reports?
+1171=50=Sort cash dec amounts?
+1172=50=Consolidate cash dec amounts?
+
+
+[CHECK TRACKING]
+
+1191=50=Check tracking
+1192=50=Show Chk No on Table Plan Table
+1193=50=Comp Covers only apply to Checks?
+1194=50=Show Covers on Table Plan Table?
+1195=50=Table Nos are Checks (else Separate)
+1196=50=Default floor plan level
+1197=50=Use Check Tracking, if no Table Tracking.
+1198=50=Allow Z-Mode Open Check Report?
+1199=50=Auto Receipt for Checks?
+1200=50=Auto New Balance at Clerk Sign Off?
+1201=50=Do not print time on checks?
+1202=50=Do not print date on checks?
+1203=50=Do not print consec number on checks?
+1204=50=Automatic full bill at finalisation?
+1205=50=Service Charge
+1206=50=Service charge is Amount (No, % Rate)?
+1207=50=Service charge adds to NET sales?
+1208=50=Service charge added by SChrge key only?
+1209=50=Covers before service charge applies
+1210=50=Service charge on all items?
+1211=50=Service charge on selective item 1?
+1212=50=Service charge on selective item 2?
+1213=50=Service charge on selective item 3?
+1214=50=Service charge on selective item 4?
+1215=50=Service charge on selective item 5?
+1216=50=Prompt for text on new check?
+1217=50=Prompt for text on new table?
+1218=50=Prompt with text when present?
+1219=50=Auto check number start
+1220=50=Reset auto check number at daily Z1?
+1221=50=Covers is 1, when no covers entered?
+
+
+[PRINT CONTROL]
+
+1241=50=Print Control
+1242=50=Print Graphic Logo?
+1243=50=Print Receipt Header?
+1244=50=Print Commercial Message?
+1245=50=Print Bottom Message?
+1246=50=Print VAT Number?
+1247=50=Print Duplicate, on Second Receipts?
+1248=50=Print Report Header?
+1249=50=Print Tax Symbol?
+1250=50=Do not print time on receipts?
+1251=50=Do not print date on receipts?
+1252=50=Do not print consec number on receipts?
+1253=50=Double height order number on receipts?
+1254=50=Double height chk/tbl number on receipts?
+
+
+[AUTOBROADCAST]
+
+1271=50=Auto Broadcast
+1272=50=Auto Broadcast, PLU
+1273=50=Auto Broadcast, PLU Group
+1274=50=Auto Broadcast, Clerk
+1275=50=Auto Broadcast, Clerk Detail
+1276=50=Auto Broadcast, List PLU
+1277=50=Auto Broadcast, Tax Table
+1278=50=Auto Broadcast, Batch XZ
+1279=50=Auto Broadcast, Printer Logos
+1280=50=Auto Broadcast, Scrolling Messages
+1281=50=Auto Broadcast, Cheque Printing
+1282=50=Auto Broadcast, Keyboard Level Names
+1283=50=Auto Broadcast, Fixed Character
+1284=50=Auto Broadcast, Error Message
+1285=50=Auto Broadcast, Check Text
+1286=50=Auto Broadcast, Fixed Totaliser
+1287=50=Auto Broadcast, Finalise Key
+1288=50=Auto Broadcast, Transaction Key
+1289=50=Auto Broadcast, Status Key
+1290=50=Auto Broadcast, Department
+1291=50=Auto Broadcast, Timezones
+1292=50=Auto Broadcast, Mix & Match
+1293=50=Auto Broadcast, Scheduler
+1294=50=Auto Broadcast, Keyboard
+1295=50=Auto Broadcast, System Flags
+1296=50=Auto Broadcast, Employee Jobs/Shifts
+1297=50=Auto Broadcast, Non PLU Table
+1298=50=Auto Broadcast, Floor Plan Tables
+1299=50=Auto Broadcast, Customer
+1300=50=Auto Broadcast, Customer group
+1301=50=Auto Broadcast, IO Parameter
+1302=50=Auto Broadcast, Device Connection
+
+
+[COMMS CONTROL]
+
+1321=50=Comms Control
+1322=50=Dir for Programmed Data Backup
+1323=50=Directory for Screen Dumps
+1324=50=Modem init string
+1325=50=---------- Dispense Monitoring ----------
+1326=50=Enable dispense monitoring?
+1327=50=Directory for dispense monitor file
+
+
+[CUSTOMER FILE]
+
+1341=50=Customers
+1342=50=Forename
+1343=50=Surname
+1344=50=Account number
+1345=50=Customer Group
+1346=50=Address 1:
+1347=50=Address 2:
+1348=50=Address 3:
+1349=50=Address 4:
+1350=50=Postcode
+1351=50=Telephone
+1352=50=Blacklisted?
+1353=50=New customer?
+1354=50=Not allowed selective item 5 items?
+
+
+[CUSTOMER GROUPS]
+
+1371=50=Customer Groups
+
+
+[CUSTOMER CONTROL]
+
+1501=50=Customer Control
+1502=50=Automatically Issue a Receipt for Customers?
+1503=50=Value of 100 Points
+1504=50=Site Id for Customer Cards     
+1505=50=Allow open balance Z report?
+1506=50=Auto create new customers?
+1507=50=AC Prompt for group?
+1508=50=AC Prompt for address?
+1509=50=AC Prompt for phone number?
+1510=50=Warn if acc cust, finalise not by acc?
+1511=50=Use alpha-numeric account numbers?
+1512=50=Show CID info on display?
+1513=50=------- Custom Format Mag Cards -------
+1514=50=Enable track 1 custom customer cards?
+1515=50=Enable track 2 custom customer cards?
+1516=50=Custom card format?
+1517=50=Directory for customer pictures
+
+
+[SCANNING PLU]
+
+1531=50=PLU Control
+1532=50=Scanning PLU Start Record
+1533=50=Scanning PLU End Record
+1534=50=Auto create not found PLU's?
+1535=50=Lock register at not found PLU?
+1536=50=Do not validate the check digit?
+1537=50=Print PLU Code on Receipt?
+1538=50=Print PLU Code on Journal?
+1539=50=Finalise key record for single item PLU
+1540=50=Directory for PLU pictures
+1541=50=Disable open price PLU repeat?
+
+
+[EFT CONTROL]
+
+1551=50=EFT Control
+1552=50=EFT SYSTEM
+1553=50=Use socket mode comms (if no, text mode)
+1554=50=Server IP Address
+1555=50=Server Directory
+1556=50=EFT Account Number
+1557=50=Account ID
+1558=50=Prompt for cash back?
+1559=50=Cashback adds to Drawer Totaliser
+1560=50=Cashback Out-Drawer Totaliser
+1561=50=Prompt for gratuity (tips)?
+1562=50=Gratuity adds to Drawer Totaliser
+1563=50=Allow customer not present transactions
+1564=50=Enable bill lodging
+1565=50= Send Checks
+1566=50= Send Tables
+1567=50= Only send printed bills
+1568=50=Use Thyron in portable mode?
+1569=50=Await EFT dockets from Ocius for PC?
+
+
+[REINDEX PLU]
+
+1581=50=Range PLU Program
+1582=50=Reindex PLU File OK?
+1583=50=Reindex PLU File
+1584=50=From PLU
+1585=50=To PLU
+1586=50=Range Program OK?
+
+
+[RANGE PROGRAMMING CLERK]
+
+1601=50=Range Clerk Program
+1602=50=From Clerk
+1603=50=To Clerk
+
+
+[EXPORT CUSTOMER FILE]
+
+1611=50=Export Customer File
+1612=50=Export Name & Address Only?
+1613=50=Export Name & Address with Sales?
+
+
+[RANGE PROGRAMMING CUSTOMER]
+
+1621=50=Range Customer Program
+1622=50=From Customer
+1623=50=To Customer
+
+
+[CURRENCY EXCHANGE]
+
+1631=50=Currency exchange
+1632=50=---------- EURO (sub currency) ----------
+1633=50=EURO(sub) decimal places
+1634=50=Show EURO(sub) total in reg window?
+1635=50=Show EURO(sub) total on receipt/journal?
+1636=50=Show EURO(sub) total on cust display?
+1637=50=Change in EURO(sub) (No, Local)?
+1638=50=EURO(sub) uses 2nd drawer?
+1639=50=Show change in both currencies?
+1640=50=Run EURO(sub) change over function
+1641=50=---------- Currency exchange ----------
+1642=50=Local to currency 1 exchange rate
+1643=50=Currency 1 decimal places
+1644=50=Currency 1 uses 2nd cash drawer?
+1645=50=Local to currency 2 exchange rate
+1646=50=Currency 2 decimal places
+1647=50=Currency 2 uses 2nd cash drawer?
+1648=50=Local to currency 3 exchange rate
+1649=50=Currency 3 decimal places
+1650=50=Currency 3 uses 2nd cash drawer?
+1651=50=Local to currency 4 exchange rate
+1652=50=Currency 4 decimal places
+1653=50=Currency 4 uses 2nd cash drawer?
+1654=50=Local to currency 5 exchange rate
+1655=50=Currency 5 decimal places
+1656=50=Currency 5 uses 2nd cash drawer?
+1657=50=Local to currency 6 exchange rate
+1658=50=Currency 6 decimal places
+1659=50=Currency 6 uses 2nd cash drawer?
+1660=50=Local to currency 7 exchange rate
+1661=50=Currency 7 decimal places
+1662=50=Currency 7 uses 2nd cash drawer?
+1663=50=Local to currency 8 exchange rate
+1664=50=Currency 8 decimal places
+1665=50=Currency 8 uses 2nd cash drawer?
+1666=50=Local to currency 9 exchange rate
+1667=50=Currency 9 decimal places
+1668=50=Currency 9 uses 2nd cash drawer?
+1669=50=Local to currency 10 exchange rate
+1670=50=Currency 10 decimal places
+1671=50=Currency 10 uses 2nd cash drawer?
+
+
+[HOTEL POSTING]
+
+1681=50=Hotel posting
+1682=50=Hotel system
+1683=50=Directory of hotel server
+1684=50=Allow alpha room numbers?
+1685=50=Post group totals (No, dept)?
+1686=50=Use shift allowances?
+1687=50=Enclose fields using " in .csv export file?
+1688=50=Guestline Post Z Read Totals?
+1689=50=Hotel audit printing only ---------
+1690=50=Print individual items?
+1691=50=Print dept/group totals?
+1692=50=Cut ticket after each posting?
+
+
+[SPLIT REPORTING]
+
+1711=50=Split reporting
+1712=50=Use split reporting function?
+1713=50=Report 1 adds to period 1 sales?
+1714=50=Report 1 adds to period 2 sales?
+1715=50=Report 1 adds to period 3 sales?
+1716=50=Report 2 adds to period 1 sales?
+1717=50=Report 2 adds to period 2 sales?
+1718=50=Report 2 adds to period 3 sales?
+1719=50=Stop electronic journal 1 during report 2?
+1720=50=Stop electronic journal 2 during report 2?
+1721=50=Stop journal printer during report 2?
+1722=50=Stop consecutive number during report 2?
+1723=50=Sunday --------------------
+1724=50=Monday --------------------
+1725=50=Tuesday --------------------
+1726=50=Wednesday --------------------
+1727=50=Thursday --------------------
+1728=50=Friday --------------------
+1729=50=Saturday --------------------
+1730=50=Report 2 start time
+1731=50=Report 2 end time
+
+
+[POCKETTOUCH]
+
+1741=50=PocketTouch
+1742=50=Menu operation type
+1743=50=Sort alphabetically?
+1744=50=Level shifts shown in menu levels?
+1745=50=Only allowed to open checks?
+1746=50=Only allowed to open tables?
+1747=50=Only allowed to open tables on Floor Plan?
+1748=50=Retain clerk at power up?
+1749=50=PLU Windows stays on screen until cancel?
+1750=50=Password to exit PocketTouch
+1751=50=PocketTouch uses TCP/IP (No, IPX&PTGateway)?
+
+
+[FIDELITY]
+
+1761=50=Fidelity
+1762=50=Accept Fidelity total control mag cards?
+1763=50=Card number prefix ID (5 digits)
+1764=50=Accept for compulsory non add number?
+
+
+[PASSWORDS]
+
+1771=50=Passwords
+1772=50=PGM Mode master password
+1773=50=Hidden menu password
+1774=50=Period 1 reports password
+1775=50=Period 2 reports password
+1776=50=Period 3 reports password
+
+
+[MIXANDMATCH]
+
+1781=50=Mix & Match
+
+
+[TIMEZONES]
+
+1811=50=Time Zone Times
+1812=50=Zone Start Time
+1813=50=Zone End Time
+
+
+[TIMEZONESDETAILLINK]
+
+1821=50=Time Zone Detail
+1822=50=Detail Link
+
+
+[JOURNAL CONTROL]
+
+1831=50=Journal Control
+1832=50=Do not print time on journal?
+1833=50=Do not print date on journal?
+1834=50=Do not print consec number on journal?
+1835=50=No journal 2 (archived journal)?
+
+
+[NON PLU TABLE]
+
+1841=50=Non PLU Table
+1842=50=FORMAT STRING:
+1843=50=Embedded value is Weight? (If No, Price)
+1844=50=Decimal places of embedded value
+
+
+[PLU PRICES]
+
+1851=50=PLU Prices
+1852=50=1st @ Price
+1853=50=2nd @ Price
+1854=50=3rd @ Price
+
+
+[SET DATE AND TIME]
+
+1861=50=Set System Date and Time
+1862=50=Set Time
+1863=50=Set Date
+
+
+[PLU PRICE LEVEL COPY]
+
+1865=50=PLU Price Level Copy
+1866=50=Copy from Price Level
+1867=50=Copy to Price Level
+1868=50=From PLU
+1869=50=To PLU
+1870=50=          OK?
+
+
+[PLU STOCK]
+
+1875=50=Enter stock to add and press enter
+1876=50=Add PLU Stock
+1877=50=Enter stock to subtract and press enter
+1878=50=Subtract PLU Stock
+
+
+[PLU NAMES]
+
+1891=50=PLU Names
+1892=50=Descriptor
+1893=50=Update Keyboard Text?
+
+
+[CLERK NAMES]
+
+1895=50=Clerk Names
+1896=50=Descriptor
+
+
+[SCROLLING MESSAGE]
+
+1901=50=Scrolling Messages
+1902=50=Message         
+1903=50=Pole Display Message  ->
+
+
+[RECEIPT MESSAGE]
+
+1905=50=Logos
+1906=50=Receipt Header -----------------------
+1907=50=Receipt Commercial Message --------------
+1908=50=Receipt Bottom Message ---------------
+1909=50=EFT Docket Header -------------------
+1910=50=EFT Docket Bottom Message, Store Copy ---------
+1911=50=EFT Docket Bottom Message, Customer Copy ---------
+1912=50=Report Header ----------------------
+1913=50=Signature Strip ----------------------
+1914=50=VAT Number ----------------------
+
+
+[ERROR MESSAGE]
+
+1921=50=Error Message 
+1922=50=Error Message 1
+1923=50=Error Message 2
+
+
+[FIXED CHARACTER]
+
+1931=50=Fixed character 1
+1932=50=------------ Price shifts
+1933=50=Fixed character 
+1934=50=------------ Serial port names
+1935=50=------------ Currency symbols
+1936=50=Local
+1937=50=Dual
+1938=50=------------ Mode names
+1939=50=------------ Price levels
+1940=50=------------ Terminal locations
+1941=50=------------ Customer locations
+1942=50=------------ Misc Symbols
+1943=50=------------ Hotel Shifts
+1944=50=------------ Currency Words for Cheques
+1945=50=Fixed character 2
+
+
+[PLU GROUPS]
+
+1951=50=PLU Group
+1952=50=Descriptor
+
+
+[MENU LEVEL NAMES]
+
+1961=50=Menu Level Names
+1962=50=Home Mode Level
+1963=50=X Mode Level
+1964=50=Z Mode Level
+1965=50=Manager Mode Level
+1966=50=Sales Mode Level 
+
+
+[CHECK TEXT]
+
+1971=50=Check Text
+1972=50=Check type
+1973=50=Check number
+1974=50=Text
+
+
+[EMPLOYEE JOBS]
+
+1981=50=Employee Jobs
+1982=50=Job text
+1983=50=Shift
+
+
+[EMPLOYEE SHIFTS]
+
+1985=50=Employee Shifts
+1986=50=Shift text
+1987=50=Shift start time
+1988=50=Shift end time
+1989=50=Start of breaks
+1990=50=End of breaks
+1991=50=Break time allowed
+1992=50=Start time grace (minutes)
+1993=50=End time grace (minutes)
+
+
+[TIMEANDATTENDANCE]
+
+1995=50=Time & Attendance
+1996=50=Rounding of times (minutes)
+1997=50=Log time changes?
+1998=50=Ignore 'iffy' hours worked?
+1999=50=Print stub tickets for time & att operations?
+
+
+[IRC CONTROL]
+
+2011=50=IRC Control
+2012=50=Auto IRC initialise at startup?
+2013=50=When auto IRC init, issue receipt?
+
+
+[3RD PARTY CUSTOMER SERVER CONTRO]
+
+2021=50=3rd Party Customer Server
+2022=50=Directory for server files
+2023=50=Site number
+2024=50=Enclose fields using " in .csv export file?
+2025=50=Uses track 1 mag card swipes?
+2026=50=Uses track 2 mag card swipes?
+2027=50=Auto receipt when customer is used?
+2028=50=Interface with Fidelity's ILAPopup.dll?
+
+
+[MIX AND MATCH 2]
+
+2041=50=Mix & Match 2
+
+
+[MEMORY ALLOCATION]
+
+2081=50=Maximum File Sizes
+
+
+[TABLE RESERVATIONS]
+
+2091=50=Table Reservation
+2092=50=---------- Time Line ----------
+2093=50=Reservation time line Start Hour
+2094=50=Reservation time line End Hour
+2095=50=---------- Deposits ----------
+2096=50=Transaction key used for deposits received
+2097=50=Post deposits from rsrv into the check?
+2098=50=In Drawer used for reservation deposits
+2099=50=Time table is reserved before booking
+2100=50=Default Booking duration
+2101=50=---------- Time Zoning ----------
+2102=50=Tables resvd by Time Zone (no, by Time)?
+2103=50=Time zone
+2104=50=start time
+2105=50=Warn user when opening a table?
+
+
+[status keys]
+
+2121=50=Status Key Programming
+2122=50=Descriptor
+2123=50=Update Keyboard Text?
+2124=50=Key Type
+2125=50=Print on Receipt?
+2126=50=Includes Service Charge?
+2127=50=Subtotal is EURO(sub)?
+2128=50=Toggles between EURO(sub) and local?
+2129=50=Allow alpha-numeric numbers?
+2130=50=Print on Customer Receipt?
+2131=50=Print to KP1?
+2132=50=Print to KP2?
+2133=50=Print to KP3?
+2134=50=Print to KP4?
+2135=50=Print to KP5?
+2136=50=Print to KP6?
+2137=50=Print to KP7?
+2138=50=Print to KP8?
+2139=50=Print on KPs in Red
+2140=50=Print to KV1?
+2141=50=Print to KV2?
+2142=50=Generate next order number?
+2143=50=Send Message to Terminals?
+2144=50=Prompt for customer name?
+2145=50=Issue stub receipt?
+2146=50=     with signature strip?
+2147=50=Manual entry only?
+2148=50=Use Random PLU Codes (If No, Mem Num)?
+2149=50=Linked PLU Group to Search on
+2150=50=Alphabetical order?
+2151=50=View for Signed on Clerk Only
+2152=50=Price Shift
+2153=50=Preset Clerk
+2154=50=Print on rct/journal
+2155=50=Use Account Number (If No, Mem No)?
+2156=50=Use 3rd party customer server (NOT ICRTouch)?
+2157=50=Preset customer number
+2158=50=------------------------------- Customer Receipts
+2159=50=Sort by Group?
+2160=50=Sort by Dept?
+2161=50=Sort with Totals Only?
+2162=50=---------------------------- Check Tracking Bills
+2163=50=Item Consolidation?
+2164=50=Print Date/Time Separator?
+2165=50=Print Additional Items Only?
+2166=50=For signed on customer only?
+2167=50=Auto new check?
+2168=50=Do not allow numeric entry?
+2169=50=Drop Down Window Link
+2170=50=Window stays down until ESC?
+2171=50=Removes Service Charge?
+2172=50=Sets Service Charge?
+2173=50=Currency
+2174=50=Menu Shift
+2175=50=Price Level
+2176=50=Affects current sale only?
+2177=50=Show current price level on KB text?
+2178=50=Exempts tax 1?
+2179=50=Exempts tax 2?
+2180=50=Exempts tax 3?
+2181=50=Exempts tax 4?
+2182=50=Exempts tax 5?
+2183=50=Change to Price Level
+2184=50=Item list number
+2185=50=Use programmed dir location?
+2186=50=Delete file after use?
+2187=50=Always prompt for number of bills?
+2188=50=Allowed to open check?
+2189=50=Show only this clerk's checks?
+2190=50=Show check file 1 (check)?
+2191=50=Show check file 2 (table)?
+2192=50=Show check file 3 (future)?
+2193=50=Show check file 4 (future)?
+2194=50=Data Backup?
+2195=50=Data Restore?
+2196=50=----------------------------------------- Location
+2197=50=Floppy Drive?
+2198=50=Data Backup Area?
+2199=50=PGM3 Programmable Area?
+2200=50=Drawer totaliser
+2201=50=When no amount entered, Open drawer?
+2202=50=Add to CASH DECLARED fixed tl?
+2203=50=Fixed denomination
+2204=50=Enforce multply key for multiple qty?
+2205=50=Preset Report
+2206=50=Sort Report
+2207=50=Prompt for Department range?
+2208=50=Prompt for PLU Group range?
+2209=50=Prompt for customer group range?
+2210=50=Print for signed on clerk only?
+2211=50=Prints to display?
+2212=50=Report is inline collection?
+2213=50=Report is inline consolidation
+2214=50=Report for this location only?
+2215=50=Report for all locations?
+2216=50=Preset Batch Report
+
+
+[TRANSACTION KEY]
+
+2231=50=Transaction Key Programming
+2232=50=Descriptor
+2233=50=Update Keyboard Text?
+2234=50=Key Type
+2235=50=Compulsory Eat In/Take Out?
+2236=50=Allow Price Increase?
+2237=50=Allow Price Decrease?
+2238=50=Value
+2239=50=Allow Preset Overide?
+2240=50=Restrict to One Use per Sale?
+2241=50=Allow Negative Balance?
+2242=50=Plus           %
+2243=50=Applies to all Products?
+2244=50=Applies to selective Itemiser1?
+2245=50=Applies to Selective Itemiser2?
+2246=50=Applies to Selective Itemiser3?
+2247=50=Applies to Selective Itemiser4?
+2248=50=Applies to Selective Itemiser5?
+2249=50=Not Allow after Item?
+2250=50=Not Allow after ST?
+2251=50=Minus           %
+2252=50=Discount all Products?
+2253=50=Discount Selective Itemiser1?
+2254=50=Discount Selective Itemiser2?
+2255=50=Discount Selective Itemiser3?
+2256=50=Discount Selective Itemiser4?
+2257=50=Discount Selective Itemiser5?
+2258=50=Complete line void?
+2259=50=Force drawer 1?
+2260=50=Force drawer 2?
+2261=50=Print extra ticket with signature strip?
+
+
+[FINALISE KEYS]
+
+2281=50=Finalise Key Programming
+2282=50=Preset Amount
+2283=50=High amount limit
+2284=50=Preset Room Number
+2285=50=Drawer In
+2286=50=Drawer Out
+2287=50=Open Drawer?
+2288=50=Enforce Amount Tendered?
+2289=50=Inhibit Partial Tendering?
+2290=50=Inhibit Amount Tendering?
+2291=50=Enforce Subtotal?
+2292=50=Automatic Receipt Printing?
+2293=50=Warn if a check is open?
+2294=50=Print Cheque?
+2295=50=No tender at partial credit?
+2296=50=Print Tax Break Down?
+2297=50=Compulsory non-add number entry?
+2298=50=Tendered amounts in EUROs(sub)?
+2299=50=Prompt with numeric keypad for tender?
+2300=50=Use booking ref {no, room number}?
+2301=50=Low amount limit
+
+
+[CUSTOMER GROUP]
+
+2321=50=Customer Groups
+2322=50=Group Name
+2323=50=Loyalty Type
+2324=50=---------- Discounts ------------
+2325=50=Discount Rate, All Products
+2326=50=Discount Rate, Selective Item 1
+2327=50=Discount Rate, Selective Item 2
+2328=50=Discount Rate, Selective Item 3
+2329=50=Discount Rate, Selective Item 4
+2330=50=--------- Loyalty Points ----------
+2331=50=Points per Pound, All Products
+2332=50=Points per Pound, Selective Item 1
+2333=50=Points per Pound, Selective Item 2
+2334=50=Points per Pound, Selective Item 3
+2335=50=Points per Pound, Selective Item 4
+2336=50=Discount Given
+2337=50=Spend Required for Discount
+2338=50=Only Auto-Receipt if Discount Due
+2339=50=Discount Rate(1), All Products
+2340=50=Discount Rate(1), Selective Item 1
+2341=50=Discount Rate(1), Selective Item 2
+2342=50=Discount Rate(2), All Products
+2343=50=Discount Rate(2), Selective Item 1
+2344=50=Discount Rate(2), Selective Item 2
+2345=50=Day to Reset to Rate(1)
+2346=50=Free meal entitlement
+2347=50=Can only sign on during time zone?
+2348=50=---------- Time Zone 1 ------------
+2349=50=Start time
+2350=50=End time
+2351=50=Applies to Monday?
+2352=50=Applies to Tuesday?
+2353=50=Applies to Wednesday?
+2354=50=Applies to Thursday?
+2355=50=Applies to Friday?
+2356=50=Applies to Saturday?
+2357=50=Applies to Sunday?
+2358=50=---------- Time Zone 2 ------------
+2359=50=Use a morning spend limit?
+2360=50=Morning spend limit
+2361=50=Morning end time
+2362=50=Use a daily spend limit?
+2363=50=Daily spend limit
+2364=50=Price level
+2365=50=Account customer?
+2366=50=Overdraft Limit
+2367=50=Prompt with picture if present?
+2368=50=--------- Printing on Receipts ----------
+2369=50=Print last transaction date on receipt
+2370=50=Print spend today on receipt
+2371=50=Print times used today on receipt
+2372=50=Print spend to date on receipt
+2373=50=Print spend towards discount on receipt
+2374=50=Print discount total on receipt
+2375=50=Print customer address on receipt
+2376=50=Print phone number on receipt
+2377=50=Print customer name on KP
+2378=50=Print customer address on KP
+2379=50=Print account number on receipt
+
+
+[FILE MIX AND MATCH]
+
+2401=50=Mix & Match
+2402=50=Descriptor
+2403=50=Operation type
+2404=50=Qty required
+2405=50=Amount
+2406=50=Discount Rate (%)
+2407=50=Affects Tax Table
+2408=50=Include 2nd and 3rd @ items?
+2409=50=Include old items from checks?
+2410=50=Warn user when table starts?
+2411=50=Only available in this time range?
+2412=50= Start Time Range
+2413=50= End Time Range
+2414=50= Applies to Sunday?
+2415=50= Applies to Monday?
+2416=50= Applies to Tuesday?
+2417=50= Applies to Wednesday?
+2418=50= Applies to Thursday?
+2419=50= Applies to Friday?
+2420=50= Applies to Saturday?
+
+
+[FILE MIX AND MATCH 2]
+
+2431=50=Mix & Match 2
+2432=50=Qty rqd for bucket
+2433=50=PLU No
+2434=50=  Applies to Bucket No
+
+
+[PLU]
+
+2451=50=Department Link
+2452=50=PLU Group Link
+2453=50=List Box Link 1
+2454=50=List Box Link 2
+2455=50=List Box Link 3
+2456=50=List Box Link 4
+2457=50=List Box Link 5
+2458=50=List Box Link 6
+2459=50=Windows stay until ESC?
+2460=50=Maintain Stock?
+2461=50=Error When Minimum Stock Reached?
+2462=50=Inhibit Sales When Below Minimum Stock?
+2463=50=Display Stock Quantity on One-Shot PLU?
+2464=50=Current Stock Quantity
+2465=50=Minimum Stock Quantity
+2466=50=Tax Rate
+2467=50=Mix & Match
+2468=50=Enable Zero Price Sale?
+2469=50=PLU is Negative?
+2470=50=Enable Preset Overide?
+2471=50= High Digit Limit
+2472=50=PLU is condiment PLU?
+2473=50=Do not print on receipts or bills?
+2474=50=PLU is weight PLU?
+2475=50=Allow manual weight entry?
+2476=50=Prompt with picture?
+2477=50=Single item sale?
+2478=50=Quantity of 1st @ Price
+2479=50=Quantity of 2nd @ Price
+2480=50=Quantity of 3rd @ Price
+2481=50=Print in Red on KP?
+2482=50=Print to KP1?
+2483=50=Print to KP2?
+2484=50=Print to KP3?
+2485=50=Print to KP4?
+2486=50=Print to KP5?
+2487=50=Print to KP6?
+2488=50=Print to KP7?
+2489=50=Print to KP8?
+2490=50=Print to KV1?
+2491=50=Print to KV2?
+2492=50=Print to Ticket Printer 1?
+2493=50=Print to Ticket Printer 2?
+2494=50=Selective Itemiser 1
+2495=50=Selective Itemiser 2
+2496=50=Selective Itemiser 3
+2497=50=Selective Itemiser 4
+2498=50=Selective Itemiser 5
+2499=50=Commission 1
+2500=50=Commission 2
+2501=50=Commission 3
+2502=50=Commission 4
+
+
+[DEPT]
+
+2511=50=Descriptor
+
+
+[CLERK]
+
+2521=50=Secret sign on number
+2522=50=Menu level at sign on
+2523=50=Price level at sign on
+2524=50=Defaults to floor plan at sign on?
+2525=50=Default floor plan level
+2526=50=Compulsory order number entry
+2527=50=Compulsory number of covers entry
+2528=50=Compulsory check number
+2529=50=Prompt for customer number
+2530=50=Prompt for Eat In/Take Out
+2531=50=Sign off clerk at close of sale?
+2532=50=Allowed to open other clerk's checks?
+2533=50=Use 2nd drawer?
+2534=50=Clerk is manager?
+2535=50=Clerk is trainee?
+2536=50=Allowed to correct items from checks?
+2537=50=Last item error correct only?
+2538=50=Commission rate 1 (%)
+2539=50=Commission rate 2 (%)
+2540=50=Commission rate 3 (%)
+2541=50=Commission rate 4 (%)
+2542=50=Prompt to clock in at sign on?
+2543=50=Compulsory clocked in?
+2544=30=Employee job
+2545=50=Allow Use of No Sale
+2546=50=Allow Use of Item Correct
+2547=50=Allow Use of Void
+2548=50=Allow Use of Cancel
+2549=50=Allow Use of Refund
+2550=50=Allow Use of Price Shift
+2551=50=Allow Use of Price Levels
+2552=50=Allow Use of Menu Levels
+2553=50=Allow View Active Clerk List
+2554=50=Allow Use of New Check Key
+2555=50=Allow Use of Old Check Key
+2556=50=Allow Use of New Check/Old Check Key
+2557=50=Allow Use of Check Transfer
+2558=50=Allow Use of Split Check
+2559=50=Allow Use of + Amount
+2560=50=Allow Use of - Amount
+2561=50=Allow Use of +%
+2562=50=Allow Use of -%
+2563=50=Allow Use of Exchange Points
+2564=50=Allow Use of Suspend/Resume
+2565=50=Allow Use of Paid Out
+2566=50=Allow Use of Received on Account
+2567=50=Allow Use of Deposit
+2568=50=Allow Use of Pay Account
+2569=50=Allow Use of Customer Inquiry
+2570=50=Allow Use of Hot Card Button
+2571=50=Allow Use of Customer Transfer
+2572=50=Allow Use of Temporary Price Change
+2573=50=Allow to use Service Charge key
+2574=50=Allow to view customer detail
+2575=50=Allow to use remote journal view
+2576=50=Allow to use credit card capture
+2577=50=Allow to use House Bon
+2578=50=Allow to use View Open Checks
+2579=50=Allow to use Edit Check Text
+2580=50=Allow to use Cash2 key
+2581=50=Allow to use Minimize TouchPoint
+2582=50=Allow to use menu shift 2
+2583=50=Allow to use media exchange
+2584=50=Allow Use of REG1
+2585=50=Allow Use of RF
+2586=50=Allow Use of X
+2587=50=Allow Use of Z
+2588=50=Allow Use of Manager Functions
+2589=50=Allow Use of PGM Mode - Prices
+2590=50=Allow Use of PGM Mode - Texts
+2591=50=Allow Use of PGM Mode - All Programming
+2592=50=Allow Use of PGM Mode - Keyboard
+2593=50=Allow Use of PGM Mode - System Mode
+2594=50=Allow Use of PGM Mode - PGM Reads
+2595=50=Clerk iButton No.
+2596=30=Detail Link No.
+
+
+[PROGRAM SECTION2]
+
+2601=50=ITEM  
+2602=50=Totaliser is Non-Resetable?
+2603=50=Totaliser Does Not-Print on Reports?
+2604=50=Report No         
+2605=50=Period {1-3}
+2606=50=Report Type
+2607=50=Time of price change:
+2608=50=Switch to Price Level
+2609=50=Store Name
+2610=50=Cheque Printer Type
+2611=50=--------------- Date ---------------
+2612=50=------------ Store Name ------------
+2613=50=---------- Amount in Text ----------
+2614=50=--------- Amount in Figures --------
+2615=50=Print?
+2616=50=X Position
+2617=50=Y Position
+2618=50=Rate %
+2619=50=Add In (VAT), if no, Add On?
+2620=50=Terminal ID
+2621=50=Location
+2622=50=Terminal name
+2623=50=Clerks float?
+2624=50=Use centralised check system?
+2625=50=This machine check tracking master?
+2626=50=Use centralised customer totals?
+2627=50=This machine customer total master?
+2628=50=Use centralised time and attendance file?
+2629=50=This machine time and attendance master?
+2630=50=Use TCP/IP (No, IPX/SPX)?
+2631=50=VLAN number
+2632=50=---------- Receipt Printer ----------
+2633=50=---------- Report Printer -----------
+2634=50=---------- Customer Display ---------
+2635=50=------------ Slip Printer -----------
+2636=50=---------- Journal Printer ----------
+2637=50=------------ Cash Drawer ------------
+2638=50=----------- Ticket Printer 1 -----------
+2639=50=----------- Ticket Printer 2 -----------
+2640=50=----------- Hotel Printer/PMS ----------
+2641=50=------- EFT Device (Direct RS232) ------
+2642=50=Connected to MC No.
+2643=50=Connected to 
+2644=50=Connected to Port No.
+2645=50=Backup - Connected to MC No.
+2646=50=Backup - Connected to Port.
+2647=50=Play sounds through speakers (no, Buzzer)?
+2648=50=Off screen GFX in Sys RAM (No, Vid RAM)?
+2649=50=System contains a mix of screen sizes?
+2650=50=Kitchen Printer No.
+2651=50=Kitchen Video No.
+2652=50=Kitchen Printer Name
+2653=50=Serial Port
+2654=50=Baud Rate
+2655=50=Parity  
+2656=50=Data Bits
+2657=50=Stop Bit
+2658=50=Connected Device
+
+
+[ERROR MESSAGES]
+
+4001=40=Please Check Report Printer
+4002=40=No Response, Continue Waiting?
+4003=12=NO ANSWER, 
+4004=12=, RETRY?
+4005=40=No Response From Time & Attendance Master
+4006=40=There is no time & attendance master
+4007=24=Error
+4008=40=CUSTOMER DETAIL HEADER FILE FULL
+4009=40=CUSTOMER DETAIL ITEM FILE FULL
+4010=40=NO CUSTOMER MASTER
+4011=40=No response from Customer Master
+4012=40=No Journal Roll for that Date Exists!
+4013=60=Unable to Allocate memory for Check Tracking Index File
+4014=40=RUN IRC INITIALISE
+4015=40=No Check Tracking Master!
+4016=40=Printer Error, Retry?
+4017=40=No Response From Check Master
+4018=40=ERROR, Scale.Dll not found
+4019=24=Dll Error
+4020=40=Could not get a ptr to all the scale func calls
+4021=40=SCALE CHECKSUM IS INVALID!!!
+4022=40=SCALE COMMUNICATIONS WILL BE DISABLED
+4023=40=Scale.dll not initialised
+4024=40=Error with Device Connected to Port
+4025=40=There are errors in your licence file
+4026=24=Licence file error
+4027=50=Unable to Allocate memory for Port Output Buffers
+4028=40=Printer timed out
+4029=40=TIMEOUT WAITING FOR RESPONSE
+4030=40=Unable to locate SerialDr.dll
+4031=40=SerialDr.dll
+4032=60=ERROR, could not get a pointer to all of the serial dll functions
+4033=40=No Detail Exists for This Customer
+4034=40=Unable to create customer output file
+4035=40=Customer server offline
+4036=40=Bad file format
+4037=40=Unable to initialise ILAPopUp.Dll
+4038=50=There is currently an EFT Transaction in suspend.
+4039=60=Unable to Allocate memory for Floor Plan Background Image
+4040=40=The floor plan can only be edited on the
+4041=40=larger resolution machines
+4042=40=NOT IN THE MIDDLE OF A SALE
+4043=40=YOU ALREADY HAVE A CHECK OPEN
+4044=40=NO ACTIVE SALE
+4045=40=NO SLIP PRINTER CONNECTED
+4046=60=Unable to Allocate memory for Font Set
+4047=40=Error opening system font
+4048=60=Unable to initialise Direct Draw
+4049=40=HOTEL SERVER OFFLINE
+4050=40=Unable to open output file
+4051=40=ROOM NUMBER NOT FOUND
+4052=40=NO FOLIOS FOR THIS ROOM FOUND
+4053=40=UNABLE TO OPEN ROOM ACCOUNT FILE
+4054=40=ROOM NOT OCCUPIED
+4055=40=Communications error with the PMS server
+4056=40=No response from hotel server
+4057=40=NO POSTING ALLOWED ON THIS ROOM
+4058=60=Could not initialise iButtons
+4059=60=ERROR, could not get a pointer to all of the TMEX functions needed
+4060=40=Unable to Allocate memory for Icons
+4061=40=UNABLE TO OPEN RESOURCE FILE, ICONS.RSC
+4062=60=Unable to Allocate memory for PLU file
+4063=60=Unable to Allocate memory for Clerk Detail file
+4064=60=Unable to Allocate memory for Check Text
+4065=60=Unable to Allocate memory for Time Zones
+4066=60=Unable to Allocate memory for Time Zone Links
+4067=60=Unable to Allocate memory for Time Zone Detail
+4068=60=Unable to Allocate memory for Employee Jobs
+4069=60=Unable to Allocate memory for Employee Shifts
+4070=60=Unable to Allocate memory for Employee trans
+4071=60=Unable to Allocate memory for Mix and Match
+4072=60=Unable to Allocate memory for Non PLU Table
+4073=60=Unable to Allocate memory for Keyboard File
+4074=60=Unable to Allocate memory for Multi Purpose Area
+4075=60=Unable to Allocate memory for Option Window List
+4076=60=Unable to Allocate memory for Data Buffer
+4077=60=Unable to Allocate memory for Option Window Buffer
+4078=60=Unable to Allocate memory for Display Buffer
+4079=60=Unable to Allocate memory for program list
+4080=60=Unable to Allocate memory for PLU Alpha Index
+4081=60=Unable to Allocate memory for IDC File
+4082=60=Unable to Allocate memory for customer detail headers
+4083=60=Unable to Allocate memory for customer items
+4084=60=Unable to Allocate memory Reg Buffers
+4085=60=Unable to Allocate memory Receipt Buffers
+4086=60=Unable to Allocate memory for KP Buffers
+4087=60=Unable to Allocate memory for Screen Saver Messages
+4088=60=Unable to Allocate memory for Floor Plan BackGround Image
+4089=60=WSAStartup failed!
+4090=60=WinSock Error
+4091=60=The IPX Protocol is not installed
+4092=60=The system will now be configured for TCP/IP networking
+4093=60=The network socket is already in use
+4094=60=There is no network on this machine
+4095=60=Socket failed with error
+4096=60=bind failed with error
+4097=60=The TCP/IP Protocol is not installed
+4098=60=The network port is already in use
+4099=14=Check Master,
+4100=10=Disconnect
+4101=60=Networking is currently turned off, switch on now?
+4102=60=There Is No Designated Check Tracking Master!
+4103=40=No remote terminals
+4104=40=No backup devices
+4105=40=Invalid location or disk write protected
+4106=40=Disk write error
+4107=40=Disk Error
+4108=40=Please Insert New Disk
+4109=40=Disk Full
+4110=40=Disk IO Error
+4111=40=Destination Drive Full
+4112=24=Will Not be Restored.
+4113=24=This File is a System File
+4114=40=KP Error, Retry?
+4115=24=NO ANSWER, TERMINAL,
+4116=24=KP ERROR,
+4117=40=KITCHEN VIDEO
+4118=40=RECEIPT PRINTER ERROR
+4119=40=REPORT PRINTER ERROR
+4120=40=SLIP PRINTER ERROR
+4121=40=TICKET PRINTER ERROR
+4122=40=HOTEL POSTINGS PRINTER ERROR
+4123=40=PAYCELL DEVICE OFFLINE
+4124=24=PLEASE CHECK KP,
+4125=50=PLEASE CHECK RECEIPT PRINTER, RETRY?
+4126=50=PLEASE CHECK REPORT PRINTER, RETRY?
+4127=50=PLEASE CHECK SLIP PRINTER, RETRY?
+4128=50=PLEASE CHECK TICKET PRINTER, RETRY?
+4129=50=PLEASE CHECK HOTEL POSTINGS PRINTER, RETRY?
+4130=50=PAYCELL DEVICE OFFLINE, RETRY?
+4131=40=INSUFFICIENT MEMORY
+4132=40=No more mem for Scanning PLUs
+4133=40=These two boxes are not compatible.
+4134=40=This Cell Cannot be Split!
+4135=40=STATUS KEY FILE FULL
+4136=50=Please select a table before proceeding
+4137=50=The time entered is invalid
+4138=50=This reservation has already been used
+4139=24=Unable to Open Prog File,
+4140=50=Invalid HDD Serial Number or No Dongle
+4141=50=This is not an TouchPoint licence
+4142=50=There are errors in your licence file
+4143=50=The correct payment code has already been entered
+4144=50=The 28 day extension has already been used
+4145=24=Bad Payment Code
+4146=50=The Software Can No Longer Be Used
+4147=50=The code you have entered is incorrect
+4148=12=You have
+4149=30=days to enter the correct code
+4150=50=Unable to initialise Sharp UP5900 POS Driver
+4151=50=Unable to initialise Sharp UP-X500 POS Driver
+4152=50=Missing file, splash.rsc
+4153=50=Splash.Rsc is not big enough for this resolution
+4154=50=Corrupt file, splash.rsc
+4155=50=X or Z Mode Not Allowed
+4156=50=Manager Mode Not Allowed
+4157=50=No Such Clerk
+4158=50=No Programming Allowed
+4159=50=No picture for this PLU exists
+4160=50=REFUND Mode Not Allowed
+4161=50=Receipt Printer not Connected to this Machine!
+4162=50=No Receipt Printer Connected
+4163=50=PLU NOT FOUND!
+4164=50=Invalid card
+4165=50=The transaction was cancelled
+4166=50=The transaction has been declined
+4167=50=Unable to suspend transaction
+4168=50=EFT device does not exist or is offline
+4169=50=EFT device is not responding
+4170=50=EFT device rejected the transaction
+4171=50=Timeout waiting for device to respond
+4172=50=The device is already processing a transaction
+4173=50=Unknown response
+4174=50=Unable to locate TransLtr.Dll
+4175=50=Could not get a pointer all language translation functions
+4176=50=Unable to open translation database
+4177=50=Unable to find MSPOS_USB.DLL
+4178=50=Could not get all the USB cash drawer functions
+4179=50=Cash drawer device does not exist
+4180=50=Could not all of the webserver functions
+4181=50=Unable to open MPLEX.DLL
+
+[BUTTON TEXTS]
+
+4301=9=EXIT
+4302=12=OPEN
+4303=12=TRNSF
+4304=12=INFO
+4305=12=SPLIT
+4306=21=BILL
+4307=12=SLIP
+4308=12=DUTCH
+4309=5=POS
+4310=5=SIZE
+4311=5=DEL
+4312=12=CANCEL
+4313=11=*TYPE*
+4314=11=MERGE
+4315=11=COPY LVL
+4316=11=PASTE LVL
+4317=11=SPLIT
+4318=11=Edit Text
+4319=9=SYM
+4320=9=SHIFT
+4321=9=BACKSP
+4322=9=ENTER
+4323=9=ESC
+4324=9=ICON
+4325=12=NEW RSRV
+4326=12=FUNCTIONS
+4327=12=CLOSE
+4328=12=DATE:
+4329=12=UP
+4330=12=DOWN
+4331=12=OPEN TABLE
+4332=9=PREV
+4333=9=NEXT
+4334=9=LOCK
+
+[FUNCTION KEY TYPES]
+
+4401=24=LIST PLU
+4402=24=MENU LEVEL SHIFT
+
+[PGM MENU NAMES]
+
+4501=24=Program Reads
+4502=24=Item & Descriptor
+4503=24=Char & Message
+4504=24=System Programming
+4505=24=PLU Price
+4506=24=Function Keys
+4507=24=PLU Descriptor
+4508=24=From PLU
+4509=24=To PLU
+4510=24=      OK?
+4511=24=Totaliser is Non-Resetable?
+4512=24=Totaliser Does Print on Reports?
+4513=24=KeyType:
+4514=24=Drawer In:
+4515=24=Drawer Out:
+4516=24=Value:
+4517=24=PLU
+4518=24=Finalise Key
+4519=24=Transaction Key
+4520=24=Status Key
+4521=24=Department
+4522=24=Feature
+4523=24=Operation
+4524=24=Mode Control
+4525=24=iButtons & Finger Prints
+4526=24=List PLU
+4527=24=Fixed Totaliser
+4528=24=Mix & Match
+4529=24=Batch Report
+4530=24=Scheduler
+4531=24=Customers
+4532=24=Customer Groups
+4533=24=Tax Table
+4534=24=Non PLU Table
+4535=24=Clerk
+4536=24=PLU Group
+4537=24=Time Zones
+4538=24=Time Zone Detail Link
+4539=24=Check Text
+4540=24=Employee Job
+4541=24=Employee Shift
+4542=24=Mix & Match 2
+4543=24=All Programming
+4544=24=System Flags
+4545=24=Cheque Print
+4546=24=System Configuration
+4547=24=Device Connection
+4548=24=Kitchen Printers
+4549=24=I/O Parameter
+4550=24=Clerk Detail
+4551=24=Clerk Detail 2
+4552=24=Range Programming
+4553=24=System control1
+4554=24=System control2
+4555=24=Order control
+4556=24=Report control
+4557=24=Check tracking
+4558=24=Print control
+4559=24=Slip print control
+4560=24=Journal control
+4561=24=Auto broadcast
+4562=24=Comms control
+4563=24=PLU Control
+4564=24=EFT control
+4565=24=Currency exchange
+4566=24=Hotel posting
+4567=24=Split reporting
+4568=24=PocketTouch
+4569=24=Fidelity
+4570=24=Ticket Issuance
+4571=24=Passwords
+4572=24=Time & Attendance
+4573=24=IRC Control
+4574=24=3rd Party Customer Servr
+4575=24=Table Reservations
+4576=24=Customer Features
+4577=24=Customer Control
+4578=24=Range Customer Features
+4579=24=Export Customer File
+4580=24=Clerk Range Programming
+4581=24=PLU Programming
+4582=24=Range PLU
+4583=24=Reindex PLU File
+4584=24=Mix & Match - Type 1
+4585=24=Mix & Match - Type 2
+4586=24=Prices & Stock
+4587=24=PLU Price Level Copy
+4588=24=Range of PLU Prices
+4589=24=Add PLU Stock
+4590=24=Subtract PLU Stock
+4591=24=Set System Date & Time
+4592=24=Text Programming
+4593=24=Clerk Names
+4594=24=Scrolling Messages
+4595=24=Logos
+4596=24=Error Message
+4597=24=Error Message 2
+4598=24=Fixed Character
+4599=24=Fixed Character 2
+4600=24=Menu Level Names
+4601=24=Menu Level Names 2
+4602=24=System Mode
+4603=24=File Sizes
+
+
+[PGM MENU OPTIONS]
+
+4701=24=Department Link
+4702=24=PLU Group Link
+4703=24=NO FUNCTION
+4704=24=CASH
+4705=24=CHEQUE
+4706=24=EFT
+4707=24=ACCOUNT
+4708=24=HOTEL TRANSFER
+4709=24=CASH2
+4710=24=CANCEL
+4711=24=ERROR CORRECT
+4712=24=NO SALE
+4713=24=REFUND
+4714=24=CHECK TRANSFER
+4715=24=NEW BALANCE
+4716=24=+ AMOUNT
+4717=24=- AMOUNT
+4718=24=+%
+4719=24=-%
+4720=24=EXCHANGE POINTS
+4721=24=PAID OUT
+4722=24=RECEIVED ON ACC
+4723=24=DEPOSIT
+4724=24=PAY ACCOUNT
+4725=24=PRICE CHANGE
+4726=24=HOUSE BON
+4727=24=MEDIA EXCHANGE
+4728=24=SUBTOTAL
+4729=24=RECEIPT ON/OFF
+4730=24=CLERK NUMBER
+4731=24=SIGN OFF BUTTON
+4732=24=AUTO CLERK
+4733=24=CLERK CHANGE
+4734=24=MENU LEVEL SHIFT
+4735=24=MENU LEVEL SHIFT 2
+4736=24=ESCAPE
+4737=24=PRICE SHIFT
+4738=24=PRICE LEVEL CHANGE
+4739=24=EURO SHIFT
+4740=24=TAX
+4741=24=CURRENCY EXCHANGE
+4742=24=REG WIN UP ARROW
+4743=24=REG WIN DOWN ARROW
+4744=24=PERIOD 1 REPORTS
+4745=24=PERIOD 2 REPORTS
+4746=24=PERIOD 3 REPORTS
+4747=24=BATCH REPORT
+4748=24=INLINE PERIOD 1 REPORT
+4749=24=INLINE PERIOD 2 REPORT
+4750=24=INLINE PERIOD 3 REPORT
+4751=24=INLINE BATCH REPORT
+4752=24=CASH DECLARE
+4753=24=CASH DECLARE 2
+4754=24=VIEW JOURNAL
+4755=24=REMOTE JOURNAL VIEW
+4756=24=RECEIPT PRINT
+4757=24=SLIP PRINT
+4758=24=GO DUTCH BILL PRINT
+4759=24=VALIDATION PRINT
+4760=24=NEW CHECK
+4761=24=OLD CHECK
+4762=24=NEW/OLD CHECK
+4763=24=SPLIT CHECK
+4764=24=SERVICE CHARGE
+4765=24=FLOOR PLAN
+4766=24=EDIT CHECK TEXT
+4767=24=VIEW OPEN CHECKS
+4768=24=TABLE RESERVATION
+4769=24=VIEW ACTIVE CLERKS
+4770=24=ORDER NUMBER
+4771=24=COVERS
+4772=24=TEXT MESSAGE
+4773=24=NON-ADD NUMBER (#)
+4774=24=C/CARD CAPTURE
+4775=24=LOCATION
+4776=24=CUSTOMER NUMBER
+4777=24=CUSTOMER INQUIRY
+4778=24=CUSTOMER HOT CARD
+4779=24=CUSTOMER TRANSFER
+4780=24=VIEW CUSTOMER DETAIL
+4781=24=CUSTOMER CID LOGON
+4782=24=FIDELITY LOYALTY CARD
+4783=24=MULTIPLY
+4784=24=WEIGHT
+4785=24=PLU NUMBER
+4786=24=PLU GROUP SEARCH
+4787=24=LIST PLU
+4788=24=PRICE INQUIRY
+4789=24=PLU PICTURE INQUIRY
+4790=24=PLU NOTES INQUIRY
+4791=24=SUSPEND
+4792=24=RESUME
+4793=24=EAT IN
+4794=24=TAKE OUT
+4795=24=DOWN LOAD GRAPHIC LOGO
+4796=24=CLERK FUNCS
+4797=24=SEND PROGRAM
+4798=24=RECEIVE PROGRAM
+4799=24=DATA BACKUP/RESTORE
+4800=24=INLINE FUNCTIONS
+4801=24=EDIT FLOOR PLAN
+4802=24=MINIMIZE TOUCHPOINT
+4803=24=CLOCK IN
+4804=24=CLOCK OUT
+4805=24=BREAK IN
+4806=24=BREAK OUT
+4807=24=SALE ITEM LIST IMPORT
+4808=24=REG MODE
+4809=24=X/Z MODE
+4810=24=PROGRAM MODE
+4811=24=HOME MODE
+4812=24=CLOSE TILL DOWN
+4813=24=REFUND MODE
+4814=24=MANAGER FUNCTIONS
+4815=24=In Drawer Link
+4816=24=Reports
+4817=24=No Report
+4818=24=Price Level
+4819=24=No Price Level Change
+4820=24=Prompt for price level
+4821=24=Device
+4822=24=No Device Connected
+4823=24=MPAD Kitchen Video
+4824=24=Modem
+4825=24=Direct PC
+4826=24=Barcode Scanner
+4827=24=Magnetic Card Reader
+4828=24=CRB Coin Revaluer
+4829=24=Hotel PMS (MICROS 4700)
+4830=24=Thyron Paycell
+4831=24=Avery FX120 Scale
+4832=24=Crucible Tech CID Unit
+4833=24=File List
+4834=24=No File
+4835=24=NOTUSED
+4836=24=No Link
+4837=24=Baud Rate
+4838=24=Parity
+4839=24=NONE
+4840=24=EVEN
+4841=24=ODD
+4842=24=Data Bits
+4843=24=Stop Bit
+4844=20=Port
+4845=24=Not Connected
+4846=24=Customer Group Link
+4847=24=Keyboard Menu Shifts
+4848=24=Default menu level
+4849=24=NOTUSED 
+4850=24=1st@ Price
+4851=24=2nd@ Price
+4852=24=3rd@ Price
+4853=24=Preset Clerk
+4854=24=Clerk Sign On
+4855=24=Preset Batch Report
+4856=24=Prompt for Report
+4857=24=Inline Reports
+4858=24=Prompt for a Group
+4859=24=Search all Groups
+4860=24=Tax Rate
+4861=24=No Tax
+4862=24=Loyalty Types
+4863=24=Standard Discount
+4864=24=Points
+4865=24=Joes
+4866=24=Borellis
+4867=24=School Meals
+4868=24=NOTUSED
+4869=24=Day of Week
+4870=24=Connected to Terminal
+4871=24=My Device
+4872=24=NONAME
+4873=20=Terminal ID
+4874=24=Drawer Port
+4875=24=No Drawer Connected
+4876=24=Device on COM1
+4877=24=Device on COM2
+4878=24=Device on COM3
+4879=24=Device on COM4
+4880=24=Device on COM5
+4881=24=Device on COM6
+4882=24=Sort
+4883=24=No Sort
+4884=24=Sort by Dept
+4885=24=Sort by Group
+4886=24=Locations
+4887=24=HOTEL SYSTEM
+4888=24=TOUCHPOINT SERVER SPEC
+4889=24=REMOTE AUDIT PRINTER
+4890=24=MICROS 4700 EMULATION
+4891=24=QT2000 Emltn (IPL v4.00)
+4892=24=GUESTLINE/REZLYNX
+4893=24=GUESTMASTER PRTL (1.0.4)
+4894=10=Currency
+4895=24=Operation Types
+4896=24=Menu levels
+4897=24=Departments
+4898=24=PLU Groups
+4899=24=NOTUSED
+4900=24=Mix & Match Types 
+4901=24=Discount amount 
+4902=24=Discount % 
+4903=24=Set price
+4904=24=Discount amt cheapest
+4905=24=Discount % cheapest
+4906=24=Discount amt last item
+4907=24=Discount % last item
+4908=24=Kitchen Video Type
+4909=24=MPAD - SPS1000 Emulation
+4910=24=Number is
+4911=24=Order number
+4912=24=Check/Table number
+4913=24=Consecutive number
+4914=24=Rounding method
+4915=24=Round Off (4/5)
+4916=24=Round Up
+4917=24=Round Down
+4918=24=Check type
+4919=24=Employee Shifts
+4920=24=No shift
+4921=24=Employee Jobs
+4922=24=NOT USED
+4923=24=EFT SYSTEM
+4924=24=COMMIDEA WINTI
+4925=24=COMMIDEA ILINK/BILL MGR
+4926=24=COMMIDEA DRCT TO VERIFNE
+
+
+
+
+#####################################################################
+# ICRTouch Version 2.531 - 5/4/2006                                 #
+#####################################################################
+
+
+
+[FILE NAMES]
+
+73=24=Keyboard 2
+74=3=PLU
+75=3=FIN
+76=3=TRN
+77=3=STS
+78=3=FXD
+79=8=NO FUNC
+80=8=INVALID
+
+[TICKET ISSUANCE]
+
+1094=50=Print customer name
+
+[3RD PARTY CUSTOMER SERVER CONTRO]
+
+2029=50=Allow alpha customer numbers?
+2030=50=Use Rebound Barcode Reader?
+
+[status keys]
+
+2217=50=Batch file number
+2218=50=Wait until completion
+2219=50=Launch as minimized
+
+[CUSTOMER GROUP]
+
+2380=50=Print phone number on kp
+
+[CLERK]
+
+2597=50=Allowed to use Launch Batch
+
+[SKIN PROGRAM]
+
+2701=50=Current Skin
+
+[DISPLAY MESSAGES]
+
+3903=40=Font
+3904=40=Image
+3905=40=No Image
+3906=40=Button shape
+
+[ERROR MESSAGES]
+
+4182=40=Unable to execute BarcodeReader.Exe
+
+[BUTTON TEXTS]
+
+4335=24=Type
+4336=24=Font
+4337=24=Shape
+4338=24=Txt Clr
+4339=24=Bk Clr
+
+[PGM MENU NAMES]
+
+4604=24=Skin
+
+[PGM MENU OPTIONS]
+
+4927=24=Launch Batch File
+
+
+#####################################################################
+# ICRTouch Version 2.533 - 16/1/2007                                #
+#####################################################################
+
+[PRINTER MESSAGES]
+
+543=24=EAT IN/TAKE OUT CHANGED,
+
+[SYSTEM CONTROL 2]
+
+1048=50=Sale Total Rounding 
+
+[TICKET ISSUANCE]
+
+1095=50=Line feeds before cut
+
+[AUTOBROADCAST]
+
+1303=50=Auto Broadcast, IP Printers
+
+[EFT CONTROL]
+
+1570=50=Use SaleId in Merchant Ref?
+
+[FIXED CHARACTER]
+
+1946=50=------------ Eat In/Take Out
+
+[status keys]
+
+2220=50=Shift tax rates (1-5 => 6-10)?
+2221=50=Show current eat in/take out record?
+
+[CLERK]
+
+2598=50=Allowed to use Global Eat In/Take Out
+
+[IPPRINTERS PROGRAM]
+
+2751=50=Name
+2752=50=IP Address
+
+[DISPLAY MESSAGES]
+
+3907=24=Not in effect
+
+[ERROR MESSAGES]
+
+4183=40=Due to low disk space
+4184=40=journal 2 has been disabled
+
+[PGM MENU OPTIONS]
+
+4928=24=Global Eat In/Take Out
+4929=24=TouchKitchen
+
+4930=24=No rounding
+4931=24=Round at 0,5,10
+4932=24=Round at 0,10 (4/5)
+4933=24=Round at 0,50,100
+4934=24=Round at 0,25,50,75,100
+
+
+#####################################################################
+# ICRTouch Version 2.534 - 7/6/2007                                 #
+#####################################################################
+
+[ORDER CONTROL]
+
+1149=50=Do not print English?
+
+[CHECK TRACKING]
+
+1222=50=Do not print item count on checks?
+1223=50=Do not Z reset Open Check in batch reports?
+
+[PRINT CONTROL]
+
+1255=50=Do not print item count on receipts?
+
+[CUSTOMER CONTROL]
+
+1518=50=Search acc number for unknown track 1 swipes?
+1519=50=Search acc number for unknown track 2 swipes?
+1520=50=Local area code
+
+[JOURNAL CONTROL]
+
+1836=50=Do not print item count on journal?
+
+[status keys]
+
+2222=50=Subtotal after shift?
+
+[PROGRAM SECTION2]
+
+2659=50=Does not add to Tl in Drawer?
+
+[TRANSACTION KEY]
+
+2262=50=Preset in drawer totaliser
+
+[PGM MENU OPTIONS]
+
+4935=24=Preset In Drawer Link
+4936=24=Always prompt
+
+
+#####################################################################
+# ICRTouch Version 2.535 - 25/9/2007                                #
+#####################################################################
+
+[REPORT PRINTING]
+
+975=40=CHECK BUP MSTR DOWN
+976=40=SWITCHED TO CHECK BUP
+
+[PRINT CONTROL]
+
+1256=50= Centre?
+1257=50= Centre?
+1258=50= Centre?
+1259=50=Centre sig strip message?
+1260=50= Centre?
+1261=50= Centre?
+
+[PASSWORDS]
+
+1777=50=Lock terminal password
+
+[CLERK]
+
+2599=50=Allowed to use Edit Customer
+2600=50=Allowed to use Points Adjustment
+
+[TRANSACTION KEY]
+
+2263=50=Preset points amt
+2264=50=Adds to points? {no, subtracts}
+2265=50=Tendered amount is value? {no, points}
+
+[PROGRAM SECTION2]
+
+2660=50=I am Check Backup Master?
+
+[DISPLAY MESSAGES]
+
+3908=24=Switch to backup Chk Mst
+3909=24=Send chk file to backup
+3910=40=Sending Indexes
+3911=40=Sending Detail
+3912=50=Check Backup Master is now Master
+3913=50=If this is incorrect contact your dealer asap!
+3914=40=Sending Table Reservations
+3915=16=Reval Unit
+3916=24=Seconds?
+3917=24=Program iButton
+3918=24=Unlock Code
+
+[ERROR MESSAGES]
+
+4185=50=The check master is currently online!
+
+[PGM MENU OPTIONS]
+
+4937=24=CLEAN SCREEN
+4938=24=STOCK INQUIRY
+4939=24=EDIT CUSTOMER
+4940=24=LOCK TERMINAL
+4941=24=POINTS ADJUSTMENT
+
+
+#####################################################################
+# ICRTouch Version 2.536 - 23/4/2008                                #
+#####################################################################
+
+[FILE NAMES]
+
+81=24=Product Group Header
+82=24=Product Group Item
+83=24=Set Menu
+84=24=KP Category
+85=24=Reason Table
+86=24=Check Index
+87=24=Check Detail
+88=24=IP Printers
+
+[REPORT DISPLAY MESSAGES]
+
+675=40=Printing Reason Table
+676=40=Collecting Reason Table
+
+[REPORT TITLES]
+
+755=24=Last Time Sold PLU
+
+[REPORT PRINTING]
+
+977=40=Last Time Sold, Read Report
+978=40=Last Time Sold, Reset Report
+979=40=** PLU Last Time Sold Reset
+980=40=Reason Table Period ? Read Report
+981=40=Reason Table Period ?  Reset Report
+982=40=** Reason Table Period ? Reset
+
+
+[AUTOBROADCAST]
+
+1304=50=Auto Broadcast, External Product Groups
+1305=50=Auto Broadcast, Set Menu
+1306=50=Auto Broadcast, KP Category
+1307=50=Auto Broadcast, Reason Table
+
+[STATUS KEY]
+
+2223=50=Bill prints only?
+
+[TRANSACTION KEY]
+
+2266=50=Show Reason Table
+2267=50=Show Reason Table, Voids
+2268=50=Show Reason Table, Last Item Corr
+2269=50=Selected Item? (No, Next Item)
+
+[FINALISE KEYS]
+
+2302=50=No over-tender?
+
+[PLU]
+
+2503=50=Random Code
+2504=50=Link 6 items enforced zero price
+2505=50=Set menu premium item? (uses 3rd @)
+
+[PROGRAM SECTION2]
+
+2661=50=Print prices?
+2662=24=Sort
+2663=50=KP Configuration
+2664=50=Consolidate?
+2665=50=Items with differing condiments?
+2666=50=Set menus with differing items?
+2667=50=Condiments always print small?
+
+[PRODUCT GROUPS PROGRAM]
+
+2771=50=Group Name
+2772=24=Import Prdct Groups, Ok?
+2773=50=This will overwrite your existing product groups
+2774=50=Are you sure?
+2775=50=Use Alternative Keyboard Text
+2776=50=Ignore products with an empty descriptor
+2777=50=Ignore non sellable items
+2778=50=Ignore weight PLUs
+2779=30=Headers Imported:
+2780=30=Items Imported:
+2781=50=PLU
+2782=50=TEXT COLOUR
+2783=50=BACKGROUND COLOUR
+2784=50=* DELETE ITEM
+2785=50=* ADD NEW ITEM
+2786=50=Items --------
+2787=24=Import From
+2788=50=Ignore empty groups
+2789=24=Overide text
+2790=24=Item Type
+2791=50=Import List PLUs (kb only)
+
+[SET MENU PROGRAM]
+
+2801=50=Name
+2802=50=Substitution value
+
+[PGM5 PRESETS]
+
+2811=50=Customer Detail SaleID
+
+[KP CATEGORY]
+
+2831=24=Text
+
+[REASON TABLE]
+
+2835=24=Reason
+
+[DISPLAY MESSAGES]
+
+3919=24=Manage Biometrics
+3920=24=DATE:
+3921=24=DEFER
+3922=24=SUBSTITUTE
+3923=24=STATUS: CONNECTED
+3924=24=STATUS: RECEIVE ERROR
+3925=24=STATUS: OFF
+3926=24=STATUS: NETWORK ERROR
+3927=24=INDIVIDUAL CHECK
+3928=24=INDIVIDUAL TABLE
+3929=24=ALL CHECKS/TABLES
+
+[ERROR MESSAGES]
+
+4186=50=Unable to allocate
+
+[PGM MENU NAMES]
+
+4606=24=External Product Groups
+4607=24=Product Groups
+4608=24=Import Product Groups
+4609=24=Set Menu
+4610=24=Presets
+
+[PGM MENU OPTIONS]
+
+4942=24=DEFER
+4943=24=None
+
+
+#####################################################################
+# ICRTouch Version 2.540 - 11/11/2008                               #
+#####################################################################
+
+[FILE NAMES]
+
+89=24=Preset Message
+90=24=Table Analysis
+
+[PRINTER MESSAGES]
+
+544=46=   RATE                      NET     TAX
+545=24=UPLIFT
+546=24= Unlock Customer:
+547=24=Propulsion
+548=5=(NT)
+
+[REPORT DISPLAY MESSAGES]
+
+677=40=Collecting
+
+[REPORT TITLES]
+
+756=24=Table Reservations
+757=24=Today
+758=24=Tomorrow
+759=24=All
+760=24=Table Analysis
+
+[REPORT PRINTING]
+
+983=40=** Table Reservations Reset
+984=40=** Table Analysis Period ? Totals Reset
+985=20=FIRST USE:
+986=20=LAST USE:
+987=40=WARNING - FILE FULL, POSSIBLE DATA LOSS
+
+[SYSTEM CONTROL 1]
+
+1020=50=Show end of sale total window?
+1021=50=Only process Mix & Match at Subtotal?
+
+[ORDER CONTROL]
+
+1150=50=Printer supports 180dpi vertical print?
+
+[REPORT CONTROL]
+
+1173=50=No Z report when active clerks?
+1174=50=No Z report when active checks?
+
+[CHECK TRACKING]
+
+1224=50=Track checks?
+1225=50=Track tables?
+1226=50=Track departments?
+1227=50=Track plu groups?
+
+[PRINT CONTROL]
+
+1262=50=Print sig strip on intermediate bills?
+1263=50=Print sig strip on final bills?
+
+[AUTOBROADCAST]
+
+1308=50=Auto Broadcast,
+
+[COMMS CONTROL]
+
+1328=50=---------- Coin Dispenser ----------
+1329=50=Limit dispensed coins to:
+1330=50=Do not dispense if change is more than:
+1331=50=Also display total change in input window?
+
+[CUSTOMER CONTROL]
+
+1521=50=Auto create new customer when not found?
+
+[SCANNING PLU]
+
+1542=50=Prompt for tax rate?
+1543=50=Non turnover sales affects Stock?
+1544=50=Non turnover sales affects Last Time Sold?
+1545=50=Non turnover sales affects Dispense Monitoring?
+
+[EFT CONTROL]
+
+1571=50=Yes Pay
+1572=50=Message port
+1573=50=Receipt port
+1574=50=Interactive port
+
+[REINDEX PLU]
+
+1587=50=Filter for Dept:
+1588=50=Filter for PLU Group:
+
+[RANGE PROGRAMMING CUSTOMER]
+
+1624=50=Filter for Group:
+
+[TIMEZONESDETAILLINK]
+
+1823=50=Clerk Detail, Record 1 
+
+[FIXED CHARACTER]
+
+1947=50=------------ Customer Verification
+
+[TABLE RESERVATIONS]
+
+2106=50=Reserve cashiers not tables?
+
+[STATUS KEY]
+
+2224=50=Use KP status of parent?
+2225=50=Clears black list flag? {No sets flag}
+2226=50=Preset Message
+
+[CUSTOMER GROUP]
+
+2381=50=Positive balance adjustment uplift %
+2382=50=Apply to subtotal only?
+2383=50=Award points on whole pounds only?
+2384=50=Shift to price level 2?
+
+[FILE MIX AND MATCH]
+
+2421=50=Price level 1 items only?
+
+[PLU]
+
+2506=50=Prompt for customer verification 1?
+2507=50=Prompt for customer verification 2?
+2508=50=Marine fuel PLU? {Links to next PLU for duty}
+
+
+[PROGRAM SECTION2]
+
+2668=50=Local use only? {PocketTouch 2}
+2669=50=Remote use only? {PocketTouch 2}
+2671=50=Non Turnover? {TMS/PLU sales only}
+
+[PRODUCT GROUPS PROGRAM]
+
+2792=50=* DELETE THIS GROUP
+2793=50=Delete this group and all items belonging to it
+
+[PRESET MESSAGE]
+
+2841=24=Text
+
+[DISPLAY MESSAGES]
+
+3930=24=Print List to Display
+3931=24=T:
+3932=24=C:
+3933=24=To pay
+
+[ERROR MESSAGES]
+
+4187=50=Coin dispenser offline
+4188=50=Coin dispenser low on coins
+4189=50=Coin dispenser busy
+4190=50=Active checks
+4191=50=This licence number is not compatible 
+4192=50=with this version of TouchPoint
+4193=50=No USBCR.DLL
+
+[PORTAL]
+
+4430=50=KP %d Error, Retry?
+4431=50=KV %d Error, Retry?
+4432=50=Receipt Printer Error, Retry?
+4433=50=The check is currently in use elsewhere
+4434=50=Bad Format/Check Number
+4435=50=Check/Table doesn't exist
+4436=50=Unknown command requested by client
+4437=50=The server is busy. Please try again
+4438=50=Server busy, please wait
+
+[PGM MENU OPTIONS]
+
+4944=24=Round at 0,100
+4945=24=Device on COM7
+4946=24=Device on COM8
+4947=24=Receipt Printer
+4948=24=PRESET MESSAGE
+
+
+#####################################################################
+# ICRTouch Version 2.541 - 30/4/2009                                #
+#####################################################################
+
+[REPORT TITLES]
+
+761=24=Z Report
+762=24=X Report
+763=24=Txn Report
+764=24=Bank Report
+765=24=Q Report
+766=24=Account Summary Report
+767=24=Account Detail Report
+768=24=End of Day
+769=24=Offline Transaction Report
+770=24=Last Printed Report (Re-print)
+771=24=Stored Offline Txn
+
+[STATUS KEY]
+
+2227=50=Allow intermediate receipt printing?
+
+[PROGRAM SECTION2]
+
+2672=50=Allowed to use Customer Biometrics?
+
+[ERROR MESSAGES]
+
+4194=50=The supplied IP address is invalid
+4195=50=IP Addresses should be in the format XXX.XXX.XXX.XXX
+4196=50=The target host is offline
+4197=50=Unable to connect to remote port
+4198=50=The target host is unreachable
+4199=50=Connect failed with error %d
+
+[PGM MENU OPTIONS]
+
+4949=24=CUSTOMER BIOMETRICS
+4950=25=SEND TO KP NOW
+4951=25=IBUTTON READER
+
+
+#####################################################################
+# ICRTouch Version 2.542 - 27/5/2009                                #
+#####################################################################
+
+[PRINTER MESSAGES]
+
+549=35=CODE:
+
+[REPORT TITLES]
+
+772=24=Customer Discount
+
+[REPORT PRINTING]
+
+988=40=** Customer Discount Period ? Reset
+989=40=Customer Discount Reset Report
+990=40=Customer Discount Read Report
+991=40=DISCOUNT:
+992=20=DISCOUNT TOTAL:
+
+
+
+[COMMS CONTROL]
+
+1332=50=Range Servant - Days pin code valid
+
+[EFT CONTROL]
+
+1575=50= Use EFT dialog for CNP details?
+1576=50= Prompt for address?
+
+[PLU]
+
+2509=50=Generate Range Servant ball dispenser code?
+2510=50= Number of balls to be dispensed
+
+[PROGRAM SECTION2]
+
+2673=50=- Internet ---------------------
+2674=50=Back Office TCP Socket Password
+
+[DYNDNS]
+
+5940=40=Enable Dynamic DNS Updator?
+5941=40= Hostname
+5942=40= Username
+5943=40= Password
+5944=30=STS:
+5945=30=Initialising ...
+5946=30=No response
+5947=30=Invalid response
+5948=30=Invalid hostname format
+5949=30=Invalid hostname
+5950=30=Hostname not in account
+5951=30=Blocked for update abuse!
+5952=30=Invalid username/password
+5953=30=Unknown error
+5954=10=Ok
+
+[UPNP]
+
+5960=40=Enable UPNP?
+5961=40=STS:
+5962=40=Searching ...
+5963=40=Active
+5964=40=Failed
+5965=40=Stopped
+5966=24=Protocol
+5967=24=UPNP
+5968=40=Service Name
+5969=40=External Port
+5970=40=Internal Port
+5971=24=Enable?
+5972=24=Disabled
+5973=40= Seed port for default mapping
+5974=40=Use default seeded mapping?
+
+
+[UPDATE SERVICE]
+
+5980=40=Your current version is up to date
+5981=24=Check for update
+5982=40=Update software to:
+5983=40=Update available
+5984=40=Failed to write file:
+5985=40=Failed to decompress archive:
+5986=40=Failed to connect to update service
+5987=20=RECEIVE:
+5988=40=LAUNCH FILE DOESN'T EXIST
+5989=40=Modifications;
+5990=40=Fixes;
+5991=40=Notes;
+5992=40=Display release notes?
+5993=10=FROM:
+5994=10=TO:
+5995=40=Failed to open archive:
+
+
+#####################################################################
+# ICRTouch Version 2.543 - 23/6/2009                                #
+#####################################################################
+
+[CURRENCY EXCHANGE]
+
+1672=50=Local to EURO(sub) exchange rate
+
+[UPDATE SERVICE]
+
+5996=40=Current VER ID
+
+
+#####################################################################
+# ICRTouch Version 2.552 - 19/10/2009                               #
+#####################################################################
+
+[FILE NAMES]
+
+91=24=SEL
+92=24=IDC Header
+93=24=IDC Item
+
+[REPORT TITLES]
+
+773=24=Shelf Edge Labels
+774=24=SEL - Pending
+775=24=SEL - All
+776=24=SEL - Reset Only
+777=24=Free Meal Usage - No Dtl
+
+
+[REPORT PRINTING]
+
+993=40=Shelf Edge Label Read Report
+994=40=Shelf Edge Label Reset Report
+995=40=, Pending
+996=40=, All
+997=40=** Pending Shelf Edge Labels Reset
+
+
+[EFT CONTROL]
+
+1577=50=Process offline transactions?
+
+[STATUS KEY]
+
+2228=50=Use search dialog?
+2229=50=Reprints last EFT receipt?
+
+[PROGRAM SECTION2]
+
+2675=50=- TCP/IP ---------------------
+2676=50=Adapter
+2677=50=Use DHCP ?
+2678=50=IP Address
+2679=50=Subnet
+2680=50=Gateway
+
+[PORTAL]
+
+4439=50=Invalid file
+4440=50=Missing or invalid datalyt.ini entry
+4441=50=Bad parameter
+
+[PGM MENU OPTIONS]
+
+4952=24=Justification
+4953=24=Left
+4954=24=Top
+4955=24=Centre
+4956=24=Right
+4957=24=Bottom
+
+[ACTIVATION]
+
+5850=50=Would you like to activate your device?
+5851=50=Internet connection required
+5852=50=Thank you for activating TouchPoint
+5853=50=The software on this device can no longer be used
+5854=50=until it has been activated
+5855=50=You have %d days left to activate this device
+5856=50=Failed to connect to ICRTouch.com
+5857=50=No response from ICRTouch.com
+5858=50=Unknown response
+5859=50=The hardware differs from 
+5860=50=the original activated device
+5861=50=Internal DB Error
+5862=50=Activation failed
+
+[UNITS]
+
+5870=24=Unit
+5871=40=%s%s per %s
+5872=12=ml
+5873=12=10ml
+5874=12=100ml
+5875=12=cl
+5876=12=75cl
+5877=12=litre
+5878=12=gram
+5879=12=1g
+5880=12=10g
+5881=12=100g
+5882=12=kg
+5883=12=10kg
+5884=12=100kg
+5885=12=1000kg
+5886=12=cm
+5887=12=metre
+5888=12=m/sq
+5889=12=unit 18
+5890=12=unit 19
+5891=12=unit 20
+5892=12=unit 21
+5893=12=unit 22
+5894=12=unit 23
+5895=12=unit 24
+5896=12=unit 25
+5897=12=unit 26
+5898=12=unit 27
+5899=12=unit 28
+
+
+[SHELF EDGE LABELS]
+
+5900=24=Type
+5901=24=Inactive
+5902=24=Free text
+5903=24=Item name
+5904=24=Price
+5905=24=Barcode
+5906=24=Random code
+5907=24=Line
+5908=24=Image
+5909=24=Date
+5910=24=Unit price
+
+5920=24=Width
+5921=24=Height
+5922=24=X pos
+5923=24=Y pos
+5924=24=Item
+5925=24=Text
+5926=24=Font
+5927=24=Size
+5928=24=Avg char width
+5929=24=Cut pos
+5930=24=X2 pos
+5931=24=Y2 pos
+5932=24=Thickness
+5933=24=Image File
+5934=40=Enable SEL printing
+5935=40= Pending SEL
+5936=40= Unit
+5937=40= Qty per unit
+
+
+#####################################################################
+# ICRTouch Version 2.553 - 29/1/2010                                #
+#####################################################################
+
+[FILE NAMES]
+
+94=24=Rental Code
+
+[EFT CONTROL]
+
+1578=50=Use in Hospitality Mode?
+
+[CUSTOMER GROUP]
+
+2385=50=No morning free meal entitlement?
+2386=50=Tax exempt?
+
+[PROGRAM SECTION2]
+
+2681=50=Compulsory customer?
+
+[RENTAL CODES]
+
+5840=50=Code extended by %d days
+
+[ACTIVATION]
+
+5863=50=Would you like to use offline activation?
+5864=50=The code entered is invalid
+5865=24=Activate TouchPoint
+
+[SHELF EDGE LABELS]
+
+5911=24=Price - 2nd Currency
+
+
+#####################################################################
+# ICRTouch Version 2.560 - 28/2/2011                                #
+#####################################################################
+
+[FILE NAMES]
+
+95=24=Etal
+96=24=Customer Detail Header
+97=24=Customer Detail Item
+
+[REPORT TITLES]
+
+778=24=Socket Journal
+
+[REPORT PRINTING]
+
+998=40=** IDC File Reset
+999=40=** Socket Journal Reset
+
+[CHECK TRACKING]
+
+1228=50=Print barcode on receipts?
+1229=50=Show check text on table plan table?
+
+[CUSTOMER FILE]
+
+1355=50=Expiry date
+1356=50=Notes ----
+1357=50=Mobile
+1358=50=Work Tel
+1359=50=Email
+
+[CUSTOMER CONTROL]
+
+1522=50=in drawer for account payments
+1523=50= Added as negative value?
+
+[STATUS KEY]
+
+2230=50=Use receipt printer 2?
+3700=50=Allow override amount entry?
+
+[FILE MIX AND MATCH]
+
+2422=50=Start date:
+2423=50=End date:
+
+[PLU]
+
+2512=50= Alt text for modifier
+
+[PROGRAM SECTION2]
+
+2682=50=--------- Receipt Printer 2 ---------
+
+[DISPLAY MESSAGES]
+
+3934=40=Delete current PLU?
+3935=40=ENTER EMAIL
+3936=40=ENTER MOBILE
+3937=40=ENTER WORK TEL
+3938=40=ALL AB PROGRAMS
+
+
+[ERROR MESSAGES]
+
+4200=40=RECEIPT PRINTER 2 ERROR
+4201=50=PLEASE CHECK RECEIPT PRINTER 2, RETRY?
+
+[PORTAL]
+
+4442=50=File error
+4443=50=Password required
+4444=50=Short Stock
+4445=50=Wrong Clerk
+
+[PGM MENU OPTIONS]
+
+4958=24=Run Script (Etal)
+4959=40=Flag %d
+4960=40=Number:
+4961=24=ICRTOUCH TYPE 2 (XML)
+
+[ETAL]
+
+5820=40=Version Info
+5821=24=File
+5822=24=Output File
+5823=24=Name
+5824=24=Created
+5825=24=Last Modified
+5826=24=Min Ver Id
+5827=24=Author
+
+
+#####################################################################
+# ICRTouch Version 2.562 -                                 #
+#####################################################################
+
+[PRINTER MESSAGES]
+
+550=40=CHANGED FILES:
+551=40=TECHNICIAN CODE USED
+552=40=BAD PAYMENT CODE ENTERED
+
+#####################################################################
+# ICRTouch Version 2.580 - 24/5/2012                                #
+#####################################################################
+
+[REPORT TITLES]
+
+779=24=Paid Checks
+780=24=Paid Checks - All
+781=24=Paid Checks - Today
+782=24=Paid Checks - Date Range
+
+[TICKET ISSUANCE]
+
+1096=50=Print customer address
+1097=50=Print customer phone
+
+[REPORT CONTROL]
+
+1175=50=Skip 'Are you sure' Reset prompt?
+
+[CHECK TRACKING]
+
+1230=50=Print check text in double size?
+1231=50=Store finalised bills?
+1232=50=Value for high risk table
+1233=50=Time before table needs attention (hh:mm)
+1234=50=Preview floor plan bill prints?
+1235=50=Calculate service charge on subtotal?
+1236=50=Service charge applies to all sales?
+
+[CUSTOMER CONTROL]
+
+1524=50=Prompt to post change amounts to customer balance?
+1525=50=ADDRESS
+
+[SPLIT REPORTING]
+
+1732=50=Report 2 uses order number 2?
+
+[CUSTOMER GROUP]
+
+2387=50=Also print customer details on KV?
+
+[MIX AND MATCH 2]
+
+2435=50=Link items from next table?
+
+[PLU]
+
+2513=50=Cost price
+
+[PROGRAM SECTION2]
+
+2683=50=Disable CTRL-M Macro Start?
+
+[DISPLAY MESSAGES]
+
+3939=40=Post change to account balance?
+3940=40=Number of Seats?
+3941=50=This table is merged and cannot be resized
+
+[PGM MENU NAMES]
+
+4612=24=Skip empty names?
+
+[PGM MENU OPTIONS]
+
+4963=24=VIEW PAID CHECKS
+4964=24=PLAY MACRO
+
+[DYNDNS]
+
+5955=40=Service
+5956=24=Dyn
+5957=24=No-IP
+5958=40=Bad Agent - ICRTouch Blocked
+
+[UPDATE SERVICE]
+
+5997=40=Update Complete
+5998=40=Force Restart
+5999=40=Force Restart, are you sure?
+
+[ICRTOUCH CONNECT]
+
+5800=50=ICRTouch Connect
+5801=50=Access Key:
+5802=50=
+5803=50=Site ID:
+5804=50=Table Reservations?
+5805=50=Last Status:
+
+#####################################################################
+# ICRTouch Version 2.600 - 11/7/2013                                #
+#####################################################################
+
+[FILE NAMES]
+
+98=24=System Flags 2
+
+[PRINTER MESSAGES]
+
+553=40=MANUAL DRAWER RELEASE
+
+[REPORT CONTROL]
+
+1176=50=Do not print random code on plu reports?
+
+[PRINT CONTROL]
+
+1264=50=Store receipts?
+
+[SCANNING PLU]
+
+1546=50=Non turnover sales prints to KP?
+
+[JOURNAL CONTROL]
+
+1837=50=Create CCTV Journal?
+
+[PROGRAM SECTION2]
+
+2684=50=Print large time?
+
+[PGM5 PRESETS]
+
+2812=50=Last Web Shop ItemID
+2813=50=Stats Upload Licence Key
+
+[WEBSHOP]
+
+2851=50=Paid sale destination
+2852=50=COD sale destination
+2853=24=In drawer
+2854=24=Auto new check
+2855=24=Customer account
+2856=50=Print receipt?
+
+[CUSTOMER GROUP]
+
+2388=50=Print notes on kp
+
+[DISPLAY MESSAGES]
+
+3942=50=Uploading totals to hotel server, please wait
+
+[PORTAL]
+
+4446=50=Ticket Printer %d Error, Retry?
+
+[PGM MENU NAMES]
+
+4611=24=Webshop
+
+[PGM MENU OPTIONS]
+
+4965=24=PLUS ITEM
+4966=24=VIEW RECEIPTS
+
+[ICRTOUCH CONNECT]
+
+5806=50=Webshop?
+5807=50=IDC Uploader?
+5808=50=Postcode Address Lookup?
+5809=50=Failed to connect to ICRTouch.com
+5810=50=No response from ICRTouch.com
+5811=50=Unknown response
+
+
+[POSTCODE LOOKUP]
+
+6010=50=Postcode
+6011=50=Name/Number
+6012=50=Ok?
+6013=50=Postcode address lookup
+6014=50=>> Address Lookup - Press Enter <<
+
+
+#####################################################################
+# ICRTouch Version 2.602 - 19/9/2013                                #
+#####################################################################
+
+[SYSTEM CONTROL 1]
+
+1022=50=RF Mode print extra ticket with signature strip?
+
+[FINALISE KEYS]
+
+2303=50=Don't display change?
+
+
+#####################################################################
+# ICRTouch Version 2.620 - 4/8/2014                                 #
+#####################################################################
+
+[PRINTER MESSAGES]
+
+554=12=ID
+555=12=NAME
+556=12=LIC
+557=12=VER
+558=12=IP
+559=12=F/CLERKS
+560=12=CHECK SYS
+561=12=CUSTOMERS
+562=12=TIME & ATTND
+563=12=EXT INFO
+564=46=WARNING THERE IS A MIXTURE OF VERSION ID
+565=46=THIS CAN LEAD TO INSTABILITY AND 
+566=46=CORRUPTION OF DATA
+
+[REPORT CONTROL]
+
+1177=50=Store reports?
+
+[CHECK TRACKING]
+
+1237=50=Show date/time line in reg window?
+
+[SCROLLING MESSAGE]
+
+1904=50=Till Closed Message  ->
+
+[PROGRAM SECTION2]
+
+2685=50=Receipt/Report printer width:
+2686=50=KP printer width:
+2687=50=No currency symbol?
+
+[PRODUCT GROUPS PROGRAM]
+
+2794=50=Import new items only?
+
+[STATUS KEY]
+
+3701=50=Open drawer 1?
+3702=50=Open drawer 2?
+3703=50=Disable drawer alarm?
+3704=50=Do not print XZ Counter summary on Report?
+3705=50=Do not print XZ Counter summary on Journal?
+3706=50=Next item only?
+3707=50=Preset seat:
+3708=50=Turn off display?
+
+[DISPLAY MESSAGES]
+
+3943=50=Check Rental Codes
+
+[ERROR MESSAGES]
+
+4202=50=OPERATION FAILED, TRY RUN AS ADMIN
+
+[PORTAL]
+
+4447=50=NOT FOUND
+4448=50=NOT MASTER
+
+
+[PGM MENU OPTIONS]
+
+4967=24=Local EFT App
+4968=24=Ingenico RS232
+4969=24=VIEW REPORTS
+4970=24=CATEGORY SHIFT
+4971=24=SEAT NUMBER
+4972=24=GIFT RECEIPT
+4973=24=EFT Device
+4974=24=Round at 0,10 (5/6)
+
+[ICRTOUCH CONNECT]
+
+5790=50=Enable VNC server?
+5791=50=Password:
+5792=50=Port:
+
+[ICRTOUCH CONNECT]
+
+5812=50=Text Predictions?
+5813=50=TouchTopUp Web?
+5814=50=Sync master balances?
+
+[TEXT PREDICTIONS]
+
+6020=50=Caps Type
+6021=24=Start Case
+6022=24=Sentence case
+6023=24=UPPER CASE
+6024=24=lower case
+
+[VIEW RECEIPTS]
+
+6030=24=Source
+6031=24=Receipt store list
+6032=24=TOW SaleID Lookup
+6033=50=Receipt not found
+
+
+#####################################################################
+# ICRTouch Version 2.64.0 - 25/2/2015                               #
+#####################################################################
+
+[FILE NAMES]
+
+99=24=Sub Dept
+
+[ORDER CONTROL]
+
+1151=50=Compulsory Check/Table for KP items?
+1152=50=Press Status Key:
+
+[REPORT CONTROL]
+
+1178=50=Print sales ratio on Dept reports?
+1179=50=Print sales ratio on PLU Group reports?
+1180=50=Do not print last date run?
+
+[CHECK TRACKING]
+
+1238=50=Print transfers to KP?
+
+[TRANSACTION KEY]
+
+2270=50=Preset Reason
+
+[STATUS KEY]
+
+3709=50=Use search dialog?
+3710=50=Opens Tables?
+
+[ERROR MESSAGES]
+
+4203=50=SSL Connection Failed
+4204=50=Failed to connect
+4205=50=No response from server
+4206=50=Check device for error
+
+[PGM MENU OPTIONS]
+
+4975=24=VIEW WEBSALES
+4976=24=REASON TABLE
+
+[ICRTOUCH CONNECT]
+
+5815=50=Upload Non-Turnover Sales?
+
+[SUB DEPT]
+
+6040=50=Do not print total on reports?
+
+
+#####################################################################
+# ICRTouch Version 2.66.0 - 16/06/2016                              #
+#####################################################################
+
+[PRINTER MESSAGES]
+
+567=50=DISCOUNTED ITEMS HAVE BEEN REMOVED FROM
+568=50=THE SALE. PRINTED DISCOUNTS MAY SHOW THE
+569=50=ORIGINAL AMOUNT AND COULD APPEAR WRONG
+570=50= 
+
+
+[CHECK TRACKING]
+
+1239=50=Set location to FP level on new table?
+
+[PRINT CONTROL]
+
+1265=50=Archive more than
+1266=50=Print bottom graphic logo?
+
+[CUSTOMER CONTROL]
+
+1526=50=Do not show 'available' at sign on?
+
+[SCANNING PLU]
+
+1547=50=Auto create new ISSN variants?
+1548=50=Enable Pseudo @ quantities?
+
+[PLU PRICES]
+
+1855=50=4th @ Price
+
+[TRANSACTION KEY]
+
+2271=50=Preset Amount
+2272=50=Adds to TIPS 2?
+2273=50=Do not affect stock?
+
+[PLU]
+
+2514=50=Quantity of 4th @ Price
+
+[PROGRAM SECTION2]
+
+2670=50=Allowed to use EFT Pre-Auth?
+2688=50=Search for Dallas iButton readers?
+
+[SET MENU PROGRAM]
+
+2803=50=No Defer?
+2804=50=No Substitution?
+
+[PRODUCT GROUPS PROGRAM]
+
+2795=50=* MOVE GROUP UP 1
+
+[PGM5 PRESETS]
+
+2814=50=Last Check Serial Number
+
+[STATUS KEY]
+
+3711=50=Use QWERTY?
+
+[DISPLAY MESSAGES]
+
+3944=50=Searching, please wait
+
+[ERROR MESSAGES]
+
+4207=50=Over Pre-Auth limit
+
+[PORTAL]
+
+4449=50=TOO MANY CLIENT LICENCES
+
+[PGM MENU OPTIONS]
+
+4977=24=VOUCHER
+4978=50=4th @ Price    
+4979=24=EFT PREAUTH
+4980=24=TIPS
+4981=24=BANNER
+
+
+[ICRTOUCH CONNECT]
+
+5816=50=Enable auto backup?
+5817=50=Enable PayTable?
+5818=50=Barcode Predictions?
+
+[CLOUD RESTORE]
+
+6050=50=Cloud Data Restore
+6051=50=Restore Date/Time
+6052=50=Preview Files
+6053=50=Do Restore
+6054=24=Ready, Please Select
+6055=24=Not Started
+6056=50=Restore to Temp
+6057=50=No backups available
+6058=50=No backup selected
+6059=50=Restore files?
+6060=50=Last file
+6061=24=Files Available
+6062=24=All Dirs
+6063=24=Directory
+6064=24=Waiting to Connect...
+6065=24=Completed
+6066=24=Next Backup
+
+
+#####################################################################
+# ICRTouch Version 2.66.3 - 9/11/2016                               #
+#####################################################################
+
+[PGM MENU OPTIONS]
+
+4981=24=BANNER
+
+#####################################################################
+# ICRTouch Version 2.66.5 - 9/3/2017                                #
+#####################################################################
+
+[REPORT PRINTING]
+
+1000=40=TIMEOUT WAITING FOR DATA
+
+
+
+#####################################################################
+# ICRTouch Version 68.00 - 9/10/2017                                #
+#####################################################################
+
+[PRINTER MESSAGES]
+
+571=50=START PAY SEAT
+572=50=END PAY SEAT
+573=1=Y
+574=1=N
+6403=12=RATE
+6404=12=NET
+6405=12=TAX
+6406=40=TAX ANALYSIS
+6407=12=DATE
+6408=12=FILE
+6409=12=ADD ON
+6410=12=ADD IN
+6411=30=EAT IN/TAKE OUT
+6412=30=ON KEYB LEVEL
+6413=30=NOT FOUND ON KEYB
+6414=30=TAX RATE
+
+
+[PRINT CONTROL]
+
+1267=50=Only managers can print duplicate bills?
+1268=50=Receipt alt-text usage
+
+[PLU CONTROL]
+
+1549=50=Reason table on Customer Verify?
+
+[EFT CONTROL]
+
+1579=50=Don't print merchant copy?
+
+[PLU NAMES]
+
+1894=50=Alt Text
+
+[CLERK NAMES]
+
+1897=50=NI Number
+
+[FIXED CHARACTER]
+
+1948=50=Decimal Mark
+1949=50=Thousand Separator
+
+[FILE MIX AND MATCH]
+
+2424=50=Only as discount?
+
+[PROGRAM SECTION2]
+
+2689=50=Generate CollectionPoint status code?
+2690=50=Printers Code Page
+2691=50=Country
+2692=50=Function Type
+2693=50=POS Device
+2694=50=Do not print qty on condiment items?
+2695=50=Customer Displays Code Page
+2696=50=CCTV Journal
+2697=50=Append CR?
+2698=50=Append LF?
+2699=50=Persist connection?
+2700=50=Code Page
+6400=50=Output formatting chars
+6401=50=Print sale total?
+6402=50=Do not print reason on receipt?
+
+[REASON TABLE]
+
+2836=24=Key type
+
+[ERROR MESSAGES]
+
+4208=50=Voucher not found
+4209=50=Voucher not yet active
+4210=50=Voucher expired
+4211=50=Invalid voucher type
+4212=50=Voucher has been used too many times
+4213=50=Voucher has a minimum spend value on it
+
+
+[BUTTON TEXTS]
+
+4340=24=KEYB
+
+[PGM MENU OPTIONS]
+
+4982=24=CUST VERIFY 1 (YES)
+4983=24=CUST VERIFY 1 (NO)
+4984=24=CUST VERIFY 2 (YES)
+4985=24=CUST VERIFY 2 (NO)
+4986=24=SET MENU SHIFT
+
+[ICRTOUCH CONNECT]
+
+5819=50=Enable stock download?
+6090=50=Online vouchers?
+6091=50=Use SSL?
+
+[ICRTOUCH CONNECT]
+
+5795=50=Enable EHP Server?
+
+[RENTAL LICENCES]
+
+6080=50=Your rental licence has the wrong licence number
+6081=50=Your rental licence has the wrong serial number
+6082=50=Your rental licence has expired
+6083=24=Rental Licence
+6084=50=Warning your licence expires in ? days
+
+[PGM OPTS]
+
+6120=50=Alt-text usage
+6121=24=None
+6122=24=Replace
+6123=24=Under
+
+[REPORT PRINTING]
+
+6300=9=FORCE OUT
+
+#####################################################################
+# ICRTouch Version 68.10 - 2/1/2018                                 #
+#####################################################################
+
+[DISPLAY MESSAGES]
+
+3945=50=Refresh rental licence
+
+#####################################################################
+# ICRTouch Version 68.30 - 8/8/2018                                 #
+#####################################################################
+
+[REPORT TITLES]
+
+783=24=EFT TERMINAL LIST
+
+[FINALISE KEYS]
+
+2304=50=Prompt for device?
+
+#####################################################################
+# ETAL CUSTOM LANGUAGE TEXT - START                                 #
+#####################################################################
+
+[GENERIC SCRIPT TEXT]
+
+7000=24=Script Enabled?
+7001=24=Enter Amount
+7002=24=Enter Quantity
+7003=24=Enter Percentage
+7004=24=Percentage
+7005=24=Add Amount
+7006=24=Add Quantity
+7007=24=Subtract Amount
+7008=24=Subtract Quantity
+7009=24=Multiply Amount
+7010=24=Multiply Quantity
+
+7011=24=Make Adjustment
+
+7012=24=Disclaimer
+
+7013=24=Window Settings
+7014=24=Script Settings
+7015=24=Print Settings
+7016=24=Dialog Settings
+7017=24=Display Window ?
+
+7018=40=Script will change PGM Data!
+7019=40=Have you made a Backup ?
+7020=24=Reset
+
+7021=24=Window Filepath
+7022=24=Load Filepath
+7023=24=Save Filepath
+7024=24=Config Filepath
+7025=24=Input Filepath
+7026=24=Output Filepath
+7027=24=XML Filepath
+7028=24=JSON Filepath
+7029=24=CSV Filepath
+7030=24=Remote FilePath
+7031=24=Local FilePath
+
+7032=24=License 
+7033=50=TouchPoint must be licenced
+7034=50=TouchPoint update required
+7035=50=TouchPoint version Req %V
+
+7036=24=Icon Size
+7037=24=Number of Icons
+7038=24=Button Size
+7039=24=Button Colour
+7040=24=Button Font
+7041=24=Rows
+7042=24=Columns
+7043=24=Border
+7044=24=Border Colour
+7045=24=Spacing
+
+7046=24=Remove %I
+7047=50=Rcpt Print Message
+7048=50=Jrnl Print Message
+
+7049=24=Script Key Number
+7050=24=Print Image
+
+7051=50=Trigger on PLU Key
+7052=50=Trigger on Transaction Key
+7053=50=Trigger on Status Key Key
+7054=50=Trigger on Finalise Key
+7055=50=Trigger on Barcode
+7056=50=Trigger on MagStrip
+7057=50=Trigger on IButton
+
+7058=24=Save
+7059=24=Undo
+7060=24=Done
+7061=24=Menu
+7062=24=Store
+7063=24=Recall
+7064=24=Max
+
+7065=24=Filter for %F
+7066=24=Stop Printing
+
+7067=24=Server Address
+7068=24=Archive Data
+7069=24=Scheduled
+7070=24=Scheduled Time
+
+7071=12=Days
+7072=12=Day
+7073=12=Weeks
+7074=12=Week
+7075=12=Months
+7076=12=Month
+7077=12=Years
+7078=12=Year
+7079=12=Hours
+7080=12=Hour
+7081=12=Minutes
+7082=12=Minute
+7083=12=Seconds
+7084=12=Second
+
+7085=12=Milliseconds
+
+7086=50=Use SEL Quantity
+
+7087=50=Clerk Message
+7088=50=Customer Message
+7089=50=Custom Message
+
+7090=24=Print Indent
+7091=24=Print Header Text
+7091=24=Print Summary
+7092=24=Highlight Colour
+7093=24=Background Colour
+7094=24=Window XML
+7095=24=Accepted
+7096=24=Declined
+7097=24=Maximum 
+7098=25=Minimum
+
+
+[ALLERGY SCRIPT]
+7101=50=Allergy Warning 
+7102=50=Remove allergen from sale?
+7103=50=This Item contains 
+7104=50=Customer is not allowed 
+7105=50=No Allergen Set
+7106=50=Sale contains following allergen
+
+7107=50=Warning Dialog on PLU
+7108=50=Resize To Optimum ?
+7109=50=Re-prompt Disclaimer?
+
+#####################################################################
+# ETAL CUSTOM LANGUAGE TEXT - END                                   #
+#####################################################################
+
+#####################################################################
+# ICRTouch Version 70.00 - 7/11/2018                                #
+#####################################################################
+
+[SYSTEM CONTROL 1]
+
+1023=50=Item corrects go to reg buffer?
+
+[SYSTEM CONTROL 2]
+
+1049=50=Enable finger print reader
+
+[CHECK TRACKING]
+
+1240=50=Bill printing alt-text usage
+
+[JOURNAL CONTROL]
+
+1838=50=Verbose PGM mode changes?
+
+[CUSTOMER GROUP]
+
+2389=50=Use a weekly spend limit?
+2390=50=Weekly spend limit
+
+[ICRTOUCH CONNECT]
+
+5802=50=HO Access Key:
+
+[FINGER PRINTS]
+
+6415=24=FINGER PRINT
+6416=24=PRINTS STORED
+6417=40=PLACE SAME FINGER ON THE READER
+6418=40=PLACE A FINGER ON THE READER
+6419=40=SAME FINGER TO VALIDATE
+6421=40=ADD A PRINT
+6422=40=ERASE ALL PRINTS
+
+[DISPLAY MESSAGES]
+6420=24=STATUS
+6499=40=*** CHECK CLEARED DOWN ***
+
+[PLU ALLERGENS]
+6424=40=ALLERGENS
+6425=40=CELERY
+6426=40=CEREALS CONTAINING GLUTEN
+6427=40=CRUSTACEANS
+6428=40=EGGS
+6429=40=FISH
+6430=40=LUPIN
+6431=40=MILK
+6432=40=MOLLUSCS
+6433=40=MUSTARD
+6434=40=NUTS
+6435=40=PEANUTS
+6436=40=SESAME SEEDS
+6437=40=SOYA
+6438=40=SULPHUR DIOXIDE
+6439=40=ALLERGEN 15
+6440=40=ALLERGEN 16
+
+[PLU CONTROL]
+
+6457=50=Customer verify 1 duty (1-100%)
+6458=50=Customer verify 2 duty (1-100%)
+6471=50=Enforced tax rate
+
+[FISCAL]
+
+6459=24=Fiscal
+6463=24=POS Serial
+
+6301=24=Fiscal Reports
+6302=24=Fiscal/Today
+6303=24=Fiscal/Yesterday
+6304=24=Fiscal/Date
+6464=40=CLERK IS TRAINEE
+6473=24=FDM WARNING
+6474=24=FDM ERROR
+6475=40=FDM MEMORY IS 90% FULL
+6476=40=SEE TICKET FOR MORE DETAILS
+6477=24=DISCOUNT
+6478=24=WORK IN
+6479=24=WORK OUT
+6480=50=NOT A VALID VAT RECEIPT
+6481=30=PRODUCT NUMBER
+6482=30=FIRMWARE VER
+6483=30=TRANSACTION ID
+6484=30=DATE / TIME
+6485=30=MCID#
+6486=30=PLU HASH
+6487=30=PLU COUNT
+6488=30=CONTROL DATA
+6489=30=RECEIPT COUNTER
+6490=30=RECEIPT SIGNATURE
+6491=30=CONTROL MODULE ID
+6492=30=VAT SIGNING CARD ID
+6493=30=CLERK
+6494=30=NI NUMBER
+6495=50=REFUND
+6496=50=TRAINING
+6497=50=VAT RECEIPT
+6498=50=Build not valid for selected country
+
+[AUTH]
+
+6460=24=Host
+6461=24=User
+6462=24=Password
+
+[PRINT CONTROL]
+
+6465=50=Rebuild receipt from reg buffer
+
+[PGM OPTS]
+
+6466=50=Rebuild Receipt
+6467=24=Never
+6468=24=Final Checks/Tables
+6469=24=All Final Sales
+6470=24=Always
+
+[PROGRAM SECTION2]
+
+6472=50=Language
+
+#####################################################################
+# ICRTouch Version 70.10 -                                 #
+#####################################################################
+
+[PORTAL]
+
+4450=50=MISSING TRANSACTION KEY
+
+[VOUCHER]
+
+6500=20=VOUCHER
+6501=20=CODE
+6502=20=AMOUNT

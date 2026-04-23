@@ -1,0 +1,93 @@
+<WINDOWS>
+			<WINDOW id="WDW:INPUT" name="Input window" left="780" top="28" width="244" height="30">
+				<BACKGROUND image="audit\inputwindow_bg_15.bmp"/>
+				<TEXT left="8" top="3" width="226" height="25" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="23" align="left" valign="top" colour="FFFFFF" highlightcolour="FF"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:REG" name="Reg window" left="780" top="58" width="244" height="159">
+				<BACKGROUND image="audit\regwindow_bg_15.bmp"/>
+				<TEXT left="10" top="8" width="226" height="143" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="15" align="left" valign="top" colour="FFFFFF" highlightcolour="FF"/>
+				</TEXT>
+				<!-- The EXTINFO box overlays the reg window passing across extra info such as customer loyalty message, weight information -->
+				<!-- Height is omited intentionally as the dialog swells based on how many lines are being displayed -->
+				<EXTINFO left="10" top="10" width="220" bordercolour="FF0000" borderwidth="2">				 
+    				<TEXT left="5" top="5" width="210" height="200" highlightbackcolour="FFFFFF">
+	    				<FONT face="Arial" size="15" align="left" valign="top" colour="FFFFFF" highlightcolour="FF"/>
+		    		</TEXT>
+				</EXTINFO>
+			</WINDOW>
+			<WINDOW id="WDW:CLERK" name="Clerk name window" left="377" top="1" width="260" height="24">
+				<!-- <BACKGROUND image="clerknamewindow_bg.bmp"/> -->
+				<TEXT left="5" top="0" width="250" height="24" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="24" align="centre" valign="top" colour="FFFFFF" highlightcolour="FFFFFF"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:DATE" name="Date window" left="45" top="3" width="322" height="20">
+				<!-- <BACKGROUND image="datewindow_bg.bmp"/> -->
+				<TEXT left="10" top="0" width="320" height="20" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="left" valign="top" colour="FFFFFF" highlightcolour="FFFFFF"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:TIME" name="Time window" left="957" top="751" width="60" height="20">
+				<!-- <BACKGROUND image="timewindow_bg.bmp"/> -->
+				<TEXT left="5" top="0" width="50" height="20" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="right" valign="top" colour="FFFFFF" highlightcolour="FFFFFF"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:MODE" name="Mode window" left="642" top="3" width="87" height="20">
+				<!-- <BACKGROUND image="modewindow_bg.bmp"/> -->
+				<TEXT left="5" top="0" width="77" height="20" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="right" valign="top" colour="FFFFFF" highlightcolour="FFFFFF"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:PRICELEVEL" name="Price level window" left="732" top="3" width="117" height="20">
+				<!-- <BACKGROUND image="pricelevelwindow_bg.bmp"/> -->
+				<TEXT left="5" top="0" width="107" height="20" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="right" valign="top" colour="FFFFFF" highlightcolour="FFFFFF"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:CHECKNUMBER" name="Check number window" left="852" top="3" width="169" height="20">
+				<!-- <BACKGROUND image="checknumberwindow_bg.bmp"/> -->
+				<TEXT left="5" top="0" width="159" height="20" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="right" valign="top" colour="FFFFFF" highlightcolour="FFFFFF"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:DEVICESTATUS1" name="Device Status 1 Window" left="4" top="750" width="150" height="17">
+				<!-- <BACKGROUND image="checknumberwindow_bg.bmp"/> -->
+				<TEXT left="5" top="0" width="190" height="17" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="left" valign="top" colour="FFFFFF" highlightcolour="FF0000"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:DEVICEBLOCK1" name="Device Block Count 1 Window" left="145" top="750" width="50" height="17">
+				<!-- <BACKGROUND image="checknumberwindow_bg.bmp"/> -->
+				<TEXT left="0" top="0" width="50" height="17" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="right" valign="top" colour="FFFFFF" highlightcolour="FF0000"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:DEVICESTATUS2" name="Device Status 2 Window" left="204" top="750" width="150" height="17">
+				<!-- <BACKGROUND image="checknumberwindow_bg.bmp"/> -->
+				<TEXT left="5" top="0" width="190" height="17" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="left" valign="top" colour="FFFFFF" highlightcolour="FF0000"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:DEVICEBLOCK2" name="Device Block Count 2 Window" left="345" top="750" width="50" height="17">
+				<!-- <BACKGROUND image="checknumberwindow_bg.bmp"/> -->
+				<TEXT left="0" top="0" width="50" height="17" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="right" valign="top" colour="FFFFFF" highlightcolour="FF0000"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:DEVICESTATUS3" name="Device Status 3 Window" left="404" top="750" width="150" height="17">
+				<!-- <BACKGROUND image="checknumberwindow_bg.bmp"/> -->
+				<TEXT left="5" top="0" width="190" height="17" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="left" valign="top" colour="FFFFFF" highlightcolour="FF0000"/>
+				</TEXT>
+			</WINDOW>
+			<WINDOW id="WDW:DEVICEBLOCK3" name="Device Block Count 3 Window" left="545" top="750" width="50" height="17">
+				<!-- <BACKGROUND image="checknumberwindow_bg.bmp"/> -->
+				<TEXT left="0" top="0" width="50" height="17" highlightbackcolour="FFFFFF">
+					<FONT face="Arial" size="16" align="right" valign="top" colour="FFFFFF" highlightcolour="FF0000"/>
+				</TEXT>
+			</WINDOW>
+		</WINDOWS>

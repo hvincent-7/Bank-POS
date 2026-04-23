@@ -1,0 +1,16 @@
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/bin/Debug/net10.0/Bank.Pos.Kitchen.deps.json
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/bin/Debug/net10.0/Bank.Pos.Kitchen.dll
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/bin/Debug/net10.0/Bank.Pos.Kitchen.pdb
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/bin/Debug/net10.0/Bank.Pos.Core.dll
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/bin/Debug/net10.0/Bank.Pos.Core.pdb
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/Bank.Pos.Kitchen.csproj.AssemblyReference.cache
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/Bank.Pos.Kitchen.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/Bank.Pos.Kitchen.AssemblyInfoInputs.cache
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/Bank.Pos.Kitchen.AssemblyInfo.cs
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/Bank.Pos.Kitchen.csproj.CoreCompileInputs.cache
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/Bank.Pos.Kitchen.sourcelink.json
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/Bank.Pos.9F6F4307.Up2Date
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/Bank.Pos.Kitchen.dll
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/refint/Bank.Pos.Kitchen.dll
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/Bank.Pos.Kitchen.pdb
+/workspaces/Bank-POS/src/Bank.Pos.Kitchen/obj/Debug/net10.0/ref/Bank.Pos.Kitchen.dll

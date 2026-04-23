@@ -1,0 +1,1019 @@
+
+// Collection of useful functions for working with strings.
+
+/************************************************************************
+* ReplaceString ~ Substring or array of substrings from szstring          *
+*************************************************************************/
+
+function ReplaceString(szString = "", szRemove = "",szReplace = "")
+{
+    // Convert non array inputs to array.
+    if(szString.len() == 0)return szString; 
+    // If integer into assume int is ascii szRemove value.
+    if(typeof szRemove == "integer")szRemove = szRemove.tochar();
+    // If filter input is empty string return unfiltered string. 
+    if(szRemove.len() == 0)return szString; 
+    // Create & populate Choppy Array
+    local aChopArray = [];
+    if(typeof szRemove == "string")aChopArray.push(szRemove); 
+    if(typeof szRemove == "array")aChopArray = szRemove;
+    // Chop array of stings from szString
+    foreach( idx, val in aChopArray)
+    {    
+        for (local nCount = 0; nCount <= szString.len(); nCount++)
+        {
+            local n = szString.find(val,nCount)
+            if (n == null) 
+            { 
+                // Reached the end 
+                nCount = szString.len(); 
+            }
+            else
+            {   
+                // Found string ~ chop it out
+                local sFront = szString.slice(0,n);  
+                local sEnd   = szString.slice(n+val.len()); 
+                szString = sFront + szReplace.tostring() + sEnd; 
+                nCount = n + szReplace.len(); //was nCount = n - val.len(); 
+            }
+        }    
+    }
+    //Finished Chopping
+    return szString;
+}
+
+/************************************************************************
+* RemoveString ~ Uses ReplaceString to remove from szstring      *
+*************************************************************************/
+function RemoveString(szString = "", szRemove = "",szReplace = "")
+{
+    return ReplaceString(szString , szRemove ,"");
+}
+
+
+/**************************************************************************************
+* CenterText() Returns a Centered String. 
+***************************************************************************************/
+
+function CenterText(szString, nWidth = 40)
+{
+    local szSpaces="";
+    for(local nNumOfSpacesToAdd = (nWidth-szString.len())/2 ;nNumOfSpacesToAdd >0;nNumOfSpacesToAdd--)
+    {
+        szSpaces += " ";
+    }
+    return szSpaces+szString+szSpaces;
+}
+
+/***************************************************************************************
+* CenterDBLText() Returns a Centered String taking DBL Chars into account              *
+****************************************************************************************/
+
+function CenterDBLText ( szText = "" , nWidth = 40)
+{
+    local tSysData = ICR_GetSystemData();
+    
+    if (tSysData.VERSIONID >= 6700)
+    {
+        return CenterTextUTF(szText,nWidth);
+    }
+
+    local bDBLON = false;
+    local nDBL = 0;
+    local nCMDCHAR = 0;
+    local szDebug = "";
+    //Check if DBL is use and count how many dbl chars exist and the number of dbl shift cmds.
+    for (local nCount = 0 ; nCount < szText.len() ; nCount++)
+    {
+        if (szText[nCount] == 0xFFFFFFBB) //DBLON
+        {
+            nCMDCHAR++;
+            bDBLON = true;
+            continue;
+        }
+        if (szText[nCount] == 0xFFFFFFAB) //DBLOFF
+        {
+            nCMDCHAR++;
+            bDBLON = false;
+            continue;
+        }
+        if(bDBLON)nDBL++;
+    }
+    
+    local nSpaces = ((nWidth - nDBL - (nCMDCHAR / 2 ) - szText.len()) / 2 ) ;
+    if(nSpaces < 1)return szText; //Text to long to center.
+    for (local nCount = 1 ; nCount < nSpaces; nCount++)
+    {
+        //Add before space
+        szText =  szText + " ";
+    }
+    for (local nCount = szText.len() ; nCount < nWidth - nDBL ; nCount++)
+    {
+        // Add after space
+        szText = " " + szText;    
+    }
+    return szText ;
+}
+
+/****************************************************************************
+* URLEncode(szData) ~ Make sure a String is URL Friendly                    *
+*****************************************************************************/
+
+function URLEncode(szData, bSPACEPLUS = false)
+{
+    local szOutput = "";
+    for (local nCharCount = 0; nCharCount < szData.len(); nCharCount++)
+    {
+        local nThisChar = szData[nCharCount];
+        if( nThisChar == 32) // Space
+        {    
+            if(bSPACEPLUS)
+            {
+                szOutput += "+" ; //Use plus for spaces. Some stuff might need this.
+            }
+            else
+            {
+                szOutput += "%20"; //Default space %20 should work most the time.
+            }
+            continue;
+        }
+        if( nThisChar == 37) // % are okay in url
+        {
+            szOutput += nThisChar.tochar();
+            continue;
+        }
+        if( nThisChar == 38) // & are okay in url
+        {
+            szOutput += nThisChar.tochar();
+            continue;
+        }
+        if( nThisChar == 44) // , are okay in url
+        {
+            szOutput += nThisChar.tochar();
+            continue;
+        }
+        if( nThisChar == 46) // . are okay
+        {
+            szOutput += nThisChar.tochar();
+            continue;
+        }
+        if(nThisChar == 95) // _ are okay
+        {
+            szOutput += nThisChar.tochar();
+            continue;
+        }
+        if(nThisChar == 45) // - are okay
+        {
+            szOutput += nThisChar.tochar();
+            continue;
+        }
+        
+        if( nThisChar >= 47 && nThisChar <=  64)    //number / : ; <=> ? @ okay 
+        {
+            szOutput += nThisChar.tochar();
+            continue;
+        }
+        if( nThisChar >= 65 && nThisChar <=  93)    //LETTER [ \ ]
+        {
+            szOutput += nThisChar.tochar();
+            continue;
+        }
+        if( nThisChar >= 97 && nThisChar <=  122)    //letter
+        {
+            szOutput += nThisChar.tochar();
+            continue;
+        }
+        /* Google url signing does not like pipes. wants  %7
+        if(nThisChar == 124) // | are okay
+        {
+            szOutput += nThisChar.tochar();
+            continue;
+        }
+        */
+
+        // not something alphanumeric, change it
+        if(nThisChar) // best to check it's not something that might upset format
+        {
+            szOutput += format("%%%x" ,nThisChar);
+        }
+    }
+    return szOutput;
+}
+
+
+// 2017 utf8 text centering function
+function CenterTextUTF(szText = "" , nWidth = 40)
+{
+    // it's a unicode string so lets find out how many codepoints are in it
+    local tCodePoints = StringToCodePointArray(szText);
+    // we aren't going to care about odd stuff like combining and things because I doubt TouchPoint supports it.
+    local nStringLength = 0;
+    local bDouble = false;
+    local bControlChar = false;
+    for (local nCharCount = 0; nCharCount < tCodePoints.len(); nCharCount++)
+    {
+        // grab the next codepoint
+        local nThisCP = tCodePoints[nCharCount];
+        // if it's the start of a printer control character
+        if (nThisCP == 0xA7)
+        {
+            // ยง
+            bControlChar = true;
+            continue;
+        }
+        // if the last one was a section then this one tells us what for
+        if(bControlChar)
+        {
+            bControlChar = false;
+            if(nThisCP == 'D' || nThisCP == 'J')
+            {
+                bDouble = true;
+            }
+            if(nThisCP == 'd' || nThisCP == 'j')
+            {
+                bDouble = false;
+            }
+            continue;
+        }
+        // if it wasn't anything like that then it's an actual character to print
+        nStringLength += bDouble ? 2:1;
+    }
+    
+    local nSpacesToAdd = (nWidth - nStringLength)/2;
+    local strSpaces = "";
+    for (;nSpacesToAdd >0 ; nSpacesToAdd--)
+    {
+        strSpaces += " ";
+    }
+    
+    return strSpaces + szText;
+}
+
+
+
+
+/****************************************************************************
+* IntToPrice(nValue )  Convert integer to string price                       *
+*****************************************************************************/
+
+
+// this used to be IntToPrice(nValue , nNumOfDP = null, szCurrency = null)
+function IntToPrice(nValue , tOptions = null, oldCurrencyParam = null)
+{
+    // backward compatibility...
+    local nNumOfDP = null;
+    local szCurrency = oldCurrencyParam;    // named like this for obviousness, I considered vargv but this was clearer and there was only the one
+    local bOuputXML = false;
+    if(typeof tOptions == "integer")
+    {
+        // if the options table is an integer then it's the old version of the function they're calling
+        nNumOfDP = tOptions;
+    }
+    else
+    {
+        if(typeof tOptions == "table")
+        {
+            // they passed some options.
+            if ("nNumOfDP" in tOptions)
+            {
+                nNumOfDP = tOptions.nNumOfDP;
+            }
+            if ("szCurrency" in tOptions)
+            {
+                szCurrency = tOptions.szCurrency;
+            }
+            if ("bOuputXML" in tOptions)
+            {
+                bOuputXML = tOptions.bOuputXML;
+            }
+        }
+    }
+
+    // check that we have been sent a sensible thing
+    local szValue = "0";
+    local bNegative = false;
+    try
+    {
+        szValue = abs(nValue).tostring();
+        if(nValue < 0) bNegative = true;
+    }
+    catch(e)
+    {
+        return "";
+    }
+    
+    // Currency symbol moved in 2017
+    local tSystem = ICR_GetSystemData();
+    
+    // Grab the currency symbol
+    if(szCurrency == null)
+    {
+        
+        if(tSystem.VERSIONID > 6700)
+        {
+            // 2017 Currency whole of 44 81
+            local tCurrency = ICR_GetPGMData(44,81);
+            szCurrency = tCurrency.TEXT;
+        }
+        else
+        {
+            // Pre 2016 first digits of 44 6
+            local tCurrency = ICR_GetPGMData(44,6);
+            szCurrency = tCurrency.TEXT.slice(0,3);
+            szCurrency = strip(szCurrency);
+        }
+    }
+    
+    
+    // Grab dp Settings from System Flags
+    if(nNumOfDP == null)
+    {
+        local tSysFlags = ICR_GetPGMData(101,1);
+        nNumOfDP = tSysFlags.LOCALCURDP;
+    }
+
+
+    local szPrintPrice = "";
+    // if it's an old version
+    if(tSystem.VERSIONID < 6723)
+    {  
+        szPrintPrice += szCurrency;
+        if(bNegative)
+        {
+            szPrintPrice += "-";
+        }
+    
+        if(nNumOfDP)
+        {
+            // Split number on dp and insert a fullstop.
+            if (szValue.slice(0,szValue.len()-nNumOfDP) == "")
+            {
+                szPrintPrice += "0";
+            }
+            else
+            {
+                szPrintPrice += szValue.slice(0,szValue.len()-nNumOfDP);
+            }
+            szPrintPrice += ".";
+            local szRightPart = szValue.slice(szValue.len()-nNumOfDP,szValue.len());
+            while (szRightPart.len() < nNumOfDP)
+            {
+                szRightPart = "0"+szRightPart;
+            }
+            szPrintPrice += szRightPart;
+        }
+        else
+        {
+            // number of DP is 0
+            szPrintPrice += szValue;
+        }
+    }
+    else
+    {
+        // we now have the ability to get the till to do it for us      print("Using ICR_MakeNumberString "+nValue+ " dp "+nNumOfDP+ " curr:"+szCurrency);
+        szPrintPrice = ICR_MakeNumberString(nValue , nNumOfDP,  szCurrency, true, false );
+    }
+        
+    // xml entity support! for the a4 printing script
+    if(!bOuputXML)
+    {
+        return szPrintPrice;
+    }
+    else
+    {
+        local tCodePoints = StringToCodePointArray(szPrintPrice);
+        return CodePointArrayToString(tCodePoints,true);
+    }
+}
+
+/***********************************************************************************
+* StringStartsWith(szString , szSearch) returns true if start of the szString = szSearch 
+***********************************************************************************/
+
+function StringStartsWith(szString , szSearch)
+{
+    // Catch Stupid.
+    if( typeof szString == "integer")szString = szString.tostring(); //we pretend numbers are strings for comparision
+    if( typeof szSearch == "integer")szSearch = szSearch.tostring(); //so is easy to pass plu numbers into function
+    if( typeof szString != "string")return false;  //Dont match non strings
+    if( typeof szSearch != "string")return false;  //Dont match non strings
+    if(szSearch.len() > szString.len() )return false;     //Start cannot fit inside szString.
+    // Grab the start. 
+    local szStart = szString.slice(0,szSearch.len());
+    print("szStart "+szStart);
+    // Does it match ?
+    if( szStart == szSearch)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+/***********************************************************************************
+* StringEndsWith(szString , szSearch) returns true if start of the szString = szSearch 
+***********************************************************************************/
+
+function StringEndsWith(szString , szSearch)
+{
+    // Catch Stupid.
+    if( typeof szString == "integer")szString = szString.tostring(); //we pretend numbers are strings for comparision
+    if( typeof szSearch == "integer")szSearch = szSearch.tostring(); //so is easy to find plu numbers in a string.
+    if( typeof szString != "string")return false;  //Dont match non strings
+    if( typeof szSearch != "string")return false;  //Dont match non strings
+    if(szSearch.len() > szString.len() )return false;     //End cannot fit inside szString.
+    // Grab the start. 
+    local szEnd = szString.slice(szString.len() - szSearch.len());
+    print("szEnd "+szEnd);
+    // Does it match ?
+    if( szEnd == szSearch)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+/*************************************************************************
+* InsertSubString(szTarget, szSource, nPosition) Insert a String into another.
+************************************************************************/
+
+function InsertSubString(szTarget, szSubString, nPosition)
+{
+    if((typeof szTarget != "string")||(typeof nPosition != "integer") )
+    {
+        return szTarget; //Cannot insert string.    
+    }
+    if(typeof szSubString == "integer")szSubString = szSubString.tostring();
+    
+    if(nPosition > szTarget.len() )return ( szTarget + szSubString ); // Insert position off end on string so we drop it on the end. 
+    if(nPosition <= 0 )return (szSubString + szTarget); // Insert position before start of string so we drop it on the front. 
+    // The Position is somewhere inside the string. 
+    local szLeftPart  = szTarget.slice(0,nPosition);
+    local szRightPart = szTarget.slice(nPosition);
+    return (szLeftPart + szSubString + szRightPart);
+}
+
+/*************************************************************************
+* EscapeHTML(szString) Escapes HTML entities 
+************************************************************************/
+
+function EscapeHTML(str)
+{
+    if (!"ReplaceString" in this)
+        return null;
+
+    local chars = {         
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#039;"
+    }
+
+    // Do &amp; first as & prefixes html entities
+    str = ReplaceString(str, "&", "&amp;");
+
+    // Then do the other chars 
+    foreach (char, escapedChar in chars) {
+        str = ReplaceString(str, char, escapedChar);
+    }
+
+    return str;
+}
+
+/*************************************************************************
+* HexToInt(szString) Hex String to Int 
+************************************************************************/
+function HexToInt(strNumber)
+{
+    if( typeof strNumber != "string")
+    {
+        return null;
+    }
+    local nOutput = 0;
+    local nDigitPos = 0;
+    for (local nCharPos = strNumber.len() -1; nCharPos >= 0; nCharPos--)
+    {
+        local nThisChar = strNumber[nCharPos];
+        if (nThisChar >= 48 && nThisChar <= 57)
+        {
+            //number
+            nOutput += (nThisChar - 48) << (nDigitPos * 4);
+            nDigitPos++;
+            
+            continue;
+        }
+        if (nThisChar >= 65 && nThisChar <= 70)
+        {
+            // A-F
+            nOutput += (nThisChar - 55) << (nDigitPos * 4);
+            nDigitPos++;
+            continue;
+        }
+         if (nThisChar >= 97 && nThisChar <= 102)
+        {
+            // a-f
+            nOutput += (nThisChar - 87) << (nDigitPos * 4);
+            nDigitPos++;
+            continue;
+        }
+        
+        if (nThisChar == 'x' && nCharPos == 1)
+        {
+            // prefixed 0x, let them do that
+            continue;
+        }
+        error("unexpected character");
+        return null;
+    }
+    return nOutput;
+}
+
+/*************************************************************************
+* IntToHex(nNumber) Int to Hex String  
+************************************************************************/
+
+function IntToHex(nNumber , nPadding = 4)
+{
+    if( typeof nNumber != "integer")
+    {
+        return null;
+    }
+    local szString = format("0x%0"+nPadding+"X",nNumber);
+    return szString;
+}
+
+/*************************************************************************
+* OutputBinary(nInt) For debugging Flags and Binary Number stuff.
+************************************************************************/
+function OutputBinary(nInt)
+{
+    // if not a integer we chuck out what it is.
+    if(typeof nInt != "integer")return(typeof nInt+ ":"+nInt);
+    
+    local szBinary = "";
+    for(local nCount = 31 ; nCount >= 0 ; nCount--)
+    {
+        szBinary = (nInt & 1 ) + szBinary;
+        nInt = nInt >> 1;    
+    }
+    return "0b"+szBinary;
+}
+
+/*************************************************************************
+* CodePointArrayToString
+* convert a table of codepoints to a string (an array of utf8 bytes)
+************************************************************************/
+
+function CodePointArrayToString(inputTable,bXML = false)
+{
+    local bDoUTF8Ourselves = false;
+    local tSysData = ICR_GetSystemData();
+    if(tSysData.VERSIONID < 6700)
+    {
+        bDoUTF8Ourselves = true;
+    }
+    
+    local strOutput = "";
+    local nStringLength = inputTable.len();
+    for (local nCount = 0; nCount < nStringLength; nCount++)
+    {
+        if (!bXML)
+        {
+            if(bDoUTF8Ourselves)
+            {
+                strOutput += s_toutf8(inputTable[nCount]);
+            }
+            else
+            {
+                strOutput += inputTable[nCount].toutf8();
+            }
+        }
+        else
+        {   // if xml output
+            if (inputTable[nCount] < 128)
+            {
+            
+                // codepoints under 128 are just output as is
+                if(bDoUTF8Ourselves)
+                {
+                    strOutput += s_toutf8(inputTable[nCount]);
+                }
+                else
+                {
+                    strOutput += inputTable[nCount].toutf8();
+                }
+            }
+            else
+            {
+                // everything over that wants to be as a character entity
+                strOutput += "&#"+inputTable[nCount]+";";
+            }
+        }
+    }
+    return strOutput;
+}
+
+// UTF Code points 
+function s_toutf8(nCodePoint)
+{
+    local outString = "";
+    // if it fits in a single character then do that
+    if(nCodePoint < 128)
+    {
+        outString += nCodePoint.tochar();
+        return outString;
+    }
+    // otherwise, how many bits can we fit in the last (first) byte
+    local nSpareBits = 0x3F;    // start at 6
+    // grab the rightmost 6 bits
+    local nThisChar = nCodePoint & 0x3F;
+    // mark it as continuing
+    nThisChar = nThisChar | 0x80;
+    outString += nThisChar.tochar();
+    nCodePoint = nCodePoint >> 6;
+    // until we can fit it in the last byte
+    while (nCodePoint > (nSpareBits >> 1)) // 1 because you need space for the 0 bit between the byte count and the start of the data
+    {
+        // doesn't fit, grab 6 bits as before
+        nThisChar = nCodePoint & 0x3F;
+        nThisChar = nThisChar | 0x80;
+        // add it to the START of the string because we're working right to left
+        outString = nThisChar.tochar() + outString;
+        nCodePoint = nCodePoint >> 6;
+        nSpareBits = nSpareBits >> 1;
+    }
+    // fits, work out how much is masked as byte counter and stick that onto it
+    local nLastByte = (0xFF ^ nSpareBits) | nCodePoint;
+    // add it to the START of the string because we're working right to left
+    outString = nLastByte.tochar() + outString;
+    // done
+    return outString;
+}
+
+
+/*************************************************************************
+* StringToCodePointArray
+* convert a string (an array of utf8 bytes) to a table of codepoints
+************************************************************************/
+function StringToCodePointArray(szData)
+{
+    // break a string into an array of codepoints
+    local nByteLength = szData.len();
+    local nBytePos = 0;
+    local tCodePoints = {}; // somewhere to put them
+    local nThisCodePoint = 0;
+    local uknownChar = 0xFFFD;  // the codepoint for how the hell should I know, replace with something sensible
+    while(nBytePos < nByteLength)
+    {
+        nThisCodePoint = 0;
+        local nBytesToRead = 1;
+        // grab the next byte
+        local thisByte = szData[nBytePos++];
+        
+        thisByte = thisByte & 0x000000FF;
+        if(thisByte < 0)
+        {
+            // ffs. it's not fucking signed.
+            thisByte = abs(thisByte);
+        }
+        // is it a codepoint by itself?
+        if (thisByte <= 127)
+        {
+            // YES
+            tCodePoints[tCodePoints.len()]<- thisByte;
+            continue;
+        }
+        // right here we are going to detect compressed ยง
+        if(thisByte == 0xf5)
+        {
+            local nNextByte = szData[nBytePos];
+            // check the first two bits, if they're 10xxxxxx then the next byte is a continuation of this one
+            // so if either the first bit isn't set or the second one is then the next byte has nothing to do with this one and it would be beneficial not to put replacement in :)
+            if (!(nNextByte &0x80) || (nNextByte & 0x40))
+            {
+                //print("found a compressed character!!!");
+                // this was a single 0xf5 on its own, a CP858 section character as used internally for printer control characters, it's not generally stored utf8 for size reasons
+                tCodePoints[tCodePoints.len()]<- 0xA7;
+                continue;
+            }
+        }
+        //multibyte character!
+        // how many though?
+        local naBit = 0x40;
+        local nMask = 0x80;
+        local bAbort = false;
+        while (thisByte & naBit  )
+        {
+            
+            nBytesToRead++;
+            nMask = nMask | naBit;
+            if (nBytesToRead > 6) 
+            {
+                thisByte = 0;
+                bAbort = true;
+            }
+            naBit = naBit >> 1;
+        }
+        if(bAbort)
+        {
+            // if it was waaaaaaaaay too big get upset and try the next byte
+            tCodePoints[tCodePoints.len()]<- uknownChar;
+            continue;
+        }
+
+        // right, lets chop this first byte up and shove it over there
+        thisByte = thisByte & ~nMask;
+        thisByte = thisByte << (6 * (nBytesToRead - 1));// nBytesToRead includes this one, so we need to shove it over by 6 bits per remaining byte
+        
+        nThisCodePoint = nThisCodePoint | thisByte;
+       
+        // while there are still bytes in this character according to the first one
+        bAbort = false;
+        while(nBytesToRead-- > 1 && !bAbort)
+        {
+            //A/ Check next byte exists.
+            if(nBytePos +1 > szData.len())
+            {
+                //A/ Last Multibyte Char is Mangled by end of string.
+                //print("OVERRUN"); 
+                // LastChar is mangled
+                nThisCodePoint = uknownChar;
+                // run away
+                bAbort = true;
+                continue;
+            }
+            // grab the next byte
+            thisByte = szData[nBytePos++];
+            thisByte = thisByte & 0x000000FF;
+            if(!(thisByte & 0x80))
+            {
+                // if the first bit isn't a 1
+                // so this can't be a continuation of the multibyte character we are in the middle of
+                // step back one byte so we start reading again from this one
+                nBytePos--;
+                // this character is mangled
+                nThisCodePoint = uknownChar;
+                // run away
+                bAbort = true;
+                continue;
+            }
+            // first bit is correct, 2nd one?
+            if(thisByte & 0x40)
+            {
+                // if the second bit isn't a 0
+                // so this can't be a continuation of the multibyte character we are in the middle of
+                // step back one byte so we start reading again from this one
+                nBytePos--;
+                // this character is mangled
+                nThisCodePoint = uknownChar;
+                // run away
+                bAbort = true;
+                continue;
+            }
+            thisByte = thisByte & 0x3F;
+            thisByte = thisByte << (6 * (nBytesToRead - 1));// nBytesToRead includes this one, so we need to shove it over by 6 bits per remaining byte
+            nThisCodePoint = nThisCodePoint | thisByte;
+        }
+        // now that we know which one it is stick it in the array and carry on
+        tCodePoints[tCodePoints.len()]<- nThisCodePoint;
+    }
+    return tCodePoints;
+}
+
+/*************************************************************************
+* StripWhiteSpace
+* unicode version of strip
+************************************************************************/
+// all thses codepoints are some variation on a space, really I think we only worry about 0x0020 (space) but well, better to do them all than have someone moan later.
+local __tWhiteSpace = {[0x0020] = true,[0x00A0] = true,[0x1680] = true,[0x180E] = true,[0x2000] = true,[0x2001] = true,[0x2002] = true,[0x2003] = true,[0x2004] = true,[0x2005] = true,
+                       [0x2006] = true,[0x2007] = true,[0x2008] = true,[0x2009] = true,[0x200A] = true,[0x200B] = true,[0x202F] = true,[0x205F] = true,[0xFEFF] = true};
+                       
+function StripWhiteSpace(input)
+{
+    local output = LeftStrip(input);
+    return RightStrip(output);
+}
+
+function LeftStrip(input)
+{
+    local bString = false;
+    if(typeof input == "string")bString = true;
+    if(bString)input = StringToCodePointArray(input);
+    local output = {};
+    // strip from the start
+    local bStripping = true;
+    local nLength = input.len();
+    for(local nCount = 0; nCount < nLength; nCount++)
+    {
+        // grab the next one
+        local nThisCodePoint = input[nCount];
+        // if it's white space, ditch it
+        if((nThisCodePoint in __tWhiteSpace) && bStripping)
+        {
+            continue;
+        }
+        // we are only stripping off the start
+        bStripping = false;
+        output[output.len()]<- nThisCodePoint;
+    }
+    if(bString)output = CodePointArrayToString(output);
+    return output;
+}
+
+
+function RightStrip(input)
+{
+    local bString = false;
+    if(typeof input == "string")bString = true;
+    if(bString)input = StringToCodePointArray(input);
+    // local output = {};
+    // strip from the END
+    local bStripping = true;
+    local nLength = input.len();
+    for(local nCount = nLength - 1; nCount >= 0; nCount--)
+    {
+        // grab the next one
+        local nThisCodePoint = input[nCount];
+        // if it's white space, ditch it
+        if((nThisCodePoint in __tWhiteSpace) && bStripping)
+        {
+            delete input[nCount];
+            continue;
+        }
+        // we are only stripping off the end, once we hit a character stop
+        break;
+        //bStripping = false;
+       // output[output.len()]<- nThisCodePoint;
+    }
+    if(bString)input = CodePointArrayToString(input);
+    return input;
+}
+
+
+// raw/hex conversion functions, typically useful for AES and PBKDF2
+function HexStringToString(strInput)
+{
+    // convert a string of hex to the actual string it represents
+    local strOutput = "";
+    if( strInput.len() % 2)
+    {
+        print("Invalid parameter");
+        return null;
+    }
+    
+    for (local nCount = 0; nCount < strInput.len(); nCount+=2)
+    {
+        local strThisByte = strInput.slice(nCount,nCount+2);
+        local thisChar = HexToInt(strThisByte);
+        strOutput += thisChar.tochar();
+    }
+    return strOutput;
+}
+
+function StringToHexString(strInput)
+{
+    // convert a string to a stream of hex
+    local strOutput = "";
+
+    for (local nCount = 0; nCount < strInput.len(); nCount++)
+    {
+        local thisByte = strInput[nCount] & 0xFF;   // NB. all ints in Etal are signed 32bit so we need to chop it back to a byte as it will be sign extended
+        // left nibble first
+        local thisNibble = thisByte >> 4;
+        if(thisNibble <= 9)
+        {
+            // number
+            thisNibble += 0x30;
+        }
+        else
+        {
+            // letter
+            thisNibble += 0x37;
+        }
+        // add that on
+        strOutput += thisNibble.tochar();
+        // and now the same on the other one
+        thisNibble = thisByte & 0x0F;
+        if(thisNibble <= 9)
+        {
+            thisNibble += 0x30;
+        }
+        else
+        {
+            thisNibble += 0x37;
+        }
+        strOutput += thisNibble.tochar();
+    }
+    return strOutput;
+}
+
+
+/*************************************************************************
+*   Jaro-Winkler Distance                                                *
+*   Gives the likeness of two strings.                                   *
+*   Return Ratio between 1 same ~ 0 no common chars                      *
+*   https://en.wikipedia.org/wiki/Jaro-Winkler_distance                  *
+*   Note this implemenation does not compare CaSe. use toupper...   //A/ *
+*************************************************************************/
+
+function jaro(source, target) 
+{
+    //if(bDebugPrinting)print("jaro "+source+ " <> " + target);
+    //A/ Min Max
+    function _max(a , b) //
+    {
+        if( a > b )return a;
+        return b;
+    }
+    function _min(a , b) //
+    {
+        if( a < b )return a;
+        return b;
+    }
+    // Passed senible strings?
+    if(source == null)return 0.0;
+    if(target == null)return 0.0;
+    if(typeof source != "string")return 0.0;
+    if(typeof target != "string")return 0.0;
+    // Empty strings ?
+    if(source.len() == 0 && target.len() == 0) return 1;
+    
+    /* Formula **********************************************************
+    *                     Part1       Part2        Part3                *
+    *                                                                   *
+    *   score =       {     m            m         m -( t/2 )    }      *
+    *                 {   _______   + _______   + ____________   } / 3  *
+    *                 {    len1        len2           m          }      *
+    *                                                                   *
+    ********************************************************************/
+    
+    // Dont fall off the end of the strings.. 
+    local match_distance = ( _max(source.len(), target.len()) / 2 ) - 1;
+    
+    // Comparison setup
+    local s_matches = array(source.len(),false);
+    local t_matches = array(target.len(),false);
+    local matches = 0;
+    local transpositions = 0;
+    // Compare loops  source[i]  target[j] count matches
+    for (local i = 0; i < source.len(); i++) 
+    {
+        local start = _max(0, i - match_distance);
+        local end   = _min(i + match_distance + 1 , target.len());
+        
+        for (local j = start; j < end; j++) 
+        {
+            if(t_matches[j]) continue; // already matched
+            if(source[i] != target[j]) continue;
+            s_matches[i] = true;
+            t_matches[j] = true;
+            matches++;
+            break;
+        }
+    }
+    // None of the letters match anywhere... boo
+    if(matches == 0) return 0.0;
+    // Count transpositions
+    local trans = 0; 
+    for (local i = 0; i < source.len(); i++) 
+    {
+        if(!s_matches[i]) continue;
+        while (!t_matches[trans]) trans++;
+        if(source[i] != target[trans]) transpositions++;
+        trans++;
+    }
+    // floatify it.
+    matches = matches.tofloat();
+    transpositions   = transpositions.tofloat();
+    //if(bDebugPrinting)print( " Len1:" +source.len()+ " Len2:" +target.len()+ " Match:"+matches + " Transp:" +transpositions)
+    
+    // Work out each bit put it all together
+    local Part1  = matches / source.len().tofloat();
+    local Part2  = matches / target.len().tofloat();
+    local Part3  = (matches - ( transpositions / 2.0 )) / matches;
+    return ((  Part1 + Part2 + Part3 ) / 3.0 );
+}
+
+/****************************************************************************************
+* AddOrdinalIndicator -- Takes integer and Returns number string with Ordinal Indicator *
+* eg 1 = 1st   2 = 2nd   3 = 3rd   4 = 4th  ... 1001 = 1001st etc                       *
+* https://en.wikipedia.org/wiki/Ordinal_number_(linguistics)                      //A/  *
+*****************************************************************************************/
+
+function AddOrdinalIndicator(nNumber)
+{
+    if(typeof nNumber != "integer")return nNumber; // Throw back non integers
+    local suffix = "th"; //Most things are th 
+    if( ((nNumber % 100) / 10) == 1) return (nNumber.tostring() + suffix); //10~19 are all "th"
+    local modulo_ten = nNumber % 10;
+    if(modulo_ten == 1)suffix = "st"; //first
+    if(modulo_ten == 2)suffix = "nd"; //second
+    if(modulo_ten == 3)suffix = "rd"; //third
+    return (nNumber.tostring() + suffix);
+}
+

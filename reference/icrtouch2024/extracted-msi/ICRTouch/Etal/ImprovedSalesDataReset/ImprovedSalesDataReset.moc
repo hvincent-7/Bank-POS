@@ -1,0 +1,119 @@
+// Deletes Receipt Store Bill Store Report Store Journals when someone does SaleDataReset from hidden menu.
+
+// Global Varibles
+local bDebugPrinting = false;    // debug logging, set this to false before letting it out
+const KTPGMMode = 232;
+local g_tTotalBeforePGM = { QUANTITY = 0 , VALUE = 0 };
+local g_MyID = 0;
+
+/**********************************************************************
+OnInit
+Called when the till starts
+**********************************************************************/
+
+function OnInit()
+{
+    ICR_SetLocalUserData("bDebugPrinting", false, true);
+	if(bDebugPrinting)
+    {
+        ICR_SetFeature("CONSOLE",bDebugPrinting);
+        ICR_SetFeature("AUTORESTART",bDebugPrinting);
+    }
+}
+
+
+/**********************************************************************
+BeforeKeyPress
+Occurs before any key is pressed.
+**********************************************************************/
+
+function BeforeKeyPress(nFile,nRecord,nKeyType)
+{
+	if(nKeyType == KTPGMMode)
+	{
+		local tSystem = ICR_GetSystemData();
+		g_tTotalBeforePGM = ICR_GetSalesData(50,30,1); // Grab the All GT + ve Totals
+		if(bDebugPrinting)printtable(g_tTotalBeforePGM);
+	}
+    return true; // Carry on and press key.
+}
+
+/**********************************************************************
+AfterKeyPress
+Occurs after any key is pressed.
+**********************************************************************/
+
+function AfterKeyPress(nFile,nRecord,nKeyType)
+{
+	if(nKeyType == KTPGMMode)
+	{
+		// After press occurs when it goes to pgm menu. if the mode not home then then went to pgm 1~ 6. if still in home after the press must be hidden menu.
+		local tSystem = ICR_GetSystemData();
+		if(bDebugPrinting)print("MODE "+tSystem.MODE+ "  CURRENTCLERK"+tSystem.CURRENTCLERK);
+		if((tSystem.MODE != 0)&&(tSystem.MODE != 7))return; // IF home. 0 or 7. (Home is mode zero rather than seven on start)
+		// Grab sales figures now.
+		local tTotalAfterPGM = ICR_GetSalesData(50,30,1); // Grab the All GT + ve Total
+		if(bDebugPrinting)printtable(tTotalAfterPGM);
+		// Did the figures change?
+		if((g_tTotalBeforePGM.VALUE != tTotalAfterPGM.VALUE)||(g_tTotalBeforePGM.QUANTITY != tTotalAfterPGM.QUANTITY))
+		{
+			if(bDebugPrinting)print("Figures were reset");
+			ResetFileStores();
+		}
+	}
+}
+
+/*****************************************************************************************************
+* ResetFileStores
+*****************************************************************************************************/
+
+function ResetFileStores()
+{
+	// Folder List 
+	local folderlist = [ @""".\\Receipt Store\\""" , @""".\\Report Store\\""" , @""".\\Bill Store\\""" , @""".\\Sales\\Journals\\""" ];
+	local szCMD = "";
+	
+	// Delete
+	foreach(idx , val in folderlist)
+	{
+		szCMD = @"rmdir "+val+" /s /q";
+		if(bDebugPrinting)print("CMD:"+szCMD);
+	    system(szCMD);
+	}
+	
+	// Mk folders
+	foreach(idx , val in folderlist)
+	{
+		szCMD = @"mkdir "+val;
+		if(bDebugPrinting)print("CMD:"+szCMD);
+		system(szCMD);
+	}
+}
+	
+	
+function printtable(tData , bPrint= true)
+{
+    local sztable = "";
+    if (tData == null)
+    {
+        print ("Null table");
+        return;
+    }
+    if (!((typeof tData == "table") || (typeof tData == "array")))
+    {
+        print ("ERR not a table or array "+tData);
+        return;
+    }
+    foreach(idx,val in tData)
+    {
+        if ((typeof val == "table") || (typeof val == "array"))
+        {
+            print( idx + "{" printtable(val) + "}");
+        }
+        else
+        {
+            sztable += (idx +":"+ val +" | ");
+        }
+    }
+    print (sztable);
+}

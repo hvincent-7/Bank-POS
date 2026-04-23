@@ -1,0 +1,329 @@
+<DIALOG id="DLG:QWERTYKB" name="QWERTY Keyboard Dialog" left="50" top="150" width="701" height="351">
+	<BACKGROUND image="qwerty_bg.bmp" TransparentColour="00FF00FF"/>
+			
+	<TITLE left="10" top="37">
+		<FONT face="Arial" size="24" align="left" valign="bottom" colour="00101010"/>
+	</TITLE>
+			
+	<INPUT left="64" top="54" width="570" height="24" textleft="64" texttop="54">
+		<FONT face="Comic Sans" size="22" align="left" valign="top" colour="FFFFFF"/>
+	</INPUT>
+			
+	<BUTTONS>
+		<!-- QWERTY function keys -->
+		<BUTTON id="BTN:ENTER" name="Enter" left="625" top="140" width="61" height="50">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="234" top="450"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="295" top="450"/>
+		</BUTTON>
+		<BUTTON id="BTN:BACKSPACE" name="Backspace" left="610" top="90" width="76" height="50">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="82" top="450"/>	
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="158" top="450"/>
+		</BUTTON>
+		<BUTTON id="BTN:SHIFT" name="Shift" left="75" top="290" width="65" height="50">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="486" top="450"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="551" top="450"/>
+		</BUTTON>
+		<BUTTON id="BTN:CAPSLOCK" name="Caps lock" left="10" top="290" width="65" height="50">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="356" top="450"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="421" top="450"/>
+		</BUTTON>
+		<BUTTON id="BTN:LEFT" name="Left Arrow" left="15" top="50" width="41" height="31">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="0" top="450"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="0" top="481"/>
+		</BUTTON>
+		<BUTTON id="BTN:RIGHT" name="Right Arrow" left="645" top="50" width="41" height="31">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="41" top="450"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="41" top="481"/>
+		</BUTTON>
+	
+		<!-- Actual QWERTY buttons -->
+		<BUTTON id="BTN:QWERTY1" name="1" left="10" top="90" width="50" height="50" char="1" shiftchar="!" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="0" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="0" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="600" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="600" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY2" name="2" left="60" top="90" width="50" height="50" char="2" shiftchar="&quot;" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="50" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="50" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="650" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="650" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY3" name="3" left="110" top="90" width="50" height="50" char="3" shiftchar="" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="100" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="100" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="700" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="700" top="250"/>
+		</BUTTON>	
+		<BUTTON id="BTN:QWERTY4" name="4" left="160" top="90" width="50" height="50" char="4" shiftchar="$" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="150" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="150" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="750" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="750" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY5" name="5" left="210" top="90" width="50" height="50" char="5" shiftchar="%" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="200" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="200" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="800" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="800" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY6" name="6" left="260" top="90" width="50" height="50" char="6" shiftchar="^" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="250" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="250" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="850" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="850" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY7" name="7" left="310" top="90" width="50" height="50" char="7" shiftchar="&amp;" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="300" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="300" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="900" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="900" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY8" name="8" left="360" top="90" width="50" height="50" char="8" shiftchar="*" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="350" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="350" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="950" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="950" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY9" name="9" left="410" top="90" width="50" height="50" char="9" shiftchar="(" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="400" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="400" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1000" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1000" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY10" name="0" left="460" top="90" width="50" height="50" char="0" shiftchar=")" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="450" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="450" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1050" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1050" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY11" name="-" left="510" top="90" width="50" height="50" char="-" shiftchar="_" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="500" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="500" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1100" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1100" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY12" name="=" left="560" top="90" width="50" height="50" char="=" shiftchar="+" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="550" top="0"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="550" top="250"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1150" top="0"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1150" top="250"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY15" name="Q" left="25" top="140" width="50" height="50" char="q" shiftchar="Q" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="0" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="0" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="600" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="600" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY16" name="W" left="75" top="140" width="50" height="50" char="w" shiftchar="W" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="50" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="50" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="650" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="650" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY17" name="E" left="125" top="140" width="50" height="50" char="e" shiftchar="E" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="100" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="100" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="700" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="700" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY18" name="R" left="175" top="140" width="50" height="50" char="r" shiftchar="R" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="150" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="150" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="750" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="750" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY19" name="T" left="225" top="140" width="50" height="50" char="t" shiftchar="T" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="200" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="200" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="800" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="800" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY20" name="Y" left="275" top="140" width="50" height="50" char="y" shiftchar="Y" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="250" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="250" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="850" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="850" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY21" name="U" left="325" top="140" width="50" height="50" char="u" shiftchar="U" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="300" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="300" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="900" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="900" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY22" name="I" left="375" top="140" width="50" height="50" char="i" shiftchar="I" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="350" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="350" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="950" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="950" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY23" name="O" left="425" top="140" width="50" height="50" char="o" shiftchar="O" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="400" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="400" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1000" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1000" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY24" name="P" left="475" top="140" width="50" height="50" char="p" shiftchar="P" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="450" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="450" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1050" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1050" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY25" name="[" left="525" top="140" width="50" height="50" char="[" shiftchar="{" capsusesshift="false">		
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="500" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="500" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1100" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1100" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY26" name="]" left="575" top="140" width="50" height="50" char="]" shiftchar="}" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="550" top="50"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="550" top="300"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1150" top="50"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1150" top="300"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY30" name="A" left="40" top="190" width="50" height="50" char="a" shiftchar="A" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="0" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="0" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="600" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="600" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY31" name="S" left="90" top="190" width="50" height="50" char="s" shiftchar="S" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="50" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="50" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="650" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="650" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY32" name="D" left="140" top="190" width="50" height="50" char="d" shiftchar="D" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="100" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="100" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="700" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="700" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY33" name="F" left="190" top="190" width="50" height="50" char="f" shiftchar="F" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="150" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="150" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="750" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="750" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY34" name="G" left="240" top="190" width="50" height="50" char="g" shiftchar="G" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="200" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="200" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="800" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="800" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY35" name="H" left="290" top="190" width="50" height="50" char="h" shiftchar="H" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="250" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="250" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="850" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="850" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY36" name="J" left="340" top="190" width="50" height="50" char="j" shiftchar="J" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="300" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="300" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="900" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="900" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY37" name="K" left="390" top="190" width="50" height="50" char="k" shiftchar="K" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="350" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="350" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="950" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="950" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY38" name="L" left="440" top="190" width="50" height="50" char="l" shiftchar="L" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="400" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="400" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1000" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1000" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY39" name=";" left="490" top="190" width="50" height="50" char=";" shiftchar=":" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="450" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="450" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1050" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1050" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY40" name="'" left="540" top="190" width="50" height="50" char="'" shiftchar="@" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="500" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="500" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1100" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1100" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY41" name="#" left="590" top="190" width="50" height="50" char="#" shiftchar="~" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="550" top="100"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="550" top="350"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1150" top="100"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1150" top="350"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY45" name="\" left="10" top="240" width="50" height="50" char="\" shiftchar="" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="0" top="150"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="0" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="600" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="600" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY46" name="Z" left="60" top="240" width="50" height="50" char="z" shiftchar="Z" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="50" top="150"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="50" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="650" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="650" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY47" name="X" left="110" top="240" width="50" height="50" char="x" shiftchar="X" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="100" top="150"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="100" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="700" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="700" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY48" name="C" left="160" top="240" width="50" height="50" char="c" shiftchar="C" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="150" top="150"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="150" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="750" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="750" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY49" name="V" left="210" top="240" width="50" height="50" char="v" shiftchar="V" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="200" top="150"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="200" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="800" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="800" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY50" name="B" left="260" top="240" width="50" height="50" char="b" shiftchar="B" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="250" top="150"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="250" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="850" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="850" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY51" name="N" left="310" top="240" width="50" height="50" char="n" shiftchar="N" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="300" top="150"/>	
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="300" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="900" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="900" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY52" name="M" left="360" top="240" width="50" height="50" char="m" shiftchar="M" capsusesshift="true">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="350" top="150"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="350" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="950" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="950" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY53" name="," left="410" top="240" width="50" height="50" char="," shiftchar="&lt;" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="400" top="150"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="400" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1000" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1000" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY54" name="." left="460" top="240" width="50" height="50" char="." shiftchar="&gt;" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="450" top="150"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="450" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1050" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1050" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY55" name="/" left="510" top="240" width="50" height="50" char="/" shiftchar="?" capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="500" top="150"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="500" top="400"/>
+			<STATEIMAGE state="ShiftUp" image="qwerty_buttons.bmp" left="1100" top="150"/>
+			<STATEIMAGE state="ShiftDown" image="qwerty_buttons.bmp" left="1100" top="400"/>
+		</BUTTON>
+		<BUTTON id="BTN:QWERTY56" name="space" left="140" top="290" width="331" height="50" char=" " shiftchar=" " capsusesshift="false">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="0" top="200"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="331" top="200"/>
+			<STATEIMAGE state="Shiftup" image="qwerty_buttons.bmp" left="0" top="200"/>
+			<STATEIMAGE state="Shiftdown" image="qwerty_buttons.bmp" left="331" top="200"/>
+		</BUTTON>
+	</BUTTONS>
+</DIALOG>

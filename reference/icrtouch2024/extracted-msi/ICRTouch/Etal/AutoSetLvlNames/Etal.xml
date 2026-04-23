@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ETAL>
+	<FILE>AutoSetLvlName.moc</FILE>
+	<OUTPUTFILE>output.txt</OUTPUTFILE>
+	<NAME>Autoset Level Name</NAME>
+	
+	<CREATED>01/06/2013</CREATED>
+	<LASTMODIFIED>01/01/2015/LASTMODIFIED>
+	<MINVERID>5540</MINVERID>
+	<AUTHOR>Antony ICRTouch</AUTHOR>
+</ETAL>

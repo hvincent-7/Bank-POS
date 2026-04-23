@@ -1,0 +1,67 @@
+/*************************************************************************
+* EscapeHTML(szString) Escapes HTML entities 
+************************************************************************/
+
+function EscapeHTML(str)
+{
+    if (!"ReplaceString" in this)
+        return null;
+
+    local chars = {         
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#039;"
+    }
+
+    // Do &amp; first as & prefixes html entities
+    str = ReplaceString(str, "&", "&amp;");
+
+    // Then do the other chars 
+    foreach (char, escapedChar in chars) {
+        str = ReplaceString(str, char, escapedChar);
+    }
+
+    return str;
+}
+
+/*************************************************************************
+* HexToInt(szString) Hex String to Int 
+************************************************************************/
+function HexToInt(strNumber)
+{
+    if( typeof strNumber != "string")
+    {
+        return null;
+    }
+    local nOutput = 0;
+    local nDigitPos = 0;
+    for (local nCharPos = strNumber.len() -1; nCharPos >= 0; nCharPos--)
+    {
+        local nThisChar = strNumber[nCharPos];
+        if (nThisChar >= 48 && nThisChar <= 57)
+        {
+            //number
+            nOutput += (nThisChar - 48) << (nDigitPos * 4);
+            nDigitPos++;
+            
+            continue;
+        }
+        if (nThisChar >= 65 && nThisChar <= 70)
+        {
+            // A-F
+            nOutput += (nThisChar - 55) << (nDigitPos * 4);
+            nDigitPos++;
+            continue;
+        }
+        
+        if (nThisChar == 'x' && nCharPos == 1)
+        {
+            // prefixed 0x, let them do that
+            continue;
+        }
+        error("unexected character");
+        return null;
+    }
+    return nOutput;
+}

@@ -1,0 +1,53 @@
+const c_MessageFollowParent = 0x2000;                           // this is the flag that tells the message key to follow status of parent.                                    
+local bDebugPrinting = false;
+local g_nTextMessageKey;
+
+
+
+dofile("etal\\lib\\keys.moc");                                  //Load keys library
+function OnInit()
+{
+   ICR_SetLocalUserData("szUserDesc", "MISC_", true);
+   if (bDebugPrinting)print("szUserDesc set to default");
+   ICR_EnableDebugLog(bDebugPrinting);
+   ICR_SetLocalUserData("bDebugPrinting", bDebugPrinting);
+   g_nTextMessageKey = CheckForKey("TEXT MESSAGE",53,43,c_MessageFollowParent); //check to see if a status key text message, with the flag follow status of parent exists. If not create it.
+}
+
+
+function AfterKeyPress (nFile, nRecord, nKeytype)
+{
+    if (nFile == 1)                                          //have you pressed a PLU
+    {
+        local szUserDesc = ICR_GetLocalUserData("szUserDesc");
+        local tPLU = ICR_GetPGMData (1, nRecord);           //get program data from the PLU pressed
+        local szName = tPLU.NAME.slice(0, szUserDesc.len());  //only compare the amount of characters in the description you have chosen 
+        if(szName.toupper() == szUserDesc)                 //convert the received name to uppercase, and check if it is the same as configured in PGM 3
+        {
+            ICR_KeyPress(53, g_nTextMessageKey);          //If the PLU pressed has whatever they have set in the description press sts key 21 (message)
+        }
+    }   
+}   
+
+
+function OnEnterPGMMenu(nSub)
+{
+    // clearing pgm menu
+    ICR_PurgeProgramSettings();
+    switch(nSub)
+    {
+        case 0:
+            
+            if (bDebugPrinting)print("resetting pgm menu");
+            // our settings
+            ICR_AdvertiseProgramSetting("PLU Desc to add a text message", "szUserDesc");
+            // version info
+            ICR_AdvertiseProgramSetting("Version Info", "SCRIPTVERINF");
+            break;
+            
+        default:
+            // this menu doesn't exist :o
+            if (bDebugPrinting)print("pgm menu does not exist");
+            ICR_AdvertiseProgramHeading("This menu doesn't exist yet :(")
+    }
+}

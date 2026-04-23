@@ -1,0 +1,1 @@
+To use the pockettouchsync.ehp place the ehp file in c:\ICRTOUCH\web\

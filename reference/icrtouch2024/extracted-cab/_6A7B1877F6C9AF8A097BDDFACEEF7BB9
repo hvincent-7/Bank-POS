@@ -1,0 +1,109 @@
+<BUTTONS>
+    <BUTTON id="BTN:1" name="Small button light" width="177" height="174">
+	    <STATEIMAGE state="up" image="salesmode_buttons.bmp" left="0" top="0"/>
+		<STATEIMAGE state="down" image="salesmode_buttons.bmp" left="0" top="174"/>
+		
+		<!-- Be warned!!!!!
+		     Sale mode buttons support transparency by the use of the TransparentColour property.  There is a large
+		     amount of overhead associated with using this, such that it is not pratical on slow machines or with
+			 large amounts of buttons in use
+
+			 If transparancy is not required then this property should be excluded from the STATEIMAGE emelement 
+		   -->
+			
+	</BUTTON>
+			
+	<BUTTON id="BTN:2" name="Small button mid" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_buttons2.bmp" left="0" top="0"/>
+		<STATEIMAGE state="down" image="salesmode_buttons2.bmp" left="0" top="174"/>
+	</BUTTON>
+	   
+	<BUTTON id="BTN:3" name="Small button dark" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_buttons3.bmp" left="0" top="0"/>
+		<STATEIMAGE state="down" image="salesmode_buttons3.bmp" left="0" top="174"/>
+	</BUTTON>
+			
+	<BUTTON id="BTN:4" name="Large button light" width="390" height="389">
+		<STATEIMAGE state="up" image="homemode_buttons.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="homemode_buttons.bmp" left="0" top="389" TransparentColour="00FF00FF"/>
+	</BUTTON>
+			
+	<BUTTON id="BTN:5" name="Large button mid" width="390" height="389">
+		<STATEIMAGE state="up" image="homemode_buttons2.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="homemode_buttons2.bmp" left="0" top="389" TransparentColour="00FF00FF"/>
+	</BUTTON>
+		
+	<BUTTON id="BTN:6" name="Large button dark" width="390" height="389">
+		<STATEIMAGE state="up" image="homemode_buttons3.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="homemode_buttons3.bmp" left="0" top="389" TransparentColour="00FF00FF"/>
+	</BUTTON>
+			
+	<BUTTON id="BTN:7" name="Round button light" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_buttonsr1.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="salesmode_buttonsr1.bmp" left="0" top="174" TransparentColour="00FF00FF"/>
+	</BUTTON>
+	
+	<BUTTON id="BTN:8" name="Round button mid" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_buttonsr2.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="salesmode_buttonsr2.bmp" left="0" top="174" TransparentColour="00FF00FF"/>
+	</BUTTON>
+	
+	<BUTTON id="BTN:9" name="Round button dark" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_buttonsr3.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="salesmode_buttonsr3.bmp" left="0" top="174" TransparentColour="00FF00FF"/>
+	</BUTTON>
+
+	<BUTTON id="BTN:10" name="Small button white" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_white.bmp" left="0" top="0"/>
+		<STATEIMAGE state="down" image="salesmode_white.bmp" left="0" top="174"/>
+	</BUTTON>
+	
+	<BUTTON id="BTN:11" name="Large button white" width="390" height="389">
+		<STATEIMAGE state="up" image="homemode_white.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="homemode_white.bmp" left="0" top="389" TransparentColour="00FF00FF"/>
+	</BUTTON>
+    
+    <BUTTON id="BTN:12" name="Large glass light" width="390" height="389">
+		<STATEIMAGE state="up" image="homemode_buttons4.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="homemode_buttons4.bmp" left="0" top="389" TransparentColour="00FF00FF"/>
+	</BUTTON>
+    
+    <BUTTON id="BTN:13" name="Large glass mid" width="390" height="389">
+		<STATEIMAGE state="up" image="homemode_buttons5.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="homemode_buttons5.bmp" left="0" top="389" TransparentColour="00FF00FF"/>
+	</BUTTON>
+    
+    <BUTTON id="BTN:14" name="Large glass dark" width="390" height="389">
+		<STATEIMAGE state="up" image="homemode_buttons6.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="homemode_buttons6.bmp" left="0" top="389" TransparentColour="00FF00FF"/>
+	</BUTTON>
+    
+    <BUTTON id="BTN:15" name="Small glass light" width="177" height="174">
+	    <STATEIMAGE state="up" image="salesmode_buttons4.bmp" left="0" top="0"/>
+		<STATEIMAGE state="down" image="salesmode_buttons4.bmp" left="0" top="174"/>
+	</BUTTON>
+			
+	<BUTTON id="BTN:16" name="Small glass mid" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_buttons5.bmp" left="0" top="0"/>
+		<STATEIMAGE state="down" image="salesmode_buttons5.bmp" left="0" top="174"/>
+	</BUTTON>
+	   
+	<BUTTON id="BTN:17" name="Small glass dark" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_buttons6.bmp" left="0" top="0"/>
+		<STATEIMAGE state="down" image="salesmode_buttons6.bmp" left="0" top="174"/>
+	</BUTTON>
+    <BUTTON id="BTN:18" name="Round glass light" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_buttonsr4.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="salesmode_buttonsr4.bmp" left="0" top="174" TransparentColour="00FF00FF"/>
+	</BUTTON>
+	
+	<BUTTON id="BTN:19" name="Round glass mid" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_buttonsr5.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="salesmode_buttonsr5.bmp" left="0" top="174" TransparentColour="00FF00FF"/>
+	</BUTTON>
+	
+	<BUTTON id="BTN:20" name="Round glass dark" width="177" height="174">
+		<STATEIMAGE state="up" image="salesmode_buttonsr6.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+		<STATEIMAGE state="down" image="salesmode_buttonsr6.bmp" left="0" top="174" TransparentColour="00FF00FF"/>
+	</BUTTON>
+</BUTTONS>

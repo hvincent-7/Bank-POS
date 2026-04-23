@@ -1,0 +1,834 @@
+/**************************************************************
+dates library for Etal
+(c) 2013 ICRTouch LLP
+
+converts dates between useful formats
+**************************************************************/
+
+local tMonthLengths = {[1]=31,[2]=28,[3]=31,[4]=30,[5]=31,[6]=30,[7]=31,[8]=31,[9]=30,[10]=31,[11]=30,[12]=31 };
+// MonthNames are in language.def 222~233 ~local tMonthNames = {[1]="JANUARY",[2]="FEBRUARY",[3]="MARCH",[4]="APRIL",[5]="MAY",[6]="JUNE",[7]="JULY",[8]="AUGUST",[9]="SEPTEMBER",[10]="OCTOBER",[11]="NOVEMBER",[12]="DECEMBER" };
+local bDebugPrinting = false;
+
+/**********************************************************************
+Date manipulation functions
+**********************************************************************/
+
+/**********************************************************************
+DateAddDays
+
+adds some days onto a date
+**********************************************************************/
+
+function DateAddDays(tDate,nDays)
+{
+    local tSysData = ICR_GetSystemData();
+    if(tSysData.VERSIONID < 6000)
+    {
+        // prior to version ID 6000 date tables had months starting from 0
+        tDate.month += 1;
+    }
+    tDate.day += nDays
+    tDate = RoundDate(tDate);
+    // tDate should now contain the new date
+     if(tSysData.VERSIONID < 6000)
+    {
+        // prior to version ID 6000 date tables had months starting from 0
+        tDate.month -= 1;
+    }
+    tDate.wday = (tDate.wday +nDays) %7;
+    
+    return tDate;
+}
+
+/**********************************************************************
+Date comparison functions
+**********************************************************************/
+
+/**********************************************************************
+DateCompare
+
+is to before or after from?
+returns -1 if to is before, 1 if after, 0 if it's the same
+**********************************************************************/
+function DateCompare(tFrom,tTo)
+{
+    // maybe they're the same
+    if(tFrom.year == tTo.year && tFrom.month == tTo.month && tFrom.day == tTo.day && tTo.hour == tFrom.hour && tTo.min == tFrom.min && tTo.sec == tFrom.sec)
+    {
+        // yay, they're the same, that was easy.
+        return 0;
+    }
+    // if from is after to
+    if ((tFrom.year > tTo.year) ||
+        (tFrom.year == tTo.year && tFrom.month > tTo.month) ||
+        (tFrom.year == tTo.year && tFrom.month == tTo.month && tFrom.day > tTo.day) ||
+        (tFrom.year == tTo.year && tFrom.month == tTo.month && tFrom.day ==  tTo.day && tFrom.hour > tTo.hour) ||
+        (tFrom.year == tTo.year && tFrom.month == tTo.month && tFrom.day ==  tTo.day && tFrom.hour == tTo.hour && tFrom.min > tTo.min) ||
+        (tFrom.year == tTo.year && tFrom.month == tTo.month && tFrom.day ==  tTo.day && tFrom.hour == tTo.hour && tFrom.min == tTo.min && tFrom.sec > tTo.sec)
+        )
+    {
+        return -1;
+    }
+    // to is after from :)
+    return 1;
+}
+
+/**********************************************************************
+DateIntCompare
+
+return the difference in *DAYS*
+if the input isn't sane we will return null;
+**********************************************************************/
+
+function DateIntCompare(nFrom, nTo)
+{
+    if( typeof nFrom != "integer" || typeof nTo != "integer")
+    {
+        // dunno what they've given us but it's not what we wanted
+        return null;
+    }
+    // date as an int is DDMMYYYY
+    // chop up the from 
+    local nFromDay = (nFrom / 1000000);
+    local nFromMonth = (nFrom / 10000)  % 100;
+    local nFromYear = nFrom % 10000;
+    // chop up the to string
+    local nToDay = (nTo / 1000000);
+    local nToMonth = (nTo / 10000)  % 100;
+    local nToYear = nTo % 10000;
+    // are they sane?
+    if((nFromMonth > 12 || nFromMonth < 1) || (nToMonth > 12 || nToMonth < 1))
+    {
+        // invalid month
+        return null;
+    }
+    local nTempMonthLengh = (nToMonth == 2 && IsLeapYear(nToYear) ) ? 1+ tMonthLengths[nToMonth] : tMonthLengths[nToMonth];
+    if (nToDay < 1 || nToDay > nTempMonthLengh)
+    {
+        return null;
+    }
+    local nTempMonthLengh = (nFromMonth == 2 && IsLeapYear(nFromYear) ) ? 1+ tMonthLengths[nFromMonth] : tMonthLengths[nFromMonth];
+    if (nFromDay < 1 || nFromDay > nTempMonthLengh)
+    {
+        return null;
+    }
+    if (nToYear == nFromYear && nToMonth == nFromMonth && nToDay == nFromDay)
+    {
+        // if they're the same then the difference is 0
+        return 0;
+    }
+    
+    local bLater = ((nToYear > nFromYear) || (nToYear == nFromYear && nToMonth > nFromMonth) || (nToYear == nFromYear && nToMonth == nFromMonth && nToDay > nFromDay));
+    local nDifferenceInDays = 0;
+    
+    local nTempDay = nToDay;
+    local nTempMonth = nToMonth;
+    local nTempYear = nToYear;
+    
+    if(!bLater)
+    {
+        // if From is later than To then swap them
+        nToDay = nFromDay;
+        nToMonth = nFromMonth;
+        nToYear = nFromYear;
+        
+        nFromDay = nTempDay;
+        nFromMonth = nTempMonth;
+        nFromYear = nTempYear;
+    }
+    
+    if(nToYear == nFromYear && nToMonth == nFromMonth)
+    {
+        // same month, difference is just days
+        nDifferenceInDays = nToDay - nFromDay;
+        
+        return bLater ? nDifferenceInDays : 0 - nDifferenceInDays;
+    }
+    
+    local nCurrentMonth = nFromMonth;
+    local nCurrentYear = nFromYear;
+    
+    // start by counting days left in fromMonth
+    nDifferenceInDays += nCurrentMonth == 2 && IsLeapYear(nCurrentYear) ? 29 - nFromDay : tMonthLengths[nCurrentMonth] - nFromDay;
+    nCurrentMonth++;
+    if (nCurrentMonth > 12)
+    {
+        nCurrentYear++;
+        nCurrentMonth = 1;
+    }
+    // then add all they days in all remaining months until we are on the same year
+    while ((nCurrentYear < nToYear) )
+    {
+        nDifferenceInDays += nCurrentMonth == 2 && IsLeapYear(nCurrentYear) ? 29 : tMonthLengths[nCurrentMonth];
+        nCurrentMonth++
+        if (nCurrentMonth > 12)
+        {
+            nCurrentYear++;
+            nCurrentMonth = 1;
+        }
+    }
+    while(nCurrentMonth < nToMonth)
+    {
+        nDifferenceInDays += nCurrentMonth++ == 2 && IsLeapYear(nCurrentYear) ? 29 : tMonthLengths[nCurrentMonth];
+    }
+    // add on the number of days used in the To month.
+    nDifferenceInDays += nToDay;
+    
+    return bLater ? nDifferenceInDays : 0 - nDifferenceInDays;
+}
+
+/*************************************************************************************************************
+function GetDateDiff(tStartDate , tEndDate)
+Returns seconds mins hours days difference between two tDates ~ This func will probably end up in dates.moc
+*************************************************************************************************************/
+
+function GetDateDiff( tStartDate = null , tEndDate = null )
+{
+    // Throw back null if passed rubbish.
+    if((typeof tStartDate != "table") || (typeof tEndDate != "table"))return null;
+    // Store the diff
+    local tDiff = { negative = false };
+    
+    // Clone the tables before we operate on them.
+    local tStart = clone(tStartDate);
+    local tEnd = clone(tEndDate);
+    
+    
+    // If End is before start swap them.
+    if(DateCompare(tStartDate,tEndDate) == -1 )
+    {
+        // swap
+        local tTemp = clone(tStart);
+        tStart = clone(tEnd);
+        tEnd = clone(tTemp);
+        tDiff.negative <- true;
+    }
+
+    if(tEnd.sec < tStart.sec  )
+    {
+        tEnd.sec += 60;
+        tEnd.min--;
+    }
+    tDiff.sec <- ( tEnd.sec - tStart.sec );
+
+    if(tEnd.min < tStart.min)
+    {
+        tEnd.min += 60;
+        tEnd.hour--;
+    }
+    tDiff.min <- (tEnd.min - tStart.min);
+    
+    if(tEnd.hour < tStart.hour )
+    {
+        tEnd.hour += 24;
+        tEnd.day--;
+    }
+    tDiff.hour <- (tEnd.hour - tStart.hour);
+    
+    local tMonthLengths = {[1]=31,[2]=28,[3]=31,[4]=30,[5]=31,[6]=30,[7]=31,[8]=31,[9]=30,[10]=31,[11]=30,[12]=31 };
+    
+    if(tEnd.day < tStart.day )
+    {
+        tEnd.month--;
+        if(tEnd.month == 0)
+        {
+            tEnd.month = 12;
+            tEnd.year--;
+        }
+        tEnd.day += tMonthLengths[tEnd.month];
+    }
+    tDiff.day <- ( tEnd.day  - tStart.day);
+    
+    while( ( tStart.month != tEnd.month ) || ( tStart.year != tEnd.year ) )
+    {
+        //print( " sm"+ tStart.month + " em"+ tEnd.month +" sy"+tStart.year + " ey"+tEnd.year );
+        // Keep subtracts days on until we get there.
+        tEnd.month--;
+        if(tEnd.month == 0)
+        {
+            tEnd.month = 12;
+            tEnd.year--;
+        }
+        //print("Adding days "+tMonthLengths[tEnd.month] +" to "+tDiff.day);
+        tDiff.day += tMonthLengths[tEnd.month];
+        // Leap year 
+        if(tEnd.month == 2)
+        {
+            if(IsLeapYear(tEnd.year))
+            {
+                tDiff.day++;
+            }
+        }
+    }
+    return tDiff;
+}
+
+
+
+/**********************************************************************
+Date conversion functions
+**********************************************************************/
+
+/**********************************************************************
+DateToInteger
+Takes a date table and returns an integer for use in touchpoint
+**********************************************************************/
+
+function DateToInteger(tDate)
+{
+    local tSysData = ICR_GetSystemData();
+    if(tSysData.VERSIONID < 6000)
+    {
+        // prior to version ID 6000 date tables had months starting from 0
+        tDate.month += 1;
+    }
+    local nDate = tDate.year + (10000 * tDate.month) + (1000000 * tDate.day);
+    return nDate;
+}
+
+/**********************************************************************
+DateToString
+Takes a date table and returns a string for printing
+**********************************************************************/
+
+function DateToString(tDate)
+{
+    if(typeof tDate == "integer" )tDate = IntegerToDate(tDate);
+    local szDate = "";
+    local tSysData = ICR_GetSystemData();
+    if(tSysData.VERSIONID < 6000)
+    {
+        // prior to version ID 6000 date tables had months starting from 0
+        tDate.month += 1;
+    }
+    szDate += tDate.day < 10 ? "0"+tDate.day : tDate.day;
+    szDate += "/";
+    szDate += tDate.month < 10 ? "0"+(tDate.month) : (tDate.month);
+    szDate += "/";
+    szDate += tDate.year;
+    
+    return szDate;
+}
+
+/**********************************************************************
+IntegerToDate
+Takes an integer for use in touchpoint and returns a date table
+**********************************************************************/
+
+function IntegerToDate(nDate)
+{
+    local tDate = {sec = 0,min=0,hour=0};
+    tDate.day <- nDate / 1000000;
+    tDate.month <- (nDate / 10000) % 100;
+    tDate.year <- nDate % 10000;
+    
+   
+    local tSysData = ICR_GetSystemData();
+    if(tSysData.VERSIONID < 6000)
+    {
+        // prior to version ID 6000 date tables had months starting from 0
+        tDate.month -= 1;
+    }
+    tDate = CalcWeekDay(tDate);
+    return tDate;
+}
+/**********************************************************************
+UNIXTimeStampToDate
+Takes a UNIX Time Stamp and converts it into a human readable time format.
+Returns as a date table.
+**********************************************************************/
+
+function UNIXTimeStampToDate(nUNIXTimeStamp)
+{
+    local tDate = {day = 0, month = 0, year = 0, hour = 0, min = 0, sec = 0, wday=0, yday=0};
+    
+    local tMonths = { [1] = 31, [2] = 28, [3] = 31, [4] = 30, [5] = 31, [6] = 30, [7] = 31, [8] = 31, [9] = 30, [10] = 31, [11] = 30, [12] = 31 };
+    
+    local nYearEpoch = 1970;
+    local nApproxNumberYearsElapsed = nUNIXTimeStamp / 31557600;
+    
+    local nThisYear = nYearEpoch + nApproxNumberYearsElapsed;
+    
+    local nDayCount = 0;
+    
+    local nLastYear = nThisYear - 1;
+    local nDaysLastYearSinceEpoch = 0;
+    
+    for(local nCount = nYearEpoch; nCount <= nThisYear; nCount++)
+    {
+        if(IsLeapYear(nCount))
+        {
+            nDayCount += 366;           
+        }
+        else
+        {
+            nDayCount += 365;           
+        }
+        
+        if(nCount == (nThisYear - 1))
+        {
+            nDaysLastYearSinceEpoch = nDayCount; 
+        }
+    }
+    
+    local nDaysElapsed = (nUNIXTimeStamp / 86400);
+        
+    local nDaysElapsedSinceLastYear = nDaysElapsed - nDaysLastYearSinceEpoch;
+        
+    local nDaysSoFar = 0;
+    local nThisMonth = 0;
+    
+    for(local nCount = 1; nCount <= 12; nCount++)
+    {
+        if((nDaysSoFar <= nDaysElapsedSinceLastYear) && (nDaysSoFar + ((IsLeapYear(nThisYear) && nCount == 2) ? tMonths[nCount] + 1 : tMonths[nCount]) <= nDaysElapsedSinceLastYear))
+        {
+            nDaysSoFar += (IsLeapYear(nThisYear) && nCount == 2) ? tMonths[nCount] + 1 : tMonths[nCount];
+            nThisMonth = nCount + 1;
+        }
+    }
+    
+    local nThisSecond = nUNIXTimeStamp % 60;
+    local nThisMinute = (nUNIXTimeStamp % 3600) / 60;
+    local nThisHour = (nUNIXTimeStamp % 86400) / 3600;
+    local nThisDay = (nDaysElapsedSinceLastYear - nDaysSoFar) + 1;
+    local nThisWeekDay = (nDaysElapsed + 4) % 7;
+        
+    tDate.sec   = nThisSecond;
+    tDate.min   = nThisMinute;
+    tDate.hour  = nThisHour;
+    tDate.day   = nThisDay;
+    tDate.month = nThisMonth;
+    tDate.year  = nThisYear;
+    tDate.wday  = nThisWeekDay;
+    tDate.yday  = nDaysElapsedSinceLastYear; 
+    
+    return tDate;
+}
+
+/**********************************************************************
+RFCDateTimeToDate
+Takes an RFC3339 date-time as a string and returns it as a date table
+
+This function doesn't support versions prior to the adding of 
+ICR_GetUTCTimeBias as it kinda needs that
+
+!**warning**!
+We are going to dump fractional seconds
+We are going to dump leap seconds
+**********************************************************************/
+
+function RFCDateTimeToDate(szRFCDateTimeToDate)
+{
+    // somewhere to put the date
+    local tDate = {sec = 0,min=0,hour=0,day=0,month=0,year=0,wday=0,yday=0};
+    // this could all go horribly wrong if the string they gave us isn't a date-time
+    try
+    {
+        // time bias that needs to be added to local time to get UTC, we will subtract this in a minute to get local time
+        local nTimeBias = ICR_GetUTCTimeBias();
+        // hack up the string
+        local szYear = szRFCDateTimeToDate.slice(0,4);
+        local szMonth = szRFCDateTimeToDate.slice(5,7);
+        local szDay = szRFCDateTimeToDate.slice(8,11);
+        local szHour = szRFCDateTimeToDate.slice(11,14);
+        local szMinute = szRFCDateTimeToDate.slice(14,17);
+        local szSecond = szRFCDateTimeToDate.slice(17,20);
+        // stick that lot in the date table
+        tDate.year = szYear.tointeger();
+        tDate.month = szMonth.tointeger();
+        tDate.day = szDay.tointeger();
+        tDate.hour = szHour.tointeger();
+        tDate.min = szMinute.tointeger();
+        tDate.sec = szSecond.tointeger();
+
+        // here's where it gets a bit more complicated
+        local nOffsetHours = 0;
+        local nOffsetMinutes = 0;
+        local bOffsetPositive = true;
+        local lastCharPos = szRFCDateTimeToDate.len() -1;
+        if (szRFCDateTimeToDate[lastCharPos] == 'Z' || szRFCDateTimeToDate[lastCharPos] == 'z')
+        {
+            // if the last character in the string is a Z then the timezone is UTC
+            // we have already set that so we don't need to do anything here
+        }
+        else
+        {
+            // there's a time offset specified... find out what it is
+            if (szRFCDateTimeToDate[lastCharPos -5] == '-')
+            {
+                // negative offset to UTC
+                bOffsetPositive = false;
+            }
+            local szOffsetHours = szRFCDateTimeToDate.slice(lastCharPos-3,lastCharPos-1);
+            local szOffsetMinutes = szRFCDateTimeToDate.slice(lastCharPos-1);
+            nOffsetHours = szOffsetHours.tointeger();
+            nOffsetMinutes = szOffsetMinutes.tointeger();
+            if (!bOffsetPositive)
+            {
+                nOffsetHours = -nOffsetHours;
+                nOffsetMinutes = -nOffsetMinutes;
+            }
+        }
+        // offset is how far offset the specified time was from UTC, so we need to subtract that from the time to get UTC then subtract the timebias to get Local :)
+        tDate.hour -= nOffsetHours;
+        tDate.min -= nOffsetMinutes;
+        // time is now in UTC (but may not make sense)
+        local nHourBias = nTimeBias / 60;
+        local nMinuteBias = nTimeBias % 60;
+        tDate.hour -= nHourBias;
+        tDate.min -= nMinuteBias;
+        // check for leap second
+        if(tDate.sec == 60)
+        {
+            tDate.sec = 59;
+        }
+        // time is now in local time but might need rounding
+        tDate = RoundDate(tDate);
+        tDate = CalcWeekDay(tDate)
+        return tDate;
+    }
+    catch(e)
+    {
+        // something bad happened, probably the string we have been passed wasn't actually a date-time
+        return null;
+    }
+}
+
+/**********************************************************************
+DateToRFC
+Takes a date table and returns it as a RFC3339 date/time string 
+
+This function doesn't support versions prior to the adding of 
+ICR_GetUTCTimeBias as it kinda needs that
+**********************************************************************/
+
+function DateToRFCDateTime(tDate)
+{
+    // we need to know when NOW is in relation to UTC, we can't do that if we don't have ICR_GetUTCTimeBias
+    local tSysData = ICR_GetSystemData();
+    if(tSysData.VERSIONID < 6021)
+    {
+        // till version is too old to know how to do this :(
+        return null;
+    }
+    //format is very dangerous... check what we have been given is a sensible date
+    if (typeof(tDate) != "table")
+    {
+        // we have not even been passed a table
+        return null;
+    }
+    if(!("year" in tDate) ||!("month" in tDate) ||!("day" in tDate) ||!("hour" in tDate) ||!("min" in tDate) ||!("sec" in tDate))
+    {
+        // if any of the fields we need aren't in the date table then abort
+        return null;
+    }
+    if(typeof(tDate.year) != "integer" ||typeof(tDate.month) != "integer" ||typeof(tDate.day) != "integer" ||typeof(tDate.hour) != "integer" ||typeof(tDate.min) != "integer" ||typeof(tDate.sec) != "integer")
+    {
+        // dunno why they've done that but one (or more) of the fields we need aren't integers
+        return null;
+    }
+    // looks like the date we have been given is in fact a date \o/
+    // somewhere to put the result
+    local szResult = "";
+    // format the date into a nice string 
+    szResult = format("%04d-%02d-%02dT%02d:%02d:%02d", tDate.year, tDate.month, tDate.day, tDate.hour, tDate.min, tDate.sec);
+    // append offset from UTC
+    // time bias that needs to be added to local time to get UTC
+    local nTimeBias = ICR_GetUTCTimeBias();
+    // which way is that?
+    local bNegative = !(nTimeBias < 0); // if the time bias is negative then we are + relative to UTC
+    // and how far?
+    nTimeBias = abs(nTimeBias);
+    // chop that up
+    local nHourOffset = nTimeBias / 60;
+    local nMinuteOffset = nTimeBias % 60;
+    // append sign
+    szResult += bNegative ? "-" : "+";
+    // hours
+    szResult += nHourOffset < 10 ? "0"+nHourOffset : nHourOffset;
+    // minutes
+    szResult += nMinuteOffset < 10 ? "0"+nMinuteOffset : nMinuteOffset;
+    // all done, give it back :)
+    return szResult;
+}
+
+
+/**********************************************************************
+Date utility functions
+**********************************************************************/
+
+/**********************************************************************
+RoundDate
+Rounds a date that been adjusted by stuff
+**********************************************************************/
+
+function RoundDate(tDate)
+{
+    while(tDate.sec < 0)
+    {
+        tDate.sec += 60;
+        tDate.min--;
+    }
+    while(tDate.sec > 59)
+    {
+        tDate.sec -= 60;
+        tDate.min++;
+    }
+    while(tDate.min < 0)
+    {
+        // if we're -ve minutes
+        // adjust the minutes by 60 and take an hour off
+        tDate.min += 60;
+        tDate.hour--;
+    }
+    while(tDate.min > 59)
+    {
+        // if we're more minutes than fit in an hour
+        // adjust the minutes by 60 and add an hour on
+        tDate.min -= 60;
+        tDate.hour++;
+    }
+    while(tDate.hour < 0)
+    {
+        // if we have gone back past midnight
+        // adjust date to day before
+        tDate.hour += 24;
+        tDate.day--;
+    }
+    while(tDate.hour > 23)
+    {
+        // if we're in tomorrow
+        tDate.hour -= 24;
+        tDate.day++;
+    }
+    local nDaysInMonth = tMonthLengths[tDate.month];
+    // is it a feb in a leap year?
+    if (tDate.month == 2 && IsLeapYear(tDate.year))
+    {
+        nDaysInMonth++;
+    }
+    while (tDate.day > nDaysInMonth)
+    {
+        // adding that many days has put us off the end of the month
+        tDate.day -= nDaysInMonth;
+        tDate.month++;
+        if (tDate.month > 12)
+        {
+            // gone off the end of the year
+            tDate.month = 1;
+            tDate.year++;
+        }
+        nDaysInMonth = tMonthLengths[tDate.month];
+         // is it a feb in a leap year?
+        if (tDate.month == 2 && IsLeapYear(tDate.year))
+        {
+            nDaysInMonth++;
+        }
+    }
+    return tDate;
+}
+
+/**********************************************************************
+IsLeapYear
+works out whether the supplied year is a leap year and returns a boolean
+**********************************************************************/
+
+function IsLeapYear(nYear)
+{
+    if (nYear % 400 == 0)
+    {
+        // 400th years are leap years
+        return true;
+    }
+    if (nYear % 100 == 0)
+    {
+        // hundredth years that aren't 400th years are NOT leap years
+        return false;
+    }
+    if (nYear % 4 == 0)
+    {
+        // every fourth year that isn't a hundredth year is a lear year
+        return true;
+    }
+    return false;
+}
+
+/**********************************************************************
+CalcWeekDay
+Works out which day of the week it is assuming only that day month year are correct
+**********************************************************************/
+function CalcWeekDay(tDate)
+{
+    local tSysData = ICR_GetSystemData();
+    if(tSysData.VERSIONID < 6000)
+    {
+        // prior to version ID 6000 date tables had months starting from 0
+        tDate.month += 1;
+    }
+    // lookup table because 2.6 nd 0.2 are hard work
+    local monthVals = {[1]=0,[2]=3,[3]=2,[4]=5,[5]=0,[6]=3,[7]=5,[8]=1,[9]=4,[10]=6,[11]=2,[12]=4};
+    local mVal = monthVals[tDate.month];
+    local C = tDate.year / 100; // century half of the year
+    local Y = tDate.year % 100; // year within that century
+    if (tDate.month < 3)
+    {
+        // the year starts in march apparently so jan/feb are last year
+        Y -= 1;
+    }
+    local wDay = (tDate.day + mVal + Y + (Y/4) + (C/4) - (2*C)) % 7;
+    if (wDay <0)
+    {
+        wDay = 7 + wDay;
+    }
+    tDate.wday <- wDay;
+    if(tSysData.VERSIONID < 6000)
+    {
+        // if we adjusted it then put it back
+        tDate.month -= 1;
+    }
+    return tDate;
+}
+
+function LongDateString(tDate)
+{
+    local tSysData = ICR_GetSystemData();
+    if(tSysData.VERSIONID < 6000)
+    {
+        // prior to version ID 6000 date tables had months starting from 0
+        tDate.month += 1;
+    }
+    
+    local szDateString = "";
+    
+    szDateString += tDate.day
+    szDateString += " " 
+    szDateString += ICR_GetLanguageText(tDate.month+221); //tMonthNames[tDate.month]
+    szDateString += " "
+    szDateString += tDate.year;
+    
+    return szDateString;
+}
+
+
+
+/********************************************************************************
+* DateToSQLDate(tDate)
+* Convert Date to SQL Looking date.
+*********************************************************************************/
+
+function DateToSQLDate(tDate , szDateDash = "-", szDTSeperator = " ", szTimeColon = ":")
+{
+    // date() to SQL TimeStamp yyyy-mm-dd HH:mm:ss
+    local szDate = "";
+    // if tDate table not valid then this will failed. return null
+    try
+    {
+        szDate += tDate.year;
+        szDate += szDateDash;
+        if(tDate.month < 10)szDate += "0";
+        szDate += tDate.month;
+        szDate += szDateDash;
+        if(tDate.day < 10)szDate += "0";
+        szDate += tDate.day;
+        
+        szDate += szDTSeperator;
+        
+        if(tDate.hour < 10)szDate += "0";
+        szDate += tDate.hour;
+        szDate += szTimeColon;
+        if(tDate.min < 10)szDate += "0";
+        szDate += tDate.min;
+        szDate += szTimeColon;
+        if(tDate.sec < 10)szDate += "0";
+        szDate += tDate.sec;     
+    }
+    catch(e)
+    {
+        szDate = null;
+    }
+    if(bDebugPrinting)print("DateToUnixDate "+szDate);
+    return szDate;
+}
+
+
+/********************************************************************************
+* SQLDateToDate(szDate)
+* Get sql yyyy-mm-dd hh:mm:ss to date() table. returns null if format not valid.
+*********************************************************************************/
+
+function SQLDateToDate(szDate , szSeperators = ". :,-/")
+{
+    // if the len smaller than 15 too short to be valid date. 
+    if(szDate.len() < 15)return null;
+    local tDate = {};
+    try
+    {
+        // Chop it up
+        local aSplit = split(szDate,szSeperators); // example result will be array ["2016","11","08","13","59","40"]
+        if(bDebugPrinting)printtable(aSplit);
+        // Populate date fields
+        tDate.year  <- aSplit[0];
+        tDate.month <- aSplit[1];
+        tDate.day   <- aSplit[2];     
+        tDate.hour  <- aSplit[3];
+        tDate.min   <- aSplit[4];
+        if(5 in aSplit)
+        {
+            tDate.sec <- aSplit[5];
+        }
+        else
+        {
+            // passed time without seconds
+            tDate.sec <- 0;
+        }
+        // Make integers
+        if(bDebugPrinting)print("Making ints");
+        foreach( idx , val in tDate)
+        {
+            tDate[idx] <- val.tointeger();
+        }
+        // TODO: Range Checking day 0~31 etc?
+          
+        // Add yday. number of days from start of the year.
+        local nDate = (( tDate.day * 1000000 ) + ( tDate.month * 10000 ) +  tDate.year);
+        local nYearStartDate = 1010000 +  tDate.year;
+          
+        if(bDebugPrinting)print("Calc days from "+nYearStartDate+ " to "+nDate);
+          
+        local nyday = DateIntCompare(  nYearStartDate , nDate ); 
+        tDate.yday  <- nyday;
+        // Calc wday  wikipedia formula( Gregorian calendar)
+        local tMonthOffset = {  [1]  = 0,
+                                [2]  = 3,
+                                [3]  = 3,
+                                [4]  = 6,
+                                [5]  = 1,
+                                [6]  = 4,
+                                [7]  = 6,
+                                [8]  = 2,
+                                [9]  = 5, 
+                                [10] = 0,
+                                [11] = 3,
+                                [12] = 5 };
+        local nCentOffset = (tDate.year / 100) % 4;
+        local nYY = tDate.year % 100;
+         
+        // wikipedia formula = ( d + MonthOffSet + yy + (yy / 4) + CentOffset ) % 7
+        if(bDebugPrinting)print("day "+ tDate.day +" + MonthOffset " + tMonthOffset[tDate.month] + " + YY " + nYY + "( "+ nYY +" div 4 ) " + nCentOffset + " ) % 7");
+          
+        local nWeekDay = (tDate.day + tMonthOffset[tDate.month] + nYY + (  nYY / 4  ) + nCentOffset ) % 7;
+        // Wikipedia formula wday 0=Sat ~ 6 = Fri  ~ Etal is 1 less.  0 = Sun ~ 6 = Sat
+        nWeekDay--; // Etal one day less than wiki
+        if(nWeekDay == -1)nWeekDay = 6;
+          
+        // Store wday
+        tDate.wday <- nWeekDay;
+    }
+    catch(e)
+    {
+        if(bDebugPrinting)print(e);
+        return null;
+    }
+    
+    return tDate;
+}

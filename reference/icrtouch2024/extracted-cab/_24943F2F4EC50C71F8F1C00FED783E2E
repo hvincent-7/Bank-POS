@@ -1,0 +1,40 @@
+<FONTS>
+  <FONT id="FNT:STKCNT" name="Courier New Bold 16" face="Courier New" size="16" bold="true"/>
+  <FONT id="FNT:1" name="Courier New Bold 16" face="Courier New" size="16" bold="true"/>
+  <FONT id="FNT:2" name="Arial Narrow 26" face="Arial Narrow" size="26" bold="true"/>
+  <FONT id="FNT:3" name="Brush Script BT 72" face="Brush Script BT" size="72" bold="true" italic="true"/>
+  <FONT id="FNT:4" name="Arial 16" face="Arial" size="16" />
+  <FONT id="FNT:5" name="Comic Sans MS 16" face="Comic Sans MS" size="16"/>
+  <FONT id="FNT:6" name="Comic Sans MS 30" face="Comic Sans MS" size="30"/>
+  <FONT id="FNT:7" name="Comic Sans MS 36" face="Comic Sans MS" size="36"/>
+  <FONT id="FNT:8" name="Rockwell Condensed 20" face="Rockwell Condensed" size="20"/>
+  <FONT id="FNT:9" name="Placard Condensed 24" face="Placard Condensed" size="24" bold="true"/>
+  <FONT id="FNT:10" name="Rockwell Condensed 16" face="Rockwell Condensed" size="16"/>
+  <FONT id="FNT:11" name="Rockwell Condensed 24" face="Rockwell Condensed" size="24"/>
+  <FONT id="FNT:12" name="Rockwell Condensed 28" face="Rockwell Condensed" size="28"/>
+  <FONT id="FNT:13" name="Rockwell Condensed 34" face="Rockwell Condensed" size="34"/>
+  <FONT id="FNT:14" name="Arial 20" face="Arial" size="20" bold="true"/>
+  <FONT id="FNT:15" name="Arial 24" face="Arial" size="24" bold="true"/>	 
+  <FONT id="FNT:16" name="Arial 28" face="Arial" size="28" bold="true"/>
+  <FONT id="FNT:17" name="Arial 34" face="Arial" size="34" bold="true"/>
+  <FONT id="FNT:18" name="Placard Condensed 16" face="Placard Condensed" size="16" bold="true"/>
+  <FONT id="FNT:19" name="Placard Condensed 20" face="Placard Condensed" size="20" bold="true"/>
+  <FONT id="FNT:20" name="Placard Condensed 28" face="Placard Condensed" size="28" bold="true"/>
+  <FONT id="FNT:21" name="Placard Condensed 34" face="Placard Condensed" size="34" bold="true"/>
+  <FONT id="FNT:22" name="Placard Condensed 72" face="Placard Condensed" size="72" bold="true"/>
+  <FONT id="FNT:23" name="Arial Narrow 16" face="Arial Narrow" size="16" bold="true"/>
+  <FONT id="FNT:24" name="Arial Narrow 20" face="Arial Narrow" size="20" bold="true"/>
+  <FONT id="FNT:25" name="Arial Narrow 24" face="Arial Narrow" size="24" bold="true"/>
+  <FONT id="FNT:26" name="Arial Narrow 34" face="Arial Narrow" size="34" bold="true"/>
+  <FONT id="FNT:27" name="Trebuchet MS 18" face="Trebuchet MS" size="18" bold="true"/>
+  <FONT id="FNT:28" name="Trebuchet MS 24" face="Trebuchet MS" size="24" bold="true"/>
+  <FONT id="FNT:29" name="Trebuchet MS 36" face="Trebuchet MS" size="36" bold="true"/>   
+  <FONT id="FNT:30" name="Segoe UI 18" face="Segoe UI" size="18" bold="true"/>
+  <FONT id="FNT:31" name="Segoe UI 24" face="Segoe UI" size="24" bold="true"/>
+  <FONT id="FNT:32" name="Segoe UI 36" face="Segoe UI" size="36" bold="true"/>
+  <FONT id="FNT:33" name="Verdana 20" face="Verdana" size="20"/>
+  <FONT id="FNT:34" name="Verdana 24" face="Verdana" size="24"/>
+  <FONT id="FNT:35" name="Verdana 34" face="Verdana" size="34"/>
+  <FONT id="FNT:36" name="Serifa BT 72" face="Serifa BT" size="72" bold="true"/>
+  <FONT id="FNT:37" name="Trebuchet MS 72" face="Trebuchet MS" size="72" bold="true"/>
+</FONTS>

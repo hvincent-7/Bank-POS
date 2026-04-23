@@ -1,0 +1,10 @@
+<DIALOG id="DLG:TOTALWIN" name="End of Sale Total Window" left="120" top="110" width="600" height="400">
+	<BACKGROUND image="totalwin_bg.bmp" TransparentColour="00FF00FF"/>
+	
+	<LINE1MESSAGE left="50" top="80">
+		<FONT face="Arial" size="120" align="left" valign="centre" italic="true" colour="FFFFFF"/>
+	</LINE1MESSAGE>
+
+  <AUTOCLEARTIME>30</AUTOCLEARTIME>
+
+</DIALOG>

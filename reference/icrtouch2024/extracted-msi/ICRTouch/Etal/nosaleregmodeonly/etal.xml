@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ETAL>
+ <FILE>script.moc</FILE>
+ <OUTPUTFILE>output.txt</OUTPUTFILE>
+ <NAME>Inhibit no sale in x/z</NAME>
+
+ <CREATED>09/10/2014</CREATED>
+ <LASTMODIFIED>09/10/2014</LASTMODIFIED>
+ <MINVERID>5600</MINVERID>
+ <AUTHOR>ICRTouch LLP</AUTHOR>
+</ETAL>

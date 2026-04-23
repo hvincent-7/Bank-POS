@@ -1,0 +1,36 @@
+<ICONS>
+    <ICON id="ICN:RECEIPTSWITCH" name="Receipt Switch Icon" left="931" top="750" width="20" height="16">
+        <STATEIMAGES>
+	        <STATEIMAGE state="on" image="icons.bmp" left="0" top="0" TransparentColour="FF00FF"/>
+		    <STATEIMAGE state="off" image="icons.bmp" left="20" top="0" TransparentColour="FF00FF"/>
+	    </STATEIMAGES>
+    </ICON>
+
+	<ICON id="ICN:POWERSTATUS" name="Power Status Icon" left="891" top="750" width="16" height="15">
+		<STATEIMAGES>
+			<STATEIMAGE state="batt100per" image="icons.bmp" left="40" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="batt80per" image="icons.bmp" left="56" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="batt60per" image="icons.bmp" left="72" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="batt40per" image="icons.bmp" left="88" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="batt20per" image="icons.bmp" left="104" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="batt0per" image="icons.bmp" left="120" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="onmains" image="icons.bmp" left="136" top="0" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="charging" image="icons.bmp" left="152" top="0" TransparentColour="FF00FF"/>
+		</STATEIMAGES>
+	</ICON>
+			
+	<ICON id="ICN:NETWORKSTATUS" name="Network Status Icon" left="909" top="750" width="17" height="14">
+		<STATEIMAGES>
+			<STATEIMAGE state="nodata" image="icons.bmp" left="0" top="17" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="dataout" image="icons.bmp" left="17" top="17" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="datain" image="icons.bmp" left="34" top="17" TransparentColour="FF00FF"/>
+			<STATEIMAGE state="databoth" image="icons.bmp" left="51" top="17" TransparentColour="FF00FF"/>
+		</STATEIMAGES>
+	</ICON>
+			
+	<ICON id="ICN:ICRICON" name="ICR Icon" left="3" top="1" width="35" height="35">
+		<STATEIMAGES>
+			<STATEIMAGE state="normal" image="newlogo.png" left="0" top="0" TransparentColour="FF00FF"/>
+		</STATEIMAGES>
+	</ICON>
+</ICONS>

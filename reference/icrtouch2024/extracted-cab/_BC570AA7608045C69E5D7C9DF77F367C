@@ -1,0 +1,23 @@
+<SKIN>
+  <WINDOW left="4" top="657" width="128" height="85">
+  <BACKGROUND image="window.bmp" TransparentColour="00FF00FF" /> 
+</WINDOW>
+</SKIN>
+
+	<!-- Bottom Left of Retail Skin salesmodewindows.xml with the Subtotal Item window shifted left to fit 
+
+
+	<WINDOW id="WDW:SUBTOTAL" name="Subtotal window" left="132" top="655" width="370" height="42">
+		<BACKGROUND image="subtotalwindow.bmp"/>
+		<TEXT left="10" top="4" width="340" height="40" highlightbackcolour="FFFFFF">
+			<FONT face="Arial" size="34" align="right" valign="top" colour="FFFFFF" highlightcolour="FF"/>
+		</TEXT>
+	</WINDOW>
+
+	<WINDOW id="WDW:ITEMCOUNT" name="Itemcount window" left="132" top="700" width="370" height="42">
+		<BACKGROUND image="itemcount.bmp"/>
+		<TEXT left="10" top="5" width="340" height="40" highlightbackcolour="FFFFFF">
+			<FONT face="Arial" size="34" align="right" valign="top" colour="FFFFFF" highlightcolour="FF"/>
+		</TEXT>
+	</WINDOW>
+-->

@@ -1,0 +1,24 @@
+<SCREENSAVER imagetime="100" ScreenOffFillColour="FFFFFF" >
+   <!-- Font used for the scrolling messages -->
+   <FONT face="Comic Sans MS" size="100" Colour="FF0000" />
+        
+   <!-- Images displayed, these are shown in a round robin fashion -->
+   <IMAGES>
+      <IMAGE id="IMG:1" IMAGE="..\..\scrnsave.bmp" /> 
+      <IMAGE id="IMG:2" IMAGE="..\..\scrnsave2.bmp" /> 
+      <IMAGE id="IMG:3" IMAGE="..\..\scrnsave3.bmp" /> 
+      <IMAGE id="IMG:4" IMAGE="..\..\scrnsave4.bmp" /> 
+   </IMAGES>
+		
+   <!-- The FIXEDMESSAGES node allows scrolling messages to be fixed, ie not programmable in pgm2 
+        this is good for till dealership messages etc 
+			 
+        These should be ommitted if you want normal program access to scrolling messages -->
+<!-- remove the comment tags from this to use fixed message
+   <FIXEDMESSAGES>
+      <FIXEDMESSAGE id="MSG:BOTTOM" text="ICRTouch Pizza" />
+      <FIXEDMESSAGE id="MSG:LINE1"  text="Hello my name is john" />
+   </FIXEDMESSAGES>
+-->
+
+</SCREENSAVER> 

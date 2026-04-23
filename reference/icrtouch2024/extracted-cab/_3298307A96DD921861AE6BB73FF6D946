@@ -1,0 +1,697 @@
+/**********************************************************************
+* Version history
+* 1.6   19/10/2016
+        Changes
+            * added a "stock only because we don't let them program stuff on the till" type flag
+* 1.5   26/07/2016
+        Changes
+            * pending SEL support
+            * various minor tweaks and tidying ups
+* 1.4   08/06/2015
+        Fixes
+            * if you did multiple program mode changes the sign off at removal of ibutton flag wouldn't be put back
+* 1.3 - 28/01/2015
+*       Changes
+*           * no longer allows program changes mid sale as that can do weird things
+*           * added some support for the PLU number key
+* 1.2 - 17/07/2013
+*       Changes
+*           * moved programming into a function so it's not in there twice
+*           * added edit option using the 2013 data entry dialog
+*           * added time to journal entries (as touchpoint does these days)
+* 1.1 - 02/03/2012
+*       Changes
+*           * added Add stock option
+*           * added remove stock option
+*           * made only the options appear for the allowed program modes for the current clerk
+*           * added file sending (Touchpoint 2012 required)
+*           * screen cache is invalided if names were programmed (2012 required)
+*           * added program mode option to restrict remove stock option to clerks with "manager" set
+*           * barcode lookup changed to use ICR_GetPLURecNumber
+* 1.0 - intial release
+**********************************************************************/
+
+// what we're currently doing, NB. the numbers are not the same as they were and anything hard coded will have changed, don't even think about changing NONE from 0 though
+enum programJob {NONE=0,PRICE=1,NAME=2,ADDSTOCK=3,REMSTOCK=4,EDIT=5,SEL=6,END=7 }
+
+const PENDING = 0x00000020;
+
+local nProgrammingPLUs = programJob.NONE;
+local nScriptKeyNum = 0;
+local bDebugPrinting = false;	// set this false to disable all the debug printing in the output file
+
+local nClerkSignOffTime = 0;
+local bClerkSignOffAtIbuttonRemoval = false;
+local bKeyboardNeedsUpdating = false;
+local bProgramDataNeedsSending = false;
+local bSELsNeedPrinting = false;
+
+dofile("etal\\lib\\keys.moc");      // load the function key lib
+dofile("etal\\lib\\barcode.moc");      // load the barcode lib
+
+function OnInit()
+{
+	ICR_EnableDebugLog(bDebugPrinting);
+    
+    ICR_SetLocalUserData("bDebugPrinting", bDebugPrinting);     //turn on debug printing in the library functions
+    if(bDebugPrinting)
+    {
+        ICR_SetFeature("CONSOLE",bDebugPrinting);
+        ICR_SetFeature("AUTORESTART",bDebugPrinting);
+    }
+   	
+    nScriptKeyNum = CheckForKey("Program PLU",53,110,0,0,500);  // get the key number for the script key
+    
+    // default settings for program mode options
+    ICR_SetLocalUserData("bOnlyManagerRemoveStock",false,true);
+}
+
+function BeforeKeyPress(nFile,nRecord,nKeyType)
+{
+    if (bDebugPrinting)print("key pressed: "+nFile+","+nRecord+","+nKeyType);
+    if (nKeyType == 110)return true;               // if it's a run script key just press it, ICRTouch will call OnRunScriptKeyPress for us in a second
+    
+    if (nKeyType == 160 ||
+        nKeyType == 161 ||
+        nKeyType == 159)
+    {
+        return true;               // if it's a level change key then press it   
+    }
+
+    if(nFile == 998)
+    {
+        return true;
+    }
+    if (nKeyType == 233 && (nProgrammingPLUs != programJob.NONE))                            // home mode
+    {
+        if (bDebugPrinting)print("home mode pressed, aborting programming");
+        EndProgramming();
+        return true;                   
+    }
+    
+    if(nKeyType == 50 && (nProgrammingPLUs != programJob.NONE))
+    {
+        // it's the PLU number key...
+        // grab that key so we can look at what it's set to look for
+        local tThisKey = ICR_GetPGMData(nFile,nRecord);
+        local bUseRandom = tThisKey.FLAG & 0x0001 ? true:false;
+        // grab the input
+        local szInput = ICR_GetInput();
+        local nPLUNum = 0;
+        if(bUseRandom)
+        {
+            // if we're after random code
+            // did they enter one?
+            if (szInput == "")
+            {
+                // nope, get one
+                local nInput = ICR_GetNumberDialog(tThisKey.NAME);
+                if(nInput == 0)
+                {
+                    // still didnt bother, just give up
+                    return false;
+                }
+                szInput = nInput.tostring();
+            }
+            nPLUNum = ICR_GetPLURecNumber(szInput);
+        }
+        else
+        {
+            // it's a record number
+            // try converting the input into a number
+            try
+            {
+                nPLUNum = szInput.tointeger();
+            }
+            catch(e)
+            {
+                // didn't manage that, ask for one
+                nPLUNum = ICR_GetNumberDialog(tThisKey.NAME);
+            }
+        }
+        // did we find one?
+        if (nPLUNum == 0)
+        {
+            // nope
+            ICR_Error(34);
+            return false;
+        }
+        // if we got here then nPLUNum is the one to edit/whatever so do that
+        ICR_SetInput("");
+        return ProgramPLU(nPLUNum);
+    }
+    
+    if (nFile == 1)                     // if it's a PLU
+    {
+        if((nProgrammingPLUs != programJob.NONE))
+        {
+            return ProgramPLU(nRecord);
+        }
+        else
+        {
+            return true;
+        }
+    }
+       
+    if ((nProgrammingPLUs != programJob.NONE))
+    {   
+        // we are in programming and it's not a plu and not a special key
+        ICR_Error(46);                   // wrong mode
+        return false;  
+    }
+    
+    // didn't match anything, return true so that it presses the key :)
+    return true;
+}
+
+function OnBarcode(szBarcode)
+{
+    // are we programming?
+    if((nProgrammingPLUs == programJob.NONE))
+    {
+        // we're not programming, let ICRTouch deal with it
+        return true;
+    }
+    // we're programming, lets do something useful
+    // is it a barcode
+    if(!(CheckCheckDigitEAN(szBarcode)))
+    {
+        // not an EAN, don't care about it
+        if(bDebugPrinting)print("Not an EAN");
+        return true;
+    }
+    local nPLU = ICR_GetPLURecNumber(szBarcode);
+    if (nPLU == 0)
+    {
+        // doesn't match an PLUs, not caring about that
+        if(bDebugPrinting)print("PLU not found for barcode "+szBarcode);
+        return true;
+    }
+    // we're programming and it's a PLU
+    
+    // ripped this out into a seperate function so it's only in there once
+    return ProgramPLU(nPLU);
+
+    
+}
+
+function ProgramPLU(nPLU)
+{  
+    switch(nProgrammingPLUs)
+    {
+        case programJob.PRICE:
+            // prices
+            // grab the programming from the plu
+            local tPLUPGM = ICR_GetPGMData(1,nPLU);     
+            // ask them what price they want  if they didn't tell us already
+            tPLUPGM.PRICE1L1 = ICR_GetNumberDialog(tPLUPGM.NAME,tPLUPGM.PRICE1L1,false);
+            // set the price
+            ICR_SetPGMData(1,nPLU,tPLUPGM);   
+            // remember that we changed stuff
+            bProgramDataNeedsSending = true;
+            // don't sell the PLU        
+            return false;
+            
+        case programJob.NAME:
+            // names
+            // grab the PLU
+            local tPLUPGM = ICR_GetPGMData(1,nPLU);
+            // ask what name they want
+            tPLUPGM.NAME = ICR_GetAlphaDialog(tPLUPGM.NAME,24,false,tPLUPGM.NAME);  
+            // set the plu name
+            ICR_SetPGMData(1,nPLU,tPLUPGM);
+            // write down that the keyboard needs to be redrawn
+            bKeyboardNeedsUpdating = true;
+            bProgramDataNeedsSending = true;
+            // don't press the PLU
+            return false;
+        case programJob.ADDSTOCK:
+            // add stock
+            // grab the PLU and see whether stock is on
+            local tThisPLU = ICR_GetPGMData(1,nPLU);
+            if(!(tThisPLU.STOCKFLAG & 0x01))
+            {
+                if(bDebugPrinting)print("Stock not enabled on this PLU");
+                ICR_SetInput_Message("Stock Not Enabled");
+                return false;
+            }
+            // find out the current stock level
+            local nCurrentStock = ICR_GetStock(nPLU);
+            // ask them how much they want to add
+            local nStockAdjust = ICR_GetNumberDialog("Add Stock");
+            // add that to the current stock and set it on that PLU
+            ICR_SetStock(nPLU, nCurrentStock + nStockAdjust);
+            return false;
+        case programJob.REMSTOCK:
+            // remove stock
+            // grab the PLU and see whether stock is on
+            local tThisPLU = ICR_GetPGMData(1,nPLU);
+            if(!(tThisPLU.STOCKFLAG & 0x01))
+            {
+                if(bDebugPrinting)print("Stock not enabled on this PLU");
+                ICR_SetInput_Message("Stock Not Enabled");
+                return false;
+            }
+            // find out the current stock level
+            local nCurrentStock = ICR_GetStock(nPLU);
+            // ask them how much they want to remove
+            local nStockAdjust =  ICR_GetNumberDialog("Remove Stock");
+            // add that to the current stock and set it on that PLU
+            ICR_SetStock(nPLU, nCurrentStock - nStockAdjust);
+            return false;
+        case programJob.EDIT:
+            // Edit PLU
+            // grab the PLU
+            local tThisPLU = ICR_GetPGMData(1,nPLU);
+            // load all the things we want from it into the data entry dialog using the text from the language file
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(1892),true,tThisPLU.NAME);
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(2503),false,tThisPLU.RANDOMCODE);
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(1852),false,tThisPLU.PRICE1L1);
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(1853),false,tThisPLU.PRICE2L1);
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(1854),false,tThisPLU.PRICE3L1);
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(2451),false,tThisPLU.DEPT);
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(2452),false,tThisPLU.GROUP);
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(2466),false,tThisPLU.TAXRATE);
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(2478),false,tThisPLU.QTY1);
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(2479),false,tThisPLU.QTY2);
+            ICR_DataEntryDialog_AddItem(ICR_GetLanguageText(2480),false,tThisPLU.QTY3);
+            // show the edit dialog
+            local tResult = ICR_DataEntryDialog("Edit PLU");
+            // did they change the name?
+            if (tThisPLU.NAME != tResult.FIELD1)
+            {
+                // YES!!!
+                bKeyboardNeedsUpdating = true;
+            }
+            // store all the stuff they set
+            tThisPLU.NAME = tResult.FIELD1;
+            tThisPLU.RANDOMCODE = tResult.FIELD2;
+            tThisPLU.PRICE1L1 = tResult.FIELD3;
+            tThisPLU.PRICE2L1 = tResult.FIELD4;
+            tThisPLU.PRICE3L1 = tResult.FIELD5;
+            tThisPLU.DEPT = tResult.FIELD6;
+            tThisPLU.GROUP = tResult.FIELD7;
+            tThisPLU.TAXRATE = tResult.FIELD8;
+            tThisPLU.QTY1 = tResult.FIELD9;
+            tThisPLU.QTY2 = tResult.FIELD10;
+            tThisPLU.QTY3 = tResult.FIELD11;
+            // stick that in the PLU file
+            ICR_SetPGMData(1,nPLU,tThisPLU);
+            // remember that we changed stuff
+            bProgramDataNeedsSending = true;
+            // don't sell it
+            return false;
+        case programJob.SEL:
+            // grab the PLU
+            local tThisPLU = ICR_GetPGMData(1,nPLU);
+            // set the pending flag
+            tThisPLU.FLAG4 = tThisPLU.FLAG4 | PENDING;
+            // stick that in the PLU file
+            ICR_SetPGMData(1,nPLU,tThisPLU);
+            // remember that we need to print them
+            bSELsNeedPrinting = true;
+            // don't sell the PLU
+            return false;
+            break;
+        default:
+            // we're not in a programming mode
+            // We shouldn't get here but well, we might. Somehow.
+            return true;
+            break;
+    }
+    // if we didn't already return then maybe we ought to sell it as something weird has happened.
+    return true;
+}
+
+function OnRunScriptKeyPress(nFile, nRecord, nNumber, nValue, nFlag)
+{
+    switch(nNumber)                      																// what sort of script key have we pressed?
+    {
+        case 500:
+        if (bDebugPrinting)print("plu programming key pressed");
+        pressProgrammingPLUKey(nFlag);
+        break;
+    }
+}
+
+function pressProgrammingPLUKey(nFlag)
+{
+    // check for clerk etc
+    local tSysData = ICR_GetSystemData();
+    if(tSysData.CURRENTCLERK == 0)
+    {
+        ICR_Error(1);   // sign on first
+        return;
+    }
+    if(tSysData.MODE != 1)
+    {
+        ICR_Error(5);   // reg mode only
+        return;
+    }
+    // should we allow this in the middle of a sale?
+    local tSaleHeader = ICR_GetClerkBuffer_Index();
+    if(tSaleHeader.REGPOS != 0)
+    {
+        ICR_Error(45);  //finalise sale
+        return;
+    }
+    
+    local tClerk = ICR_GetPGMData(5,tSysData.CURRENTCLERK);
+    
+    local bFirstItem = true;
+    local tOptionsListed = {};
+    local nChoice=0;
+    //program mode options
+    if(tClerk.MODECONTROL & 0x100 || tClerk.MODECONTROL & 0x400)
+    {
+        // clerk is allowed to program prices
+        // add prices to the list
+        ICR_ListDialog_AddItem("Prices",bFirstItem);
+        // unset firstness
+        bFirstItem = false;
+        // add it to the list of possible choices
+        tOptionsListed[tOptionsListed.len()+1] <- programJob.PRICE;
+    }
+
+    if(tClerk.MODECONTROL & 0x200 || tClerk.MODECONTROL & 0x400)
+    {
+        // clerk is allowed to program names
+        // add names to the list
+        ICR_ListDialog_AddItem("Names",bFirstItem);
+        // unset firstness
+        bFirstItem = false;
+        // add it to the list of possible choices
+        tOptionsListed[tOptionsListed.len()+1] <- programJob.NAME;
+    }
+    
+    if(tClerk.MODECONTROL & 0x100 || tClerk.MODECONTROL & 0x400)
+    {
+        // clerk is allowed to Add stock
+        // add addstock to the list
+        ICR_ListDialog_AddItem("Add Stock",bFirstItem);
+        // unset firstness
+        bFirstItem = false;
+        // add it to the list of possible choices
+        tOptionsListed[tOptionsListed.len()+1] <- programJob.ADDSTOCK;
+    }
+    // if they are manager, OR if only let manager remove stock is no...
+    if(tClerk.OPERATION & 0x0008 || (ICR_GetLocalUserData("bOnlyManagerRemoveStock") == false))
+    {
+        // check whether they are allowed to remove stock and add that option
+        if(tClerk.MODECONTROL & 0x100 || tClerk.MODECONTROL & 0x400)
+        {
+            // clerk is allowed to Remove stock
+            // add removestock to the list
+            ICR_ListDialog_AddItem("Remove Stock",bFirstItem);
+            // unset firstness
+            bFirstItem = false;
+            // add it to the list of possible choices
+            tOptionsListed[tOptionsListed.len()+1] <- programJob.REMSTOCK;
+        }
+    }
+    // if we're using 2013 and they're allowed into pgm3 show the edit option
+    if(tSysData.VERSIONID >= 6000 && (tClerk.MODECONTROL & 0x400))
+    {
+        // clerk is allowed to edit PLUs
+        // add Edit to the list
+        ICR_ListDialog_AddItem("Edit",bFirstItem);
+        // unset firstness
+        bFirstItem = false;
+        // add it to the list of possible choices
+        tOptionsListed[tOptionsListed.len()+1] <- programJob.EDIT;
+    }
+    
+    // they need to be allowed into Z to run the pending SELs report but I don't really see much need for other permissions, it's not a bad thing to need to be able to do and it's pretty non destructive
+    if(tClerk.MODECONTROL & 0x0020)
+    {
+        ICR_ListDialog_AddItem("Print SEL",bFirstItem);
+        // unset firstness
+        bFirstItem = false;
+        // add it to the list of possible choices
+        tOptionsListed[tOptionsListed.len()+1] <- programJob.SEL;
+    }
+    
+    if(nFlag & 0x0001)
+    {
+        // Stock Only flag is set
+        // ditch the options we had because we only care about the stock ones
+        bFirstItem = true;
+        ICR_ListDialog_AddItem("Add Stock",bFirstItem);
+        bFirstItem = false;
+        ICR_ListDialog_AddItem("Remove Stock",bFirstItem);
+        tOptionsListed = {};
+        tOptionsListed[tOptionsListed.len()+1] <- programJob.ADDSTOCK;
+        tOptionsListed[tOptionsListed.len()+1] <- programJob.REMSTOCK;
+    }
+    
+    if(tOptionsListed.len() == 0)
+    {
+        // no options have been added, abort
+        ICR_Error(15);
+        return;
+    }
+    
+    ICR_ListDialog_AddItem("End programming");
+    tOptionsListed[tOptionsListed.len()+1] <- programJob.END;
+    
+    // if we're already in programming then ask what they want to do but default to "end programming"
+    if(nProgrammingPLUs != 0)
+    {
+        if (bDebugPrinting)print("in programming, asking which mode they want");
+        // the LAST option in the list will be end programming
+        nChoice = ICR_ListDialog("PLU Programming",tOptionsListed.len());
+    }
+    else
+    {   // if they're not already in programming ask but default to prices
+        if (bDebugPrinting)print("not in programming, asking which mode they want");
+        nChoice = ICR_ListDialog("PLU Programming",1);
+    }
+    if (nChoice == 0)
+    {
+        // if they pressed ESC on the list dialog...
+        // run away
+        return;
+    }
+    local tFixedChar = {};
+    local tDate = date();
+    switch (tOptionsListed[nChoice])
+    {
+        case programJob.PRICE:
+            // they chose prices
+            StartMode(programJob.PRICE,"PGM1","PROGRAM 1 MODE");
+            break;
+        case programJob.NAME:
+            // they chose names
+            StartMode(programJob.NAME,"PGM2","PROGRAM 2 MODE");
+            break;
+        case programJob.ADDSTOCK:
+            // they chose add stock
+            StartMode(programJob.ADDSTOCK,"AddStock","Add Stock");
+            break;
+        case programJob.REMSTOCK:
+            // they chose remove stock
+            StartMode(programJob.REMSTOCK,"SubStock","Subtract Stock");
+            break;
+        case programJob.EDIT:   
+            // they chose Edit
+            StartMode(programJob.EDIT,"PGM3","Edit PLU");
+            break;
+        case programJob.SEL:   
+            // they chose SELs
+            StartMode(programJob.SEL,"SEL","Pending SEL");
+            break;
+        default:
+            // they chose to end programming
+            EndProgramming();
+    }
+}
+
+// all the things we do when we enter a new program mode are now here,
+// nJob is the mode we're going into, modetext is what to put in the mode window and journaltext is what to call this mode in the journal
+function StartMode(nJob,szModeText,szJournalText)
+{
+    local tFixedChar = {};
+    local tDate = date();
+    if(nProgrammingPLUs == programJob.NONE)
+    {
+        // disable clerk signoff
+        local tSysFlags = ICR_GetPGMData(101,1);
+        nClerkSignOffTime = tSysFlags.AUTOSIGNOFFTIME;
+        tSysFlags.AUTOSIGNOFFTIME = 0;
+        // disable ibutton removal
+        bClerkSignOffAtIbuttonRemoval = (tSysFlags.MC2 & 0x0200) ? true : false;
+        tSysFlags.MC2 = tSysFlags.MC2 & (~ 0x00000200);
+        ICR_SetPGMData(101,1,tSysFlags);
+    }
+    // set the text for reg mode
+    tFixedChar.TEXT <-szModeText;
+    ICR_SetPGMData(44,7,tFixedChar);
+    // redraw the mode window
+    ICR_RedrawWindow(3);
+    // steal all the events so other scripts don't break everything
+    ICR_StealEvent("BeforeKeyPress");
+    ICR_StealEvent("AfterKeyPress");
+    ICR_StealEvent("OnRunScriptKeyPress");
+    ICR_StealEvent("OnBarcode");
+    if (bDebugPrinting)print(szJournalText+", events stolen");
+    //write the mode change to the journal
+    ICR_JournalLine("MODE CHANGE, " +szJournalText+" (" +tDate.hour+":"+tDate.min+")",0, 0, 53, nScriptKeyNum, 0);
+    // set the plu programming flag so we know we should program stuff when keys are pressed
+    nProgrammingPLUs = nJob;
+}
+
+/**********************************************************************
+EndProgramming
+Called when we end programming mode, either by going to home mode or by
+choosing "end programming" from the plu programming key
+**********************************************************************/
+function EndProgramming()
+{
+    local bChangedSysFlags = false;
+    // re-enable clerk signoff and ibutton removal
+    local tFixedChar = {};
+    local tDate = date();
+    local tSysFlags = ICR_GetPGMData(101,1);
+    tSysFlags.AUTOSIGNOFFTIME = nClerkSignOffTime;
+    if(bClerkSignOffAtIbuttonRemoval)
+    {
+        tSysFlags.MC2 = tSysFlags.MC2 | 0x0200;
+        bChangedSysFlags = true;
+    }
+    // put the mode text back
+    tFixedChar.TEXT <-"REG";
+    ICR_SetPGMData(44,7,tFixedChar);
+    // redraw the mode window
+    ICR_RedrawWindow(3);
+    // release all the events so other scripts work
+    ICR_ReleaseEvent("BeforeKeyPress");
+    ICR_ReleaseEvent("AfterKeyPress");
+    ICR_ReleaseEvent("OnRunScriptKeyPress");
+    ICR_ReleaseEvent("OnBarcode");
+    // write the mode change to the journal
+    ICR_JournalLine("MODE CHANGE, REG MODE (" +tDate.hour+":"+tDate.min+")",0, 0, 53, nScriptKeyNum, 0);
+    
+    // do all the things we need to do to write things/print things etc etc
+    // we will need to know whether the till version supports it
+    local tSysData = ICR_GetSystemData();
+    
+    if(bSELsNeedPrinting)
+    {
+        bSELsNeedPrinting  = false;
+        // go find a period1 report key?
+            local nSalesKey = CheckForKey("Sales Mode",53,230);//,nReqFlag=0,nValue=0,nNumber=0,bMatchName=false)
+            local nZModeKey = CheckForKey("End Of Day",53,231);//,nReqFlag=0,nValue=0,nNumber=0,bMatchName=false)
+            local nPeriod1Key = CheckForKey("Sales Mode",53,220);//,nReqFlag=0,nValue=0,nNumber=0,bMatchName=false)
+            // we need to think about the reset yes/no prompt...
+            local bInhibitedAreYouSure = false;
+            if (tSysData.VERSIONID >= 5800)
+            {
+                if(!(tSysFlags.REPORTCTRL & 0x00002000))
+                {
+                    tSysFlags.REPORTCTRL = tSysFlags.REPORTCTRL | 0x00002000;
+                    ICR_SetPGMData(101,1,tSysFlags);
+                    bInhibitedAreYouSure = true;
+                }
+            }
+            // check whether it'll ask for a mode when we press the x/zmode button
+            local nClerk = ICR_GetCurrentClerk();
+            local tThisClerk = ICR_GetPGMData(5,nClerk);
+            if(tThisClerk.MODECONTROL & 0x0010)
+            {
+                // they're allowed into the X mode toooooooooo
+                if (tSysData.VERSIONID >= 6400)
+                {
+                    ICR_SetNextDialogInput(2);
+                }
+                else
+                {
+                    //WARNING. this function was deprecated for a REASON
+                    ICR_SendToKeyboard("2\r");
+                }
+            }
+            // press it
+            ICR_KeyPress(53,nZModeKey);
+            // report code for pending SEL
+            ICR_SetInput(414);
+            // do the report
+            ICR_KeyPress(53,nPeriod1Key);
+            // put it back in sales mode
+            ICR_KeyPress(53,nSalesKey);
+            
+            if(bInhibitedAreYouSure)
+            {
+                // put it back
+                tSysFlags.REPORTCTRL = tSysFlags.REPORTCTRL ^ 0x00002000;
+                bChangedSysFlags = true;
+            }
+    }
+    
+    if (bKeyboardNeedsUpdating)
+    {
+        // dirty the screen cache so it's all redrawn with the right names
+        ICR_InvalidateCachedLevel();
+        ICR_RedrawScreen();
+    }
+    
+    // perhaps we ought to send programming changes to the other tills
+    if(tSysData.VERSIONID >= 5710 && bProgramDataNeedsSending)
+    {   
+        // we are running a new enough version that we support sending program files.
+       
+   
+        if(tSysFlags.AUTOBROADCAST & 0x00000001)
+        {
+            // auto broadcast is on for the PLU file
+            // send the PLU file to all tills
+            ICR_ProgramSendFile(1,999);
+        }
+        // did they change any names?
+        if (bKeyboardNeedsUpdating)
+        {
+            // names
+            // dirty the screen cache so it's all redrawn with the right names
+            ICR_InvalidateCachedLevel();
+            ICR_RedrawScreen();
+
+            // plu names also affect the keyboard
+            if(tSysFlags.AUTOBROADCAST & 0x00040000)
+            {
+                // auto broadcast is on for the keyboard file
+                // send the keyboard file to all tills
+                ICR_ProgramSendFile(74,999);
+            }
+        }
+    }
+    // if there are changes to the system flags write them back to pgmdata (ibutton, don't ask to reset)
+    if(bChangedSysFlags)
+    {
+        ICR_SetPGMData(101,1,tSysFlags);
+    }
+    // unset the programming flag so beforekeypress doesn't do anything
+    nProgrammingPLUs = programJob.NONE;
+    // forget whether they keyboard has changed
+    bKeyboardNeedsUpdating = false;
+    bProgramDataNeedsSending = false;
+    if (bDebugPrinting)print("Finished programming, events released");
+}
+
+/**********************************************************************
+OnEnterPGMMenu
+**********************************************************************/
+
+function OnEnterPGMMenu(nSub)
+{
+    local nID=0;
+    ICR_PurgeProgramSettings();
+    switch(nSub)
+    {
+        case 0:
+            ICR_AdvertiseProgramSetting("Only Allow Manager to Remove Stock","bOnlyManagerRemoveStock");
+            // version info
+            ICR_AdvertiseProgramSetting("Version Info", "SCRIPTVERINF");
+            break;
+            
+        default:
+            ICR_AdvertiseProgramHeading("This menu doesn't exist yet :(");
+    }
+}

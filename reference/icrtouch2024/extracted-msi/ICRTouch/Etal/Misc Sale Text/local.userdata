@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<USERDATA>
+  <ITEM>
+    <NAME>szUserDesc</NAME>
+    <KIND>STRING</KIND>
+    <VALUE>MISC_</VALUE>
+  </ITEM>
+  <ITEM>
+    <NAME>bDebugPrinting</NAME>
+    <KIND>BOOLEAN</KIND>
+    <VALUE>FALSE</VALUE>
+  </ITEM>
+  <ITEM>
+    <NAME>TEXT MESSAGE</NAME>
+    <KIND>INTEGER</KIND>
+    <VALUE>199</VALUE>
+  </ITEM>
+  <ITEM>
+    <NAME>KEYTYPE_43_TEXT MESSAGE</NAME>
+    <KIND>INTEGER</KIND>
+    <VALUE>21</VALUE>
+  </ITEM>
+</USERDATA>

@@ -1,0 +1,129 @@
+/**************************************************************
+Base64 library for Etal
+(c) 2014 ICRTouch LLP
+
+converts strings to Base64(MIME)
+**************************************************************/
+
+// base64 character set
+const base64MIME = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+const base64MIMEPadCharacter = '=';
+
+/**************************************************************
+ToBase64_MIME
+
+accepts a string, converts it to base64 and returns it
+**************************************************************/
+function ToBase64_MIME(szInput)
+{
+    // somewhere to store the output
+    local szOutput = "";
+    // how far through are we 
+    local nPosition = 0;
+    // while we're in the input string
+    while (nPosition < szInput.len())
+    {
+        // no padding characters
+        local pad = 0;
+        // grab the first of the three characters
+        local nChar1 = szInput[nPosition++]& 0xFF;
+        // get the next one if it's in the string
+        local nChar2 = 0;
+        if (nPosition < szInput.len()) 
+        {
+            nChar2 = szInput[nPosition++]& 0xFF;
+        }
+        else
+        {
+            // if it's not then leave it at 0 and pad one character
+            pad++;
+        }
+        // get the next one if it's in the string
+        local nChar3 = 0;
+        if (nPosition < szInput.len()) 
+        {
+            nChar3 = szInput[nPosition++]& 0xFF;
+        }
+        else
+        {
+            // if it's not then leave it at 0 and pad one character
+            pad++;
+        }
+        // hack those three 8 bit characters into four 6 bit ones
+        local outChar1 = base64MIME[nChar1 >> 2];
+        local outChar2 = base64MIME[((nChar1 & 0x03) << 4) + ((nChar2 & 0xF0) >> 4)];
+        local outChar3 = base64MIME[((nChar2 & 0x0F) << 2) + ((nChar3 & 0xC0) >> 6)];
+        local outChar4 = base64MIME[nChar3 & 0x3F];
+        // if we were padding replace the output characters with the pad one
+        if (--pad >= 0)
+            outChar4 = base64MIMEPadCharacter;
+        if (--pad >= 0)
+            outChar3 = base64MIMEPadCharacter;    
+        // add the four output characters to the string to return
+        szOutput += outChar1.tochar();
+        szOutput += outChar2.tochar();
+        szOutput += outChar3.tochar();
+        szOutput += outChar4.tochar();
+    }
+    // done, give it back
+    return szOutput;
+}
+
+/**************************************************************
+FromBase64_MIME
+
+accepts a string of base64, converts it to utf/ascii/whatever and returns it
+**************************************************************/
+function FromBase64_MIME(szInput)
+{
+    // somewhere to store the output
+    local szOutput = "";
+    // If the input is not valid base64 then it die horribly. catch this and return null.
+    try
+    {
+        // how far through are we 
+        local nPosition = 0;
+        // while we're in the input string
+        while (nPosition < szInput.len())
+        {
+            // base64 will be a mulitple of 4 bytes long, if there doesn't need to be that much then it'll be padded with '='
+            // grab the next four characters
+            local strChar1 = szInput.slice(nPosition,nPosition+1);
+            nPosition++;
+            local strChar2 = szInput.slice(nPosition,nPosition+1);
+            nPosition++;
+            local strChar3 = szInput.slice(nPosition,nPosition+1);
+            nPosition++;
+            local strChar4 = szInput.slice(nPosition,nPosition+1);
+            nPosition++;
+            // find their position in the character table
+            local nChar1 = base64MIME.find(strChar1);
+            local nChar2 = base64MIME.find(strChar2);
+            local nChar3 = base64MIME.find(strChar3);
+            local nChar4 = base64MIME.find(strChar4);
+        
+            // they'll be null if they were padding
+
+            local outChar1 = nChar1 << 2 |((nChar2 & 0xF0) >> 4);
+            szOutput += outChar1.tochar();
+            if (nChar3 != null)
+            {
+                local outChar2 = ((nChar2 & 0x0F) << 4) | (nChar3 >> 2);
+                szOutput += outChar2.tochar();
+            }
+            if(nChar4 != null)
+            {
+                local outChar3 = ((nChar3 & 0x03) << 6) | (nChar4);
+                szOutput += outChar3.tochar();
+            }
+        }
+    }
+    catch(e)
+    {
+        print(szInput +" not valid base64");
+        return null;
+    }
+    // done, give it back
+    return szOutput;
+}
+

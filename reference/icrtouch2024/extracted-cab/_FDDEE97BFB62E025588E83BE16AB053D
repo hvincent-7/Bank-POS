@@ -1,0 +1,325 @@
+// TOW Account Active Indicator
+local bDebugPrinting = false;
+// Window IDs
+local nTOW_WindowOK = 0;
+local nTOW_WindowPoor = 0;
+local nTOW_WindowBad  = 0;
+//IDC FeedBack 2016 2.66.2 (6627) Req
+const nPoorCount = 15; // Min Past Poor Count we show yellow icon. 
+local nBadCount  = 120;// Min Past Bad Count we show red icon
+local tLastWorked = { sec = 0 , min = 0,  hour = 3, day = 1 , month = 6 , year = 2016 , wday = 5 , yday = 153 };
+local nFailMin = 0;
+//2017 extras
+local nPending = null;
+
+//Timers
+local nTimerLong   = 0;
+// Reducing the LongDelay may impact performance!
+const nlongdelay = 300000; // 300000 = 5min
+
+// Messages
+local szLastStatus = "";
+local szCallDealerMessage = "For Support contact 98765 432100"; //Default Msg
+local szTitle = "TOW Status";
+
+// Dates & Json Library
+dofile("etal\\lib\\dates.moc"); 
+dofile("etal\\lib\\json.moc"); 
+
+function OnInit()
+{
+    ICR_SetLocalUserData("bDebugPrinting",false);
+    
+    //Wrapped try to catch win permissions / missing file breaking. 
+    try
+    {
+        if(bDebugPrinting)print("Loading windows");
+        
+        nTOW_WindowOK = ICR_SalesModeWindow_Add("window.xml");
+        if(nTOW_WindowOK != 0)ICR_Window_Enable(nTOW_WindowOK, false);
+        
+        nTOW_WindowPoor = ICR_SalesModeWindow_Add("windowpoor.xml");
+        if(nTOW_WindowPoor != 0)ICR_Window_Enable(nTOW_WindowPoor, false);
+        
+        nTOW_WindowBad  = ICR_SalesModeWindow_Add("windowbad.xml");
+        if(nTOW_WindowBad != 0)ICR_Window_Enable(nTOW_WindowBad, false);
+    }
+    catch(e)
+    {
+        print(e);
+    }
+    if(bDebugPrinting)print("TOWWindowOK:"+nTOW_WindowOK);
+    if(bDebugPrinting)print("TOWWindowPoor:"+nTOW_WindowPoor);
+    if(bDebugPrinting)print("TOWWindowBad:"+nTOW_WindowBad);
+
+
+    // Last Worked
+    local szLastWorked = JSONSerialise(tLastWorked);
+    ICR_SetLocalUserData("szLastWorked",szLastWorked,true);
+    szLastWorked = ICR_GetLocalUserData("szLastWorked")
+    if(bDebugPrinting)print("szLastWorked "+szLastWorked);
+    tLastWorked = JSONDeSerialise(szLastWorked);
+    
+    // Default Dealer Messages
+    ICR_SetLocalUserData("szCallDealerMessage",szCallDealerMessage,true);
+    ICR_SetLocalUserData("nBadMinutes",nBadCount,true);
+    
+    // Goto AfterMode to Dealer Messages
+    AfterModeChange(10,0);
+}
+
+
+function AfterModeChange( nFrom , nTo)
+{    
+    if(nFrom == 10)
+    {
+        // Force Write UserData
+        ICR_SetLocalUserData("bDebugPrinting",bDebugPrinting);
+        // Load Settings
+        szCallDealerMessage = ICR_GetLocalUserData("szCallDealerMessage");
+		//Do we have a web service ?
+		local tSysConfig = ICR_GetPGMData(302,1);
+		if(tSysConfig.CONNECT_FLAG & 0x0004)  //IDC UPLOADER
+		{
+			if(szCallDealerMessage == "For Support contact 98765 432100")ICR_MessageBox("TOW Indicator message not configured","Configure Message in PGM3 > Etal",szTitle,0);
+        }
+		nBadCount = ICR_GetLocalUserData("nBadMinutes");
+    }
+    
+    if(nTo > 6)
+    {
+        if(nTimerLong)ICR_StopTimer(nTimerLong);
+        nTimerLong = 0;
+    }
+    
+    if(nTo == 1)
+    {
+        IDCStatusCheck();
+    }    
+}
+
+function ReDrawWindow()
+{
+    //Do we have a web service ?
+    local tSysConfig = ICR_GetPGMData(302,1);
+
+    if(tSysConfig.CONNECT_FLAG & 0x0004)  //IDC UPLOADER
+    {
+        if(bDebugPrinting)print("Enabling Window");
+        // Decide which window to show?
+        if(bDebugPrinting)print("FailedMin:"+nFailMin);
+
+        local nStatus = 0; // OK
+        if(nFailMin >= nPoorCount)nStatus = 1; // Poor
+        if(nFailMin >= nBadCount)nStatus = 2;  // Bad
+        if(szLastStatus == "Not started")nStatus = 0; // Dont Know
+        // Show yellow when uploading (2017) 
+        if(nPending != null)if((nFailMin == 0 )&&(nPending > 5))nStatus = 1; 
+        
+        switch(nStatus)
+        {
+            case 0: // OK Window
+                if(bDebugPrinting)print("Show Ok Window");
+                if(nTOW_WindowPoor != 0)ICR_Window_Enable(nTOW_WindowPoor, false);
+                if(nTOW_WindowBad != 0)ICR_Window_Enable(nTOW_WindowBad, false);
+                if(nTOW_WindowOK != 0)ICR_Window_Enable(nTOW_WindowOK, true);
+                ICR_RedrawWindow(21 , nTOW_WindowOK);
+                //ICR_RedrawScreen();
+                break;
+            case 1: //Poor Window
+                if(bDebugPrinting)print("Show Poor Window");
+                if(nTOW_WindowOK != 0)ICR_Window_Enable(nTOW_WindowOK, false);
+                if(nTOW_WindowBad != 0)ICR_Window_Enable(nTOW_WindowBad, false);
+                if(nTOW_WindowPoor != 0)ICR_Window_Enable(nTOW_WindowPoor,true);
+                ICR_RedrawWindow(21 , nTOW_WindowPoor);
+                //ICR_RedrawScreen();
+                break;
+            case 2: // Bad Window
+                if(bDebugPrinting)print("Show Bad Window");
+                if(nTOW_WindowOK != 0)ICR_Window_Enable(nTOW_WindowOK, false);
+                if(nTOW_WindowPoor != 0)ICR_Window_Enable(nTOW_WindowPoor,false);
+                if(nTOW_WindowBad != 0)ICR_Window_Enable(nTOW_WindowBad, true);
+                ICR_RedrawWindow(21 , nTOW_WindowBad);
+                //ICR_RedrawScreen();
+                break;   
+            default:
+                if(bDebugPrinting)print("Unknown Status"+nStatus);
+        }// End nStatus switch
+    }
+    else
+    {
+        if(bDebugPrinting)print("Disable all Windows");
+        if(nTOW_WindowOK != 0)ICR_Window_Enable(nTOW_WindowOK, false);
+        if(nTOW_WindowPoor != 0)ICR_Window_Enable(nTOW_WindowPoor, false);
+        if(nTOW_WindowBad != 0)ICR_Window_Enable(nTOW_WindowBad, false);
+    }
+}
+
+function IDCStatusCheck()
+{
+    local tSystem = ICR_GetSystemData();
+    if("IDCLASTSTATUS" in tSystem)
+    {
+        if(bDebugPrinting)print("IDCLASTSTATUS:"+tSystem.IDCLASTSTATUS);
+        //Update Messages Text.
+        szLastStatus = tSystem.IDCLASTSTATUS;
+        // IDCLASTSTATUS = "Ok" 
+        // or "Not started"  
+        // or "Invalid Access Key" 
+        // or "Unable to reach icrtouch-connect.com" 
+        // or  "" ( if something eaten the header reply)
+       
+        switch(tSystem.IDCLASTSTATUS)
+        {
+            case "Ok":
+            case "OK":
+                if(bDebugPrinting)print("Ok");
+                nFailMin = 0;
+                tLastWorked = date();
+                local szLastWorked = JSONSerialise(tLastWorked);
+                // STore Last worked in userdata. This be reload if till restarted.
+                ICR_SetLocalUserData("szLastWorked",szLastWorked);
+                ReDrawWindow();
+                break;
+            case "Not started":
+                if(bDebugPrinting)print("Not Started");
+                nFailMin = 0;
+                ReDrawWindow();
+                break;
+            default:
+                if(szLastStatus == "")szLastStatus = "Could not get Status from Reply";
+                if(bDebugPrinting)print("ErrorStatus");
+                local tTimeNow = date();
+                nFailMin = 1 + MinuteCompare(tLastWorked , tTimeNow);
+                ReDrawWindow(); 
+        }
+        // IDCUPLOADED  IDCPENDING
+        if("IDCPENDING" in tSystem)nPending = tSystem.IDCPENDING;
+    }
+    else
+    {
+        if(bDebugPrinting)print(tSystem.VERSIONINFO + " does not have IDCLASTSTATUS");
+        ReDrawWindow();
+    }
+    // Refresh LongTimer
+    RefreshLongTimer();
+}
+
+
+function AfterFinalise()
+{
+    if(bDebugPrinting)print("AfterFinalise calling IDCStatusCheck");
+    IDCStatusCheck();
+}
+
+function AfterSignOn(nClerk)
+{
+    if(bDebugPrinting)print("AfterSignOn calling IDCStatusCheck");
+    IDCStatusCheck();
+}
+
+function OnTimer(nTimerID, nSystemTime)
+{    
+    if(nTimerID == nTimerLong)
+    {
+        ICR_StopTimer(nTimerLong);
+        nTimerLong = 0;
+        if(bDebugPrinting)print("LongTimer Occurred");
+        IDCStatusCheck();
+    }
+}
+
+function OnMouseEvent(nWindowID, nEvent, nX, nY)
+{
+    // we only care if event is clicked (mouse up). 
+    if(nEvent != 1)return;
+    
+    // Does this version support Feedback?
+    local tSystem = ICR_GetSystemData();
+    if("IDCLASTSTATUS" in tSystem)
+    {
+        switch(nWindowID)
+        {
+        case nTOW_WindowOK:
+            if(bDebugPrinting)print("TOW Window ID"+nWindowID);
+            local szPending = ""; //default is where we may not be able to tell pending. (2016)
+            if(nPending != null) //nPending is null until PENDING exists in 
+            {
+                // not null in 2016
+                szPending = "No Pending Transactions";
+                if(nPending > 0)szPending = nPending + " Pending Transactions";
+            }
+            ICR_MessageBox(ICR_GetLanguageText(5805) + szLastStatus, szPending , szTitle , 0);
+            break;
+        case nTOW_WindowPoor:
+        case nTOW_WindowBad:
+            if(bDebugPrinting)print("TOW Window ID"+nWindowID);
+            ICR_MessageBox(szLastStatus, szCallDealerMessage , "Last Comm "+DateToRFCDateTime(tLastWorked) , 0);
+            break;
+        default:
+            if(bDebugPrinting)print("Not our window "+nWindowID);
+        }
+    }
+    else
+    {
+        if(bDebugPrinting)print(tSystem.VERSIONINFO + " does not have IDCLASTSTATUS");
+    }
+    IDCStatusCheck();
+}
+
+function OnEnterPGMMenu(nSub)
+{
+    local nID = 0;
+    ICR_PurgeProgramSettings();
+    if(bDebugPrinting)print("OnEnterPGMMenu "+nSub);
+    switch(nSub) 
+    {
+        case 0:  //MainMenu
+            ICR_AdvertiseProgramSetting("Dealer Message","szCallDealerMessage");
+            ICR_AdvertiseProgramSetting("Minutes offline before Bad Status","nBadMinutes");
+            break;
+        default: 
+            if(bDebugPrinting)print("nSub"+nSub+" does not exist");
+    }
+}
+
+
+/**********************************************************************
+MinuteCompare ~ Req stuff from dates.moc ( max return 1y 525600 ) 
+**********************************************************************/
+function MinuteCompare(tFrom,tTo)
+{
+    // Are we within 1 Day ?
+    local nDays = DateIntCompare( DateToInteger(tFrom), DateToInteger(tTo)  );
+    // minutes not really relavant after a year. return max 
+    if(nDays > 365)return 525600;
+    if(nDays <= -1)return 0; // the Clock been pushed backwards ???
+    // add 24hrs for each day
+    if(nDays > 0)
+    {
+        tTo.hour = tTo.hour+ (24 * nDays);
+    }
+    // Hour diff
+    local nHoursDiff = tTo.hour - tFrom.hour;
+    // Min Dif
+    local nMinsDiff = tTo.min - tFrom.min;
+    if(nMinsDiff < 0) // did min dif go past the hour ?
+    {
+        nHoursDiff--;
+        nMinsDiff = nMinsDiff + 60;
+    }
+    
+    if(bDebugPrinting)print("Diff "+nHoursDiff+" hours "+nMinsDiff+" min");
+    // Add Hours diff to mins
+    nMinsDiff = (nHoursDiff * 60)+nMinsDiff;
+    if(bDebugPrinting)print("return "+nMinsDiff);
+    return nMinsDiff;
+}
+
+
+function RefreshLongTimer()
+{
+    if(nTimerLong)ICR_StopTimer(nTimerLong);
+    nTimerLong = ICR_StartTimer(nlongdelay);
+}
+

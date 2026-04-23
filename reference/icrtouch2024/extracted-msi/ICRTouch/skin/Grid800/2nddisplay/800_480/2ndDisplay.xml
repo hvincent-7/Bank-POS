@@ -1,0 +1,19 @@
+<SECONDDISPLAY width="800" height="480">
+	<BACKGROUND image="2nddisplay_800_480_bg.png"/>
+
+
+  <WINDOWS>
+    <WINDOW id="WDW:MAIN" name="Main display window" left="15" top="22" width="605" height="115">
+      <FONT face="Arial" size="50" align="centre" valign="centre" colour="00FFFFFF" />
+    </WINDOW>
+    <WINDOW id="WDW:REG" name="Reg window" left="15" top="160" width="405" height="305">
+      <FONT face="Arial" size="30" align="centre" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+    </WINDOW>
+    <WINDOW id="WDW:IMAGE" name="Image panel" left="610" top="160" width="180" height="305" interval="20">
+      <IMAGES>
+        <IMAGE id="IMG:1" IMAGE="advert.jpg" />
+      </IMAGES>
+    </WINDOW>
+  </WINDOWS>
+
+</SECONDDISPLAY>

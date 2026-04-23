@@ -1,0 +1,122 @@
+<DIALOG id="DLG:SEARCH" name="Search Dialog" width="796" height="555">
+	<BACKGROUND image="search_bg.png" TransparentColour="00FF00FF"/>
+			
+	<!-- <TITLE left="150" top="10">
+		<FONT face="Arial" size="24" align="centre" valign="centre" colour="FFFFFF"/>
+	</TITLE> no title, it'll look silly on a big window-->
+
+  	<SORT left="10" top="2" width="775" height="22">
+
+      <FONT face="Arial" size="16" align="centre" valign="centre" colour="FFFFFF" />
+
+      <!-- Left part of sort bar -->
+      <STATEIMAGE pos="left" state="up" image="search_buttons.bmp" left="0" top="0" width="6" />
+      <STATEIMAGE pos="left" state="down" image="search_buttons.bmp" left="65" top="0" width="6" />
+    
+      <!-- Middle part of sort bar - note this is stretched to the correct size-->
+      <STATEIMAGE pos="middle" state="up" image="search_buttons.bmp" left="6" top="0" width="1" />
+      <STATEIMAGE pos="middle" state="down" image="search_buttons.bmp" left="71" top="0" width="1" />
+    
+      <!-- Right part of sort bar -->
+      <STATEIMAGE pos="right" state="up" image="search_buttons.bmp" left="59" top="0" width="6" />
+      <STATEIMAGE pos="right" state="down" image="search_buttons.bmp" left="124" top="0" width="6" />
+    
+  </SORT>
+
+
+  <LIST left="10" top="28" width="775" height="238" textleft="20" highlightbackcolour="FFFFFF">
+		<FONT face="Arial" size="20" align="left" valign="top" colour="FFFFFF" highlightcolour="000000"/>
+	</LIST>
+
+  <INPUT left="60" top="270" width="570" height="24" textleft="62" texttop="270">
+    <FONT face="Arial" size="22" align="left" valign="top" colour="FFFFFF"/>
+	</INPUT>
+
+	<BUTTONS>
+		<BUTTON id="BTN:PAGEUP" name="Page Up Button" left="707" top="266" width="65" height="50">
+			<STATEIMAGE state="up" image="listbox_buttons.bmp" left="0" top="0" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="listbox_buttons.bmp" left="65" top="0" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:SCROLLUP" name="Scroll Up Button" left="707" top="316" width="65" height="50">
+			<STATEIMAGE state="up" image="listbox_buttons.bmp" left="0" top="50" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="listbox_buttons.bmp" left="65" top="50" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		
+		<BUTTON id="BTN:ESCAPE" name="Escape Button" left="707" top="500" width="65" height="50">
+			<STATEIMAGE state="up" image="listbox_buttons.bmp" left="0" top="150" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="listbox_buttons.bmp" left="65" top="150" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:SCROLLDOWN" name="Scroll Down Button" left="707" top="366" width="65" height="50">
+			<STATEIMAGE state="up" image="listbox_buttons.bmp" left="0" top="200" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="listbox_buttons.bmp" left="65" top="200" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:PAGEDOWN" name="Page Down Button" left="707" top="416" width="65" height="50">
+			<STATEIMAGE state="up" image="listbox_buttons.bmp" left="0" top="250" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="listbox_buttons.bmp" left="65" top="250" TransparentColour="00FF00FF"/>
+		</BUTTON>
+    	<!-- <BUTTON id="BTN:SORT" name="Sort Button" left="10" top="30" width="65" height="23">
+      		<STATEIMAGE state="up" image="search_buttons.bmp" left="0" top="300" TransparentColour="00FF00FF"/>
+      		<STATEIMAGE state="down" image="search_buttons.bmp" left="65" top="300" TransparentColour="00FF00FF"/>
+    	</BUTTON> -->
+
+
+		<!-- the qwerty buttons we want to move -->
+		<BUTTON id="BTN:LEFT" name="Left Arrow" left="10" top="266" width="41" height="31">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="0" top="450" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="0" top="481" TransparentColour="00FF00FF"/>
+		</BUTTON>
+		<BUTTON id="BTN:RIGHT" name="Right Arrow" left="645" top="266" width="41" height="31">
+			<STATEIMAGE state="up" image="qwerty_buttons.bmp" left="41" top="450" TransparentColour="00FF00FF"/>
+			<STATEIMAGE state="down" image="qwerty_buttons.bmp" left="41" top="481" TransparentColour="00FF00FF"/>
+		</BUTTON>
+
+    <!-- Bit of a cheat, but it basically tells it to load in the qwerty buttons from the qwerty dialog -->
+    <IMPORTQWERTY id="DLG:QWERTYKB" leftoffset="0" topoffset="210" />
+  </BUTTONS>
+
+  <!-- Determine the layout of the form for the individual search types -->
+
+  <!-- Total width wants to be no more than 775 (width of LIST) -->
+
+  <SEARCHES>
+    <SEARCH id="CUSTOMER" <!--defaultcolumn="1"-->>
+      <COLUMNS>
+        <COLUMN id="NUMBER" width="50" caption="#" />
+        <COLUMN id="ACCOUNTNUMBER" width="100" caption="Account"/>
+        <COLUMN id="LASTNAME" width="130" caption="Last Name"/>
+        <COLUMN id="FIRSTNAME" width="130" caption="First Name"/>
+        <COLUMN id="GROUPNAME" width="130" caption="Group"/>
+        <COLUMN id="PHONE1" width="130" caption="Phone"/>
+        <COLUMN id="POSTCODE" width="105" caption="Postcode"/>
+        
+        <!-- NUMBER, FIRSTNAME, LASTNAME, ACCOUNTNUMBER, GROUP, GROUPNAME, PHONE1, EMAIL, POSTCODE -->
+      </COLUMNS>
+
+    </SEARCH>
+
+    <!-- Total width wants to be no more than 775 (width of LIST) -->
+
+    <SEARCH id="PLU" <!--defaultcolumn="1"-->>
+      <COLUMNS>
+        <COLUMN id="NUMBER" width="50" caption="#" />
+        <COLUMN id="NAME" width="300" caption="Name"/>
+        <COLUMN id="BARCODE" width="150" caption="Barcode"/>
+        <COLUMN id="DEPTNAME" width="200" caption="Dept Name"/>
+        <COLUMN id="PRICE" width="75" caption="Price"/>
+        <!-- Valid options are NUMBER, NAME, BARCODE, DEPT, GROUP, DEPTNAME, GROUPNAME, PRICE & STOCK -->
+      </COLUMNS>
+    </SEARCH>
+    
+    <SEARCH id="PAIDCHECKS" <!--defaultcolumn="1"-->>
+      <COLUMNS>
+        <COLUMN id="NUMBER" width="50" caption="#" />
+        <COLUMN id="TYPE" width="100" caption="Type"/>
+        <COLUMN id="CHECKNUMBER" width="50" caption="Number"/>
+        <COLUMN id="DATECLOSED" width="100" caption="Date"/>
+        <COLUMN id="TIMECLOSED" width="75" caption="Time"/>
+        <COLUMN id="TEXT" width="300" caption="Text"/>
+      </COLUMNS>
+    </SEARCH>
+
+  </SEARCHES>
+</DIALOG>

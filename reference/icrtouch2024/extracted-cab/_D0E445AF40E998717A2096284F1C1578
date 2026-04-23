@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ETAL>
+ <FILE>ImprovedSalesDataReset.moc</FILE>
+ <OUTPUTFILE>output.txt</OUTPUTFILE>
+ <NAME>Improved Sales Data Reset</NAME>
+ <CREATED>29/08/2017</CREATED>
+ <LASTMODIFIED>29/08/2017</LASTMODIFIED>
+ <MINVERID>6000</MINVERID>
+ <AUTHOR>Antony ICRTouch</AUTHOR>
+</ETAL>

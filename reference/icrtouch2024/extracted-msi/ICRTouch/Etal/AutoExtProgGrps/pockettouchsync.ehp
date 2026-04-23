@@ -1,0 +1,8 @@
+<%  
+			// Generally rather than try edit two languages in the same file we generally run the script file seperately.
+			local tSystem = ICR_GetSystemData();
+			if(tSystem.VERSIONID < 6700)return; //too old for script to work
+			local szPath = ICR_GetGlobalUserData("PGImportOptionsPATH");
+			dofile(szPath +"\\"+ "AutoExtProgGrps.moc");
+			PocketTouchSync();
+%>

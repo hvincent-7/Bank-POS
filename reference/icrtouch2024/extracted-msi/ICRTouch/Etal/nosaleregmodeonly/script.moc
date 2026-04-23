@@ -1,0 +1,19 @@
+function BeforeKeyPress(nFile,nRecord,nKeytype)
+{
+    if(nKeytype != 40) // if it's not a no sale then it's not our problem
+    {
+        return true;
+    }
+    local tSysData = ICR_GetSystemData();
+    if(tSysData.CURRENTCLERK == 0) // if nobody is signed on
+    {
+        ICR_Error(1); // not signed on
+        return false; // don't press it
+    }
+    if(tSysData.MODE > 3) // 3 is refund, 1 is reg, 2 would have been reg2
+    {
+        ICR_Error(5);  // reg mode only
+        return false; // don't press it
+    }
+    return true;// all ok
+}

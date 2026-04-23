@@ -1,0 +1,47 @@
+<PGMMODE name="ProgramMode">
+  <!-- adjustable settings for pgm1/2/3/5/6 etc -->     
+  
+  <buttons>
+    <flatcolour>666666</flatcolour> <!-- currently a8a8a8 -->
+    <lightcolour>666666</lightcolour> <!-- currently FFFFFF -->
+    <darkcolour>555555</darkcolour> <!-- currently 000000 -->
+    <highlightcolour>EB5A00</highlightcolour>
+    <FONT face="Arial" size="24" colour="FFFFFF"/>
+    <IMAGES width="36" height="36" TransparentColour="00FF00FF">pgmButtonIcons.png</IMAGES>
+    <presseddepth>0</presseddepth>
+  </buttons>
+
+  <BACKGROUND>
+    <flatcolour>353535</flatcolour> <!-- currently a8a8a8 -->
+    <lightcolour>353535</lightcolour> <!-- currently FFFFFF -->
+    <darkcolour>353535</darkcolour> <!-- currently 000000 -->
+  </BACKGROUND>  
+  
+  <HEADER>
+    <flatcolour>666666</flatcolour> <!-- currently a8a8a8 -->
+    <lightcolour>666666</lightcolour> <!-- currently FFFFFF -->
+    <darkcolour>666666</darkcolour> <!-- currently 000000 -->
+    <datacolour>000000</datacolour><!-- currently a8a8a8 -->
+
+    <FONT face="Arial" size="22" colour="FFFFFF"/>
+  </HEADER>  
+  
+  <DISPLAY>
+    <lightcolour>000000</lightcolour> <!-- currently FFFFFF -->
+    <darkcolour>000000</darkcolour> <!-- currently 000000 -->
+    <datacolour>000000</datacolour> <!-- currently FFFFFF -->
+    <highlightcolour>EB5A00</highlightcolour> <!-- currently ?????? -->
+    <disabledcolour>757575</disabledcolour> <!-- currently ?????? -->
+
+    <FONT face="Arial Narrow" size="25" colour="FFFFFF" HighLightColour="000000"/>
+  </DISPLAY> 
+  
+  <ENTRY>
+    <lightcolour>000000</lightcolour> <!-- currently FFFFFF -->
+    <darkcolour>000000</darkcolour> <!-- currently 000000 -->
+    <datacolour>000000</datacolour> <!-- currently FFFFFF -->
+
+    <FONT face="Arial" size="22" colour="FFFFFF"/>
+  </ENTRY> 
+  
+</PGMMODE>

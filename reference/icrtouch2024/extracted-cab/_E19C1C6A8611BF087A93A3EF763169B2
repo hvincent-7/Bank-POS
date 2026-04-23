@@ -1,0 +1,7 @@
+<DIALOG id="DLG:DISPMSG" name="Display Message Box" left="100" top="250" width="500" height="120">
+	<BACKGROUND image="dispmsg_bg.bmp" TransparentColour="00FF00FF"/>
+	
+	<LINE1MESSAGE left="250" top="60">
+		<FONT face="Arial" size="28" align="centre" valign="centre" italic="true" colour="FFFFFF"/>
+	</LINE1MESSAGE>
+</DIALOG>

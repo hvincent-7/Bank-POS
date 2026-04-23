@@ -1,0 +1,77 @@
+//A/ AutoSets levels names to be name as the menu shift that links to them.
+local bDebugPrinting = false;
+
+local g_bScriptEnabled = true;
+// 1.1 Added Force CAPITALS option.
+local g_bForceCap = true;
+const KTMenuShift =	160 ;
+
+function AutoSetLevelName(bForceCap=true)
+{
+    if (!g_bScriptEnabled) return;
+    local szText ="";
+	local nOffSet = 1;
+    local nMaxStatus = ICR_GetFileSize(53);
+    for (local nCount = nMaxStatus ; nCount >= 1  ; nCount--) 
+    {
+        local tThisSTSKey = ICR_GetPGMData(53,nCount);
+        if ( tThisSTSKey.KEYTYPE == KTMenuShift )  //A Check keytype is a menulevel keytype
+        {
+            local tLevelName = ICR_GetPGMData( 43, tThisSTSKey.VALUE + nOffSet  ); //Offset by 1
+            szText = tThisSTSKey.NAME //Get Current key name.
+            if (bForceCap)    
+            {  
+                //Set CAPS name on menulevel
+                tLevelName.TEXT = szText.toupper();    // .toupper() inbuilt function to convert stings to CAPITALS 
+            } 
+            else
+            {
+                //Set name on menulevel
+                tLevelName.TEXT = szText; 
+            }          
+			if (bDebugPrinting) {print ("Key:"+nCount+" link:"+tThisSTSKey.VALUE+" lvl:" +(tThisSTSKey.VALUE - nOffSet));}
+            ICR_SetPGMData(43, (tThisSTSKey.VALUE + nOffSet), tLevelName);
+        }
+    }
+}
+
+function OnInit ()
+{
+    // Create Default User Setting Data
+    
+    // Script Enabled?
+    ICR_SetLocalUserData( "bScriptEnabled", g_bScriptEnabled , true);
+    g_bScriptEnabled = ICR_GetLocalUserData("bScriptEnabled");
+    // Convert names to CAPITALS 
+    ICR_SetLocalUserData( "bForceCap", g_bForceCap, true);
+    g_bForceCap = ICR_GetLocalUserData("bForceCap");
+    // Debug this script ?
+    ICR_SetLocalUserData( "bDebugPrinting", bDebugPrinting, true);
+    bDebugPrinting = ICR_GetLocalUserData("bDebugPrinting");
+}
+
+function OnEnterPGMMenu(nSub)
+{
+    ICR_PurgeProgramSettings(); //Clear any previous Etal Menus
+    ICR_AdvertiseProgramSetting("Script Enabled","bScriptEnabled");
+    ICR_AdvertiseProgramSetting("Force CAPS","bForceCap");
+    ICR_AdvertiseProgramSetting("DebugPrinting","bDebugPrinting");
+}
+
+function AfterModeChange(nFrom,nTo)
+{
+    if (nFrom == 10)
+    {
+        //A/ Force Reload and rewrite data.
+        g_bScriptEnabled = ICR_GetLocalUserData("bScriptEnabled");
+        g_bForceCap = ICR_GetLocalUserData("bForceCap");
+        bDebugPrinting = ICR_GetLocalUserData("bDebugPrinting");
+        ICR_SetLocalUserData( "bDebugPrinting", bDebugPrinting);
+        ICR_SetLocalUserData( "bScriptEnabled", g_bScriptEnabled);
+        ICR_SetLocalUserData( "bForceCap", g_bForceCap);
+        if (g_bScriptEnabled)
+        {
+            AutoSetLevelName(g_bForceCap);
+        }
+    }
+}

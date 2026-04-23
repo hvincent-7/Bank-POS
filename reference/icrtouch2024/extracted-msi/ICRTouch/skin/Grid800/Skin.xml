@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE SKIN [
+    <!-- Internal Entities used to repace strings throughout the file -->
+    <!ENTITY test1 "My entity test 1">
+
+    <!-- External Entities used to import xml from seperate files -->
+
+	<!-- Sales mode stuff -->
+	<!ENTITY import_fonts_xml            SYSTEM "fonts.xml">
+	<!ENTITY import_buttons_xml          SYSTEM "buttons.xml">
+	<!ENTITY import_salesmodewindows_xml SYSTEM "salesmodewindows.xml">
+	<!ENTITY import_regwindow_xml        SYSTEM "regwindow.xml">
+	<!ENTITY import_salesmodeicons_xml   SYSTEM "salesmodeicons.xml">
+    
+	<!-- Dialogs -->
+	<!ENTITY import_dlgnumerickeypad_xml SYSTEM "DlgNumericKeypad.xml">
+	<!ENTITY import_dlgmessagebox_xml    SYSTEM "DlgMessageBox.xml">
+	<!ENTITY import_dlgdispmessage_xml   SYSTEM "DlgDisplayMessage.xml">
+	<!ENTITY import_dlglistbox_xml       SYSTEM "DlgListBox.xml">
+	<!ENTITY import_dlgqwerty_xml        SYSTEM "DlgQWERTY.xml">
+	<!ENTITY import_dlgprogress_xml      SYSTEM "DlgProgress.xml">
+	<!ENTITY import_dlgpicturemsgbox_xml SYSTEM "DlgPictureMsgBox.xml">
+	<!ENTITY import_dlgprinttodisp_xml   SYSTEM "DlgPrintToDisplay.xml">
+	<!ENTITY import_dlgtotalwindow_xml   SYSTEM "DlgTotalWindow.xml">
+	<!ENTITY import_dlgsearch_xml        SYSTEM "DlgSearch.xml">
+
+	<!-- Programming -->
+	<!ENTITY import_kbprogramming_xml    SYSTEM "KBProgramming.xml">
+	<!-- Other Stuff -->
+	<!ENTITY import_screensaver_xml      SYSTEM "ScreenSaver.xml">
+	<!ENTITY import_2nddisplay_xml       SYSTEM "2ndDisplay.xml">
+	<!ENTITY import_floorplan_xml        SYSTEM "FloorPlan.xml">
+	<!ENTITY import_splashscreen_xml     SYSTEM "SplashScreen.xml">
+
+]>
+<SKIN name="Grid800" author="Clive" date="July 2012">
+	<SALESMODE>
+		<BACKGROUND image="salesmode_bg.bmp"/>
+		<!-- The hour glass is displayed during full screen menu redraws.
+		     Use this on slow equipment only otherwise a strange flicker will be observed 
+			 Rem or delete the <HOURGLASS> element when not requried
+		  -->
+		<!-- <HOURGLASS image="cogz.bmp" TransparentColour="00FF00FF" left="300" top="200" width="218" height="272"/> -->
+		&import_fonts_xml;
+		&import_buttons_xml;
+		&import_salesmodewindows_xml;
+		&import_salesmodeicons_xml;
+	</SALESMODE>
+	<DIALOGS>
+		&import_dlgnumerickeypad_xml;
+		&import_dlgmessagebox_xml;
+		&import_dlgdispmessage_xml;
+		&import_dlglistbox_xml;
+		&import_dlgqwerty_xml;
+		&import_dlgprogress_xml;
+		&import_dlgpicturemsgbox_xml;
+		&import_dlgprinttodisp_xml;
+		&import_dlgtotalwindow_xml;
+		&import_dlgsearch_xml;
+	</DIALOGS>
+	&import_screensaver_xml;
+	&import_kbprogramming_xml;
+	&import_2nddisplay_xml;
+	&import_floorplan_xml;
+	&import_splashscreen_xml;
+</SKIN>

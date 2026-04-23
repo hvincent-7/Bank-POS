@@ -1,0 +1,200 @@
+<FLOORPLAN name="Floor Plan Dialog" left="500" top="50" width="470" height="177">
+	<!-- Contains the layout for the keyboard programming editor
+	     This consists of a floating dialog over the keyboard with the editing controls mounted on it -->
+	
+	<BACKGROUND image="floorplan_bg.png" TransparentColour="00FF00FF" UseAlphaChannel="false" />;
+
+	<BUTTONS>
+
+        <!-- Global floaty buttons -->
+        <BUTTON id="BTN:EXIT" name="Exit Button" left="900" top="5" width="90" height="40" miscmask="3" offdialog="true">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="1890" top="0" TransparentColour="00FF00FF" AlphaConstant="180"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="1890" top="40" TransparentColour="00FF00FF" AlphaConstant="180"/>
+        </BUTTON>
+        <BUTTON id="BTN:UPLEVEL" name="Up Level Button" left="810" top="5" width="90" height="40" miscmask="3" offdialog="true">
+        <STATEIMAGE state="up" image="floorplan_buttons.png" left="1710" top="0" TransparentColour="00FF00FF" AlphaConstant="180"/>
+        <STATEIMAGE state="down" image="floorplan_buttons.png" left="1710" top="40" TransparentColour="00FF00FF" AlphaConstant="180"/>
+        </BUTTON>
+        <BUTTON id="BTN:DOWNLEVEL" name="Down Level Button" left="720" top="5" width="90" height="40" miscmask="3" offdialog="true">
+        <STATEIMAGE state="up" image="floorplan_buttons.png" left="1800" top="0" TransparentColour="00FF00FF" AlphaConstant="180"/>
+        <STATEIMAGE state="down" image="floorplan_buttons.png" left="1800" top="40" TransparentColour="00FF00FF" AlphaConstant="180"/>
+        </BUTTON>
+        <!-- sales mode buttons -->
+        <BUTTON id="BTN:OPEN" name="Open Button" left="8" top="91" width="150" height="40" miscmask="1">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="810" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="810" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:SPLITCHECK" name="Split Check Button" left="158" top="91" width="150" height="40" miscmask="1">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="960" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="960" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>        
+        <BUTTON id="BTN:TRANSFER" name="Transfer Button" left="8" top="131" width="150" height="40" miscmask="1">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="1110" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="1110" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:PRINTBILL" name="Print Bill Button" left="308" top="91" width="150" height="40" miscmask="1">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="1260" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="1260" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:SLIPPRINT" name="Slip Button" left="308" top="131" width="150" height="40" miscmask="1">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="1410" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="1410" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:DUTCHBILLPRINT" name="Dutch Button" left="158" top="131" width="150" height="40" miscmask="1">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="1560" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="1560" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>        
+        <!-- Manager mode buttons -->
+        <BUTTON id="BTN:MOVE" name="Move Button" left="365" top="94" width="90" height="40" miscmask="2">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="540" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="540" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:ADD" name="Add Button" left="5" top="94" width="90" height="40" miscmask="2">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="630" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="630" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:SPLIT" name="Split Button" left="275" top="134" width="90" height="40" miscmask="2">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="720" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="720" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:DEL" name="Delete Button" left="5" top="134" width="90" height="40" miscmask="2">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="0" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="0" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:NUMBER" name="Number Button" left="365" top="134" width="90" height="40" miscmask="2">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="90" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="90" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:SEATS" name="Number of Seats Button" left="275" top="94" width="90" height="40" miscmask="2">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="180" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="180" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:SHAPE" name="Shape Button" left="185" top="94" width="90" height="40" miscmask="2">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="360" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="360" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <!-- future -->
+        <BUTTON id="BTN:TYPE" name="Type Button" left="185" top="134" width="90" height="40" miscmask="2">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="270" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="270" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+        <BUTTON id="BTN:TEXT" name="Text Button" left="95" top="134" width="90" height="40" miscmask="2">
+            <STATEIMAGE state="up" image="floorplan_buttons.png" left="450" top="0" TransparentColour="00FF00FF"/>
+            <STATEIMAGE state="down" image="floorplan_buttons.png" left="450" top="40" TransparentColour="00FF00FF"/>
+        </BUTTON>
+
+
+    </BUTTONS>
+
+    <OBJECTS>
+        <!-- Table Objects -->
+        <OBJECT id="OBJ:TABLE1" name="Square Table" width="128" height="128">
+        <STATEIMAGE state="empty" image="3dtables.png" left="0" top="0" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="emptyselected" image="3dtables.png" left="128" top="0" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupied" image="3dtables.png" left="256" top="0" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupiedselected" image="3dtables.png" left="384" top="0" TransparentColour="00FF00FF"/>
+        </OBJECT>
+        <OBJECT id="OBJ:TABLE2" name="Round Table" width="128" height="128">
+        <STATEIMAGE state="empty" image="3dtables.png" left="0" top="128" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="emptyselected" image="3dtables.png" left="128" top="128" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupied" image="3dtables.png" left="256" top="128" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupiedselected" image="3dtables.png" left="384" top="128" TransparentColour="00FF00FF"/>
+        </OBJECT>
+        <OBJECT id="OBJ:TABLE3" name="Flat Square Table" width="128" height="128">
+        <STATEIMAGE state="empty" image="flattables.png" left="0" top="0" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="emptyselected" image="flattables.png" left="128" top="0" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupied" image="flattables.png" left="256" top="0" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupiedselected" image="flattables.png" left="384" top="0" TransparentColour="00FF00FF"/>
+        </OBJECT>
+        <OBJECT id="OBJ:TABLE4" name="Flat Round Table" width="128" height="128">
+        <STATEIMAGE state="empty" image="flattables.png" left="0" top="128" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="emptyselected" image="flattables.png" left="128" top="128" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupied" image="flattables.png" left="256" top="128" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupiedselected" image="flattables.png" left="384" top="128" TransparentColour="00FF00FF"/>
+        </OBJECT>
+        <OBJECT id="OBJ:TABLE5" name="Classic Square Table" width="128" height="128">
+        <STATEIMAGE state="empty" image="classictables.png" left="0" top="0" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="emptyselected" image="classictables.png" left="128" top="0" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupied" image="classictables.png" left="256" top="0" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupiedselected" image="classictables.png" left="384" top="0" TransparentColour="00FF00FF"/>
+        </OBJECT>
+        <OBJECT id="OBJ:TABLE6" name="Classic Round Table" width="128" height="128">
+        <STATEIMAGE state="empty" image="classictables.png" left="0" top="128" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="emptyselected" image="classictables.png" left="128" top="128" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupied" image="classictables.png" left="256" top="128" TransparentColour="00FF00FF"/>
+        <STATEIMAGE state="occupiedselected" image="classictables.png" left="384" top="128" TransparentColour="00FF00FF"/>
+        </OBJECT>
+        
+        <!-- Status Icons -->
+        <OBJECT id="OBJ:BILLICON" name="Bill icon" width="16" height="16">
+        <STATEIMAGE state="" image="floorplanicons.png" left="0" top="0" TransparentColour="00FF00FF"/>
+        </OBJECT>
+        <OBJECT id="OBJ:MONEYICON" name="Money icon" width="16" height="16">
+        <STATEIMAGE state="" image="floorplanicons.png" left="16" top="0" TransparentColour="00FF00FF"/>
+        </OBJECT>
+        <OBJECT id="OBJ:RESERVEDICON" name="Reserved icon" width="16" height="16">
+        <STATEIMAGE state="" image="floorplanicons.png" left="32" top="0" TransparentColour="00FF00FF"/>
+        </OBJECT>
+        <OBJECT id="OBJ:HANDLEICON" name="Handle icon" width="16" height="16">
+        <STATEIMAGE state="" image="floorplanicons.png" left="48" top="0" TransparentColour="00FF00FF"/>
+        </OBJECT>
+    
+        <!-- Text object for tables -->
+        <OBJECT id="OBJ:TABLENUMBER" name="Table number" width="11" height="12" hplace="right" vplace="top" prefix="" suffix="">
+        <FONT face="Arial" size="28" align="right" valign="centre" colour="00000000" />
+        </OBJECT>
+        <OBJECT id="OBJ:COVERS" name="Covers" width="11" height="12" hplace="right" vplace="bottom" prefix="" suffix="">
+        <FONT face="Arial" size="20" align="right" valign="bottom" colour="00000000" />
+        </OBJECT>
+        <OBJECT id="OBJ:TABLETEXT" name="Table Text" width="11" height="12" hplace="centre" vplace="bottom" prefix="" suffix="">
+        <FONT face="Arial" size="14" align="centre" valign="top" colour="00000000" />
+        </OBJECT>
+        
+        <!-- level number -->
+        <OBJECT id="OBJ:LEVELNUMBER" name="Level Number" left="700" top="5" width="20" height="40" hplace="centre" vplace="centre" prefix="" suffix="">
+        <FONT face="Arial" size="40" align="centre" valign="centre" bold="true" colour="00000000" />
+        </OBJECT>
+
+    </OBJECTS>
+	
+	<WINDOWS>
+		<!-- you can have background images on these but I don't because it's easier not to -->
+   <!-- <WINDOW id="WDW:LEVEL" name="Level window" left="5" top="39" width="300" height="41">
+      <TEXT left="5" top="5" width="290" height="31">
+        <FONT face="Arial" size="30" align="left" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+      </TEXT>
+    </WINDOW> -->
+
+        <WINDOW id="WDW:INFO" name="Table information window" left="3" top="0" width="460" height="84">
+            <TEXT left="6" top="3" width="450" height="80">
+                <FONT face="Arial" size="21" align="left" valign="top" colour="00FFFFFF" highlightcolour="000000FF"/>
+            </TEXT>
+        </WINDOW>
+    
+        <WINDOW id="WDW:COLOUR" name="Button background colour window" left="5" top="127" width="101" height="41">
+			<TEXT left="5" top="5" width="91" height="31">
+				<FONT face="Arial" size="30" align="centre" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+		<WINDOW id="WDW:TEXTCOLOUR" name="Button text colour window" left="109" top="127" width="101" height="41">
+			<TEXT left="5" top="5" width="91" height="31">
+				<FONT face="Arial" size="30" align="centre" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+		<WINDOW id="WDW:INFO" name="Button information window" left="5" top="83" width="254" height="41">
+			<TEXT left="5" top="5" width="240" height="31">
+				<FONT face="Arial" size="30" align="left" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+		<WINDOW id="WDW:FONT" name="Current font window" left="262" top="83" width="100" height="41">
+			<TEXT left="5" top="5" width="90" height="31">
+				<FONT face="Arial" size="30" align="left" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+		<WINDOW id="WDW:SHAPE" name="Current button shape window" left="365" top="83" width="100" height="41">
+			<TEXT left="5" top="5" width="90" height="31">
+				<FONT face="Arial" size="30" align="left" valign="centre" colour="00FFFFFF" highlightcolour="000000FF"/>
+			</TEXT>
+		</WINDOW>
+	</WINDOWS>
+</FLOORPLAN>

@@ -1,0 +1,19 @@
+Action	Condition	Sequence
+s72	S255	I2
+AdvtExecuteSequence	Action
+CostFinalize		1000
+CostInitialize		800
+InstallValidate		1400
+InstallFinalize		6600
+InstallInitialize		1500
+ScheduleReboot	ISSCHEDULEREBOOT	6410
+RegisterTypeLibraries		4910
+RegisterProgIdInfo		4800
+CreateShortcuts		4500
+PublishComponents		6200
+PublishFeatures		6300
+PublishProduct		6400
+RegisterClassInfo		4600
+RegisterExtensionInfo		4700
+RegisterMIMEInfo		4900
+MsiPublishAssemblies		6250

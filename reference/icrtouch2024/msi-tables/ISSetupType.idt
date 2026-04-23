@@ -1,0 +1,6 @@
+ISSetupType	Description	Display_Name	Display
+s38	L255	L255	i2
+ISSetupType	ISSetupType
+Typical	All program features will be installed. (Requires the most disk space.)	{&MSSansBold8}&Typical	1
+Custom	Choose which program features you want installed and where they will be installed. Recommended for advanced users.	{&MSSansBold8}Cu&stom	3
+Minimal	Minimum required features will be installed.	{&MSSansBold8}&Minimal	2

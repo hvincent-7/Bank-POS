@@ -1,0 +1,13 @@
+Property	Order	Value	X	Y	Width	Height	Text	Help
+s72	i2	s64	i2	i2	i2	i2	L64	L50
+RadioButton	Property	Order
+ApplicationUsers	1	AllUsers	1	7	290	14	&Anyone who uses this computer (all users)	
+ApplicationUsers	2	OnlyCurrentUser	1	23	290	14	Only for &me ([USERNAME])	
+AgreeToLicense	1	No	0	15	295	15	I &do not accept the terms in the license agreement	
+AgreeToLicense	2	Yes	0	0	295	15	I &accept the terms in the license agreement	
+_IsMaintenance	1	Change	0	0	290	14	{&MSSansBold8}&Modify	
+_IsMaintenance	2	Reinstall	0	60	290	14	{&MSSansBold8}Re&pair	
+_IsMaintenance	3	Remove	0	120	290	14	{&MSSansBold8}&Remove	
+_IsSetupTypeMin	1	Typical	1	6	264	14	{&MSSansBold8}&Typical	
+RestartManagerOption	1	CloseRestart	6	9	331	14	Automatically close and attempt to restart applications.	
+RestartManagerOption	2	Reboot	6	21	322	17	Do not close applications. (A reboot will be required.)	

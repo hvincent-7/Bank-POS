@@ -1,0 +1,50 @@
+<DIALOG id="DLG:MSGBOX" name="Message Box" left="100" top="250" width="500" height="120">
+	<BACKGROUND image="dispmsg_bg.Bmp" TransparentColour="00FF00FF"/>/&gt;
+	
+	<LINE1MESSAGE left="250" top="30">
+		<FONT face="Arial" size="24" align="centre" valign="centre" italic="true" colour="000000"/>
+	</LINE1MESSAGE>
+	
+	<LINE2MESSAGE left="250" top="50">
+		<FONT face="Arial" size="24" align="centre" valign="centre" italic="true" colour="000000"/>
+	</LINE2MESSAGE>
+			
+	<TITLE left="490" top="5">
+		<FONT face="Arial" size="16" align="right" valign="top" colour="00EEEEEE"/>
+	</TITLE>
+			
+	<BUTTONS>
+		<BUTTON id="BTN:OK" name="Ok Button" left="210" top="80" width="80" height="30">
+			<STATEIMAGE state="up" image="msgbox_buttons.bmp" left="0" top="0"/>
+			<STATEIMAGE state="down" image="msgbox_buttons.bmp" left="0" top="30"/>
+		</BUTTON>
+		<BUTTON id="BTN:YES" name="Yes Button" left="165" top="80" width="80" height="30">
+			<STATEIMAGE state="up" image="msgbox_buttons.bmp" left="80" top="0"/>
+			<STATEIMAGE state="down" image="msgbox_buttons.bmp" left="80" top="30"/>
+		</BUTTON>
+		<BUTTON id="BTN:NO" name="No Button" left="255" top="80" width="80" height="30">
+			<STATEIMAGE state="up" image="msgbox_buttons.bmp" left="160" top="0"/>
+			<STATEIMAGE state="down" image="msgbox_buttons.bmp" left="160" top="30"/>
+		</BUTTON>
+		<BUTTON id="BTN:SUSPEND" name="Suspend Button" left="335" top="80" width="80" height="30">
+			<STATEIMAGE state="up" image="msgbox_buttons.bmp" left="240" top="0"/>
+			<STATEIMAGE state="down" image="msgbox_buttons.bmp" left="240" top="30"/>
+		</BUTTON>
+		<BUTTON id="BTN:OPEN" name="Open Button" left="75" top="80" width="80" height="30">
+			<STATEIMAGE state="up" image="msgbox_buttons.bmp" left="320" top="0"/>
+			<STATEIMAGE state="down" image="msgbox_buttons.bmp" left="320" top="30"/>
+		</BUTTON>
+		<BUTTON id="BTN:PRINT" name="Print Button" left="165" top="80" width="80" height="30">
+			<STATEIMAGE state="up" image="msgbox_buttons.bmp" left="400" top="0"/>
+			<STATEIMAGE state="down" image="msgbox_buttons.bmp" left="400" top="30"/>
+		</BUTTON>
+		<BUTTON id="BTN:DUTCH" name="Go dutch Button" left="255" top="80" width="80" height="30">
+			<STATEIMAGE state="up" image="msgbox_buttons.bmp" left="480" top="0"/>
+			<STATEIMAGE state="down" image="msgbox_buttons.bmp" left="480" top="30"/>
+		</BUTTON>
+		<BUTTON id="BTN:CANCEL" name="Cancel Button" left="345" top="80" width="80" height="30">
+			<STATEIMAGE state="up" image="msgbox_buttons.bmp" left="560" top="0"/>
+			<STATEIMAGE state="down" image="msgbox_buttons.bmp" left="560" top="30"/>
+		</BUTTON>
+	</BUTTONS>
+</DIALOG>

@@ -1,0 +1,88 @@
+local bDebugPrinting = false;	// set this false to disable all the debug printing in the output file
+local nScriptKeyNum = 0;
+
+dofile("etal\\lib\\keys.moc");      // load the function key lib
+
+function OnInit()
+{
+	ICR_EnableDebugLog(bDebugPrinting);
+    
+    ICR_SetLocalUserData("bDebugPrinting", bDebugPrinting);     //turn on debug printing in the library functions
+   	
+    nScriptKeyNum = CheckForKey("Copy Paste Level",53,110,0,0,501);  // get the key number for the script key
+}
+
+function OnRunScriptKeyPress(nFile, nRecord, nNumber, nValue, nFlag)
+{
+    //print("Called OnRunScriptKeyPress() File=" + nFile + " Record=" + nRecord + " Value=" + nValue + " Flag=" + nFlag);
+    switch(nNumber)                      // what sort of script key have we pressed?
+    {
+        case 501:
+        pressCopyPasteLevelKey();
+        break
+    }
+}
+
+function pressCopyPasteLevelKey()
+{
+    //check for manager mode
+    local nMode = ICR_GetCurrentMode();
+    local nClerk = ICR_GetCurrentClerk();
+    
+    do  //once, make sure while is false
+    {
+        if (nClerk == 0)
+        {
+            ICR_Error(1); // sign on first
+            break;
+        }
+        if (bDebugPrinting)print("clerk is "+nClerk);
+        if (nMode != 6)
+        {
+            ICR_Error(46); // wrong mode
+            break;
+        }
+        if (bDebugPrinting)print("in manager mode");
+        local tClerk = ICR_GetPGMData(5,nClerk);
+        if (!(tClerk.MODECONTROL & 0x800))
+        {
+            ICR_Error(15); // pgm4 not allowed
+            break;
+        }
+        
+        if (bDebugPrinting)print("clerk is allowed to do programming");
+        // get the size of the level names file
+        local Maximums = ICR_GetPGMData(399,43);
+        // build an array big enough to hold them
+        local aLevelNames = array(Maximums.SIZE);
+        // fill it with the names
+        for (local nCount=1;nCount<Maximums.SIZE;nCount++)
+        {
+            local nextname = ICR_GetPGMData(43,nCount);
+            aLevelNames[nCount-1] = nextname.TEXT;
+        }
+        // build the list dialog of level names
+        for (local nCount=1;nCount<Maximums.SIZE;nCount++)
+        {
+            ICR_ListDialog_AddItem(aLevelNames[nCount-1]);
+        }
+        //get level to copy from
+        local nFromLevel = (ICR_ListDialog("From Level",11)-1);// -1 because the listbox starts from 1
+        if (bDebugPrinting)print("from level is "+nFromLevel);
+        //get level to copy to
+        local nToLevelStart = (ICR_ListDialog("1st To Level",11)-1);// -1 because the listbox starts from 1
+        if (bDebugPrinting)print("to level is from "+nToLevelStart);
+        local nToLevelEnd = (ICR_ListDialog("last To Level",nToLevelStart+1)-1);// -1 because the listbox starts from 1
+        if (bDebugPrinting)print("to level is to "+nToLevelEnd);
+        //copy keys :)
+        for (local nToLevel=nToLevelStart; nToLevel <= nToLevelEnd;nToLevel++)
+        {
+            for (local nCount=1;nCount<=200;nCount++)
+            {
+                ICR_SetPGMData(74,nToLevel*200+nCount, ICR_GetPGMData(74,nFromLevel*200+nCount));
+                ICR_SetPGMData(75,nToLevel*200+nCount, ICR_GetPGMData(75,nFromLevel*200+nCount));
+            }  
+        }
+        ICR_JournalLine("Keyboard level "+nFromLevel+" copied to "+(nToLevelStart+1)+"to"+(nToLevelEnd+1),0,0,53,nScriptKeyNum,0);
+    }while(false);//only do it once
+}

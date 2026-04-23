@@ -1,0 +1,12 @@
+/workspaces/Bank-POS/src/Bank.Pos.Core/bin/Debug/net10.0/Bank.Pos.Core.deps.json
+/workspaces/Bank-POS/src/Bank.Pos.Core/bin/Debug/net10.0/Bank.Pos.Core.dll
+/workspaces/Bank-POS/src/Bank.Pos.Core/bin/Debug/net10.0/Bank.Pos.Core.pdb
+/workspaces/Bank-POS/src/Bank.Pos.Core/obj/Debug/net10.0/Bank.Pos.Core.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/Bank-POS/src/Bank.Pos.Core/obj/Debug/net10.0/Bank.Pos.Core.AssemblyInfoInputs.cache
+/workspaces/Bank-POS/src/Bank.Pos.Core/obj/Debug/net10.0/Bank.Pos.Core.AssemblyInfo.cs
+/workspaces/Bank-POS/src/Bank.Pos.Core/obj/Debug/net10.0/Bank.Pos.Core.csproj.CoreCompileInputs.cache
+/workspaces/Bank-POS/src/Bank.Pos.Core/obj/Debug/net10.0/Bank.Pos.Core.sourcelink.json
+/workspaces/Bank-POS/src/Bank.Pos.Core/obj/Debug/net10.0/Bank.Pos.Core.dll
+/workspaces/Bank-POS/src/Bank.Pos.Core/obj/Debug/net10.0/refint/Bank.Pos.Core.dll
+/workspaces/Bank-POS/src/Bank.Pos.Core/obj/Debug/net10.0/Bank.Pos.Core.pdb
+/workspaces/Bank-POS/src/Bank.Pos.Core/obj/Debug/net10.0/ref/Bank.Pos.Core.dll

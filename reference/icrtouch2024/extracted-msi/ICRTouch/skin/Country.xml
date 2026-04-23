@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DATA>
+
+  <COUNTRYS>
+    <COUNTRY><ID>0</ID><CODE>GBR</CODE><NAME>UK (multilingual)</NAME></COUNTRY>
+    <COUNTRY><ID>1</ID><CODE>DNK</CODE><NAME>Denmark</NAME></COUNTRY>
+    <COUNTRY><ID>2</ID><CODE>ISL</CODE><NAME>Iceland</NAME></COUNTRY>
+    <COUNTRY><ID>3</ID><CODE>BEL</CODE><NAME>Belgium (multilingual)</NAME></COUNTRY>
+    <COUNTRY><ID>4</ID><CODE>IRL</CODE><NAME>Ireland</NAME></COUNTRY>
+  </COUNTRYS>
+  
+  <KEYBOARDS>
+    <KEYBOARD>
+      <COUNTRY>GBR</COUNTRY>
+      <LINE1>
+        <LOWER>1234567890-=</LOWER>
+        <SHIFT>!"£$%^&amp;*()_+</SHIFT>
+        <SYMBOL1>   €        </SYMBOL1>
+        <SYMBOL2>            </SYMBOL2>
+      </LINE1>
+      <LINE2>
+        <LOWER>qwertyuiop[]</LOWER>
+        <SHIFT>QWERTYUIOP{}</SHIFT>
+        <SYMBOL1>  é   úíó   </SYMBOL1>
+        <SYMBOL2>  É   ÚÍÓ   </SYMBOL2>
+      </LINE2>
+      <LINE3>
+        <LOWER>asdfghjkl;'#</LOWER>
+        <SHIFT>ASDFGHJKL:@~</SHIFT>
+        <SYMBOL1>áßë  ÿüïö   </SYMBOL1>
+        <SYMBOL2>ÁßË  ŸÜÏÖ   </SYMBOL2>
+      </LINE3>
+      <LINE4>
+        <LOWER>\zxcvbnm,./ </LOWER>
+        <SHIFT> ZXCVBNM&lt;&gt;? </SHIFT>
+        <SYMBOL1> ä    ñ     </SYMBOL1>
+        <SYMBOL2> Ä    Ñ     </SYMBOL2>
+      </LINE4>
+    </KEYBOARD>
+       
+    <KEYBOARD>
+      <COUNTRY>DNK</COUNTRY> <!-- Denmark -->
+      <LINE1>
+        <LOWER>1234567890+ </LOWER>
+        <SHIFT>!"#¤%&amp;/()=?</SHIFT>
+        <SYMBOL1> @£$€ {[]} |</SYMBOL1>
+        <SYMBOL2>            </SYMBOL2>
+      </LINE1>
+      <LINE2>
+        <LOWER>qwertyuiopå </LOWER>
+        <SHIFT>QWERTYUIOPÅ </SHIFT>
+        <SYMBOL1>  ë  ÿüïö   </SYMBOL1>
+        <SYMBOL2>  Ë   ÜÏÖ   </SYMBOL2>
+      </LINE2>
+      <LINE3>
+        <LOWER>asdfghjklæø#</LOWER>
+        <SHIFT>ASDFGHJKLÆØ~</SHIFT>
+        <SYMBOL1>ä é  ýúíó   </SYMBOL1>
+        <SYMBOL2>Ä É  ÝÚÍÓ   </SYMBOL2>
+      </LINE3>
+      <LINE4>
+        <LOWER>&lt;zxcvbnm,.-</LOWER>
+        <SHIFT>&gt;ZXCVBNM;:_</SHIFT>
+        <SYMBOL1>\á      µ   </SYMBOL1>
+        <SYMBOL2> Á          </SYMBOL2>
+      </LINE4>
+    </KEYBOARD>
+    
+    <KEYBOARD>
+      <COUNTRY>ISL</COUNTRY> <!-- Iceland -->
+      <LINE1>
+        <LOWER>1234567890ö </LOWER>
+        <SHIFT>!"#¤%&amp;/()=Ö</SHIFT>
+        <SYMBOL1> @£$€ {[]} |</SYMBOL1>
+        <SYMBOL2>            </SYMBOL2>
+      </LINE1>
+      <LINE2>
+        <LOWER>qwertyuiopð </LOWER>
+        <SHIFT>QWERTYUIOPÐ </SHIFT>
+        <SYMBOL1>  ë  ÿüïö   </SYMBOL1>
+        <SYMBOL2>  Ë   ÜÏÖ   </SYMBOL2>
+      </LINE2>
+      <LINE3>
+        <LOWER>asdfghjklæ #</LOWER>
+        <SHIFT>ASDFGHJKLÆ ~</SHIFT>
+        <SYMBOL1>ä é  ýúíó   </SYMBOL1>
+        <SYMBOL2>Ä É  ÝÚÍÓ   </SYMBOL2>
+      </LINE3>
+      <LINE4>
+        <LOWER>&lt;zxcvbnm,.þ</LOWER>
+        <SHIFT>&gt;ZXCVBNM;:Þ</SHIFT>
+        <SYMBOL1>\áå     µ   </SYMBOL1>
+        <SYMBOL2> ÁÅ         </SYMBOL2>
+      </LINE4>
+    </KEYBOARD>
+
+    <KEYBOARD>
+      <COUNTRY>BEL</COUNTRY> <!-- Belgium  -->
+      <LINE1>
+        <LOWER>&amp;é"'( è!çà)-</LOWER>
+        <SHIFT>1234567890°_</SHIFT>
+        <SYMBOL1>|@#  ^  {}  </SYMBOL1>
+        <SYMBOL2>            </SYMBOL2>
+      </LINE1>
+      <LINE2>
+        <LOWER>azertyuiop $</LOWER>
+        <SHIFT>AZERTYUIOP *</SHIFT>
+        <SYMBOL1>  €   úíó []</SYMBOL1>
+        <SYMBOL2>  €   ÚÍÓ []</SYMBOL2>
+      </LINE2>
+      <LINE3>
+        <LOWER>qsdfghjklmùµ</LOWER>
+        <SHIFT>QSDFGHJKLM%£</SHIFT>
+        <SYMBOL1>áßë  ÿüïö   </SYMBOL1>
+        <SYMBOL2>ÁßË  ŸÜÏÖ   </SYMBOL2>
+      </LINE3>
+      <LINE4>
+        <LOWER>&lt;wxcvbn,;:= </LOWER>
+        <SHIFT>&gt;WXCVBN?./+  </SHIFT>
+        <SYMBOL1> ä          </SYMBOL1>
+        <SYMBOL2> Ä          </SYMBOL2>
+      </LINE4>
+    </KEYBOARD>  
+    
+    <KEYBOARD>
+      <COUNTRY>IRL</COUNTRY> <!-- Ireland -->
+      <LINE1>
+        <LOWER>1234567890-=</LOWER>
+        <SHIFT>!"£$%^&amp;*()_+</SHIFT>
+        <SYMBOL1>   €        </SYMBOL1>
+        <SYMBOL2>            </SYMBOL2>
+      </LINE1>
+      <LINE2>
+        <LOWER>qwertyuiop[]</LOWER>
+        <SHIFT>QWERTYUIOP{}</SHIFT>
+        <SYMBOL1>  é   úíó   </SYMBOL1>
+        <SYMBOL2>  É   ÚÍÓ   </SYMBOL2>
+      </LINE2>
+      <LINE3>
+        <LOWER>asdfghjkl;'#</LOWER>
+        <SHIFT>ASDFGHJKL:@~</SHIFT>
+        <SYMBOL1>áßë  ÿüïö   </SYMBOL1>
+        <SYMBOL2>ÁßË  ŸÜÏÖ   </SYMBOL2>
+      </LINE3>
+      <LINE4>
+        <LOWER>\zxcvbnm,./ </LOWER>
+        <SHIFT> ZXCVBNM&lt;&gt;? </SHIFT>
+        <SYMBOL1> ä    ñ     </SYMBOL1>
+        <SYMBOL2> Ä    Ñ     </SYMBOL2>
+      </LINE4>
+    </KEYBOARD>
+   
+  </KEYBOARDS>  
+</DATA>

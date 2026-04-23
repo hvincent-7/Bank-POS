@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ETAL>
+  <FILE>copypastelevel.moc</FILE>
+  <OUTPUTFILE>output.txt</OUTPUTFILE>
+  <NAME>Copy/Paste Keyboard Level</NAME>
+  <CREATED>12/02/2010</CREATED>
+  <LASTMODIFIED>24/03/2010</LASTMODIFIED>
+  <MINVERID>5540</MINVERID>
+  <AUTHOR>Steve</AUTHOR>
+</ETAL>

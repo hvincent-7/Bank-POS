@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ETAL>
+	<FILE>AllergyAlerts.emoc2</FILE>
+	<OUTPUTFILE>output.txt</OUTPUTFILE>
+	<NAME>Allergy Alerts</NAME>
+	<CREATED>25/05/2017</CREATED>
+	<LASTMODIFIED>15/01/2019</LASTMODIFIED>
+	<MINVERID>5540</MINVERID>
+	<AUTHOR>Antony ICRTouch</AUTHOR>
+</ETAL>

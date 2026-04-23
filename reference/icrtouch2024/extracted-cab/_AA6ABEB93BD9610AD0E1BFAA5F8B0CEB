@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ETAL>
+  <FILE>MiscSaleText.moc</FILE>
+  <OUTPUTFILE>output.txt</OUTPUTFILE>
+  <NAME>Misc Sale Text</NAME>
+
+  <CREATED>16/09/2010</CREATED>
+  <LASTMODIFIED>16/09/2010</LASTMODIFIED>
+  <MINVERID>5540</MINVERID>
+  <AUTHOR>Darren</AUTHOR>
+</ETAL>

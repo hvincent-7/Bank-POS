@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<USERDATA>
+  <ITEM>
+    <NAME>bDebugPrinting</NAME>
+    <KIND>BOOLEAN</KIND>
+    <VALUE>FALSE</VALUE>
+  </ITEM>
+  <ITEM>
+    <NAME>Program PLU</NAME>
+    <KIND>INTEGER</KIND>
+    <VALUE>198</VALUE>
+  </ITEM>
+  <ITEM>
+    <NAME>bOnlyManagerRemoveStock</NAME>
+    <KIND>BOOLEAN</KIND>
+    <VALUE>FALSE</VALUE>
+  </ITEM>
+  <ITEM>
+    <NAME>KEYTYPE_110_Program PLU</NAME>
+    <KIND>INTEGER</KIND>
+    <VALUE>198</VALUE>
+  </ITEM>
+</USERDATA>

@@ -1,0 +1,16 @@
+/workspaces/Bank-POS/src/Bank.Pos.Data/bin/Debug/net10.0/Bank.Pos.Data.deps.json
+/workspaces/Bank-POS/src/Bank.Pos.Data/bin/Debug/net10.0/Bank.Pos.Data.dll
+/workspaces/Bank-POS/src/Bank.Pos.Data/bin/Debug/net10.0/Bank.Pos.Data.pdb
+/workspaces/Bank-POS/src/Bank.Pos.Data/bin/Debug/net10.0/Bank.Pos.Core.dll
+/workspaces/Bank-POS/src/Bank.Pos.Data/bin/Debug/net10.0/Bank.Pos.Core.pdb
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/Bank.Pos.Data.csproj.AssemblyReference.cache
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/Bank.Pos.Data.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/Bank.Pos.Data.AssemblyInfoInputs.cache
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/Bank.Pos.Data.AssemblyInfo.cs
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/Bank.Pos.Data.csproj.CoreCompileInputs.cache
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/Bank.Pos.Data.sourcelink.json
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/Bank.Pos.CE825C95.Up2Date
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/Bank.Pos.Data.dll
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/refint/Bank.Pos.Data.dll
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/Bank.Pos.Data.pdb
+/workspaces/Bank-POS/src/Bank.Pos.Data/obj/Debug/net10.0/ref/Bank.Pos.Data.dll
